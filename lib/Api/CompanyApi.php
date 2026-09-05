@@ -74,22 +74,22 @@ class CompanyApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1CompaniesClaimPost' => [
+        'claimCompany' => [
             'application/json',
         ],
-        'apiV1CompaniesGet' => [
+        'createCompany' => [
             'application/json',
         ],
-        'apiV1CompaniesIdGet' => [
+        'getCompany' => [
             'application/json',
         ],
-        'apiV1CompaniesIdLogoGet' => [
+        'getCompanyLogo' => [
             'application/json',
         ],
-        'apiV1CompaniesIdPut' => [
+        'listCompanies' => [
             'application/json',
         ],
-        'apiV1CompaniesPost' => [
+        'updateCompany' => [
             'application/json',
         ],
     ];
@@ -141,37 +141,37 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesClaimPost
+     * Operation claimCompany
      *
      * Reclamar un RUC registrado por otra cuenta, con su certificado
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesClaimPostRequest $api_v1_companies_claim_post_request api_v1_companies_claim_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesClaimPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ClaimCompanyRequest $claim_company_request claim_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['claimCompany'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesClaimPost($api_v1_companies_claim_post_request, string $contentType = self::contentTypes['apiV1CompaniesClaimPost'][0])
+    public function claimCompany($claim_company_request, string $contentType = self::contentTypes['claimCompany'][0])
     {
-        $this->apiV1CompaniesClaimPostWithHttpInfo($api_v1_companies_claim_post_request, $contentType);
+        $this->claimCompanyWithHttpInfo($claim_company_request, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesClaimPostWithHttpInfo
+     * Operation claimCompanyWithHttpInfo
      *
      * Reclamar un RUC registrado por otra cuenta, con su certificado
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesClaimPostRequest $api_v1_companies_claim_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesClaimPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ClaimCompanyRequest $claim_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['claimCompany'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesClaimPostWithHttpInfo($api_v1_companies_claim_post_request, string $contentType = self::contentTypes['apiV1CompaniesClaimPost'][0])
+    public function claimCompanyWithHttpInfo($claim_company_request, string $contentType = self::contentTypes['claimCompany'][0])
     {
-        $request = $this->apiV1CompaniesClaimPostRequest($api_v1_companies_claim_post_request, $contentType);
+        $request = $this->claimCompanyRequest($claim_company_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -199,6 +199,30 @@ class CompanyApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -207,19 +231,19 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesClaimPostAsync
+     * Operation claimCompanyAsync
      *
      * Reclamar un RUC registrado por otra cuenta, con su certificado
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesClaimPostRequest $api_v1_companies_claim_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesClaimPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ClaimCompanyRequest $claim_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['claimCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesClaimPostAsync($api_v1_companies_claim_post_request, string $contentType = self::contentTypes['apiV1CompaniesClaimPost'][0])
+    public function claimCompanyAsync($claim_company_request, string $contentType = self::contentTypes['claimCompany'][0])
     {
-        return $this->apiV1CompaniesClaimPostAsyncWithHttpInfo($api_v1_companies_claim_post_request, $contentType)
+        return $this->claimCompanyAsyncWithHttpInfo($claim_company_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -228,20 +252,20 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesClaimPostAsyncWithHttpInfo
+     * Operation claimCompanyAsyncWithHttpInfo
      *
      * Reclamar un RUC registrado por otra cuenta, con su certificado
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesClaimPostRequest $api_v1_companies_claim_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesClaimPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ClaimCompanyRequest $claim_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['claimCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesClaimPostAsyncWithHttpInfo($api_v1_companies_claim_post_request, string $contentType = self::contentTypes['apiV1CompaniesClaimPost'][0])
+    public function claimCompanyAsyncWithHttpInfo($claim_company_request, string $contentType = self::contentTypes['claimCompany'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesClaimPostRequest($api_v1_companies_claim_post_request, $contentType);
+        $request = $this->claimCompanyRequest($claim_company_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -267,21 +291,21 @@ class CompanyApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesClaimPost'
+     * Create request for operation 'claimCompany'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesClaimPostRequest $api_v1_companies_claim_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesClaimPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ClaimCompanyRequest $claim_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['claimCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesClaimPostRequest($api_v1_companies_claim_post_request, string $contentType = self::contentTypes['apiV1CompaniesClaimPost'][0])
+    public function claimCompanyRequest($claim_company_request, string $contentType = self::contentTypes['claimCompany'][0])
     {
 
-        // verify the required parameter 'api_v1_companies_claim_post_request' is set
-        if ($api_v1_companies_claim_post_request === null || (is_array($api_v1_companies_claim_post_request) && count($api_v1_companies_claim_post_request) === 0)) {
+        // verify the required parameter 'claim_company_request' is set
+        if ($claim_company_request === null || (is_array($claim_company_request) && count($claim_company_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_companies_claim_post_request when calling apiV1CompaniesClaimPost'
+                'Missing the required parameter $claim_company_request when calling claimCompany'
             );
         }
 
@@ -298,22 +322,22 @@ class CompanyApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($api_v1_companies_claim_post_request)) {
+        if (isset($claim_company_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_companies_claim_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($claim_company_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_companies_claim_post_request;
+                $httpBody = $claim_company_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -343,6 +367,10 @@ class CompanyApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -366,35 +394,37 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesGet
+     * Operation createCompany
      *
-     * Listar empresas emisoras
+     * Crear empresa emisora
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateCompanyRequest $create_company_request create_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCompany'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesGet(string $contentType = self::contentTypes['apiV1CompaniesGet'][0])
+    public function createCompany($create_company_request, string $contentType = self::contentTypes['createCompany'][0])
     {
-        $this->apiV1CompaniesGetWithHttpInfo($contentType);
+        $this->createCompanyWithHttpInfo($create_company_request, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesGetWithHttpInfo
+     * Operation createCompanyWithHttpInfo
      *
-     * Listar empresas emisoras
+     * Crear empresa emisora
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateCompanyRequest $create_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCompany'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesGetWithHttpInfo(string $contentType = self::contentTypes['apiV1CompaniesGet'][0])
+    public function createCompanyWithHttpInfo($create_company_request, string $contentType = self::contentTypes['createCompany'][0])
     {
-        $request = $this->apiV1CompaniesGetRequest($contentType);
+        $request = $this->createCompanyRequest($create_company_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -422,6 +452,30 @@ class CompanyApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -430,18 +484,19 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesGetAsync
+     * Operation createCompanyAsync
      *
-     * Listar empresas emisoras
+     * Crear empresa emisora
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateCompanyRequest $create_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesGetAsync(string $contentType = self::contentTypes['apiV1CompaniesGet'][0])
+    public function createCompanyAsync($create_company_request, string $contentType = self::contentTypes['createCompany'][0])
     {
-        return $this->apiV1CompaniesGetAsyncWithHttpInfo($contentType)
+        return $this->createCompanyAsyncWithHttpInfo($create_company_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -450,19 +505,20 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesGetAsyncWithHttpInfo
+     * Operation createCompanyAsyncWithHttpInfo
      *
-     * Listar empresas emisoras
+     * Crear empresa emisora
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateCompanyRequest $create_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesGetAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1CompaniesGet'][0])
+    public function createCompanyAsyncWithHttpInfo($create_company_request, string $contentType = self::contentTypes['createCompany'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesGetRequest($contentType);
+        $request = $this->createCompanyRequest($create_company_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -488,15 +544,23 @@ class CompanyApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesGet'
+     * Create request for operation 'createCompany'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateCompanyRequest $create_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesGetRequest(string $contentType = self::contentTypes['apiV1CompaniesGet'][0])
+    public function createCompanyRequest($create_company_request, string $contentType = self::contentTypes['createCompany'][0])
     {
+
+        // verify the required parameter 'create_company_request' is set
+        if ($create_company_request === null || (is_array($create_company_request) && count($create_company_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $create_company_request when calling createCompany'
+            );
+        }
 
 
         $resourcePath = '/api/v1/companies';
@@ -511,13 +575,24 @@ class CompanyApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($create_company_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                try {
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($create_company_request), JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                $httpBody = $create_company_request;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -545,6 +620,10 @@ class CompanyApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -560,7 +639,7 @@ class CompanyApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'GET',
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -568,37 +647,37 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdGet
+     * Operation getCompany
      *
      * Detalle de empresa
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompany'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesIdGet($id, string $contentType = self::contentTypes['apiV1CompaniesIdGet'][0])
+    public function getCompany($id, string $contentType = self::contentTypes['getCompany'][0])
     {
-        $this->apiV1CompaniesIdGetWithHttpInfo($id, $contentType);
+        $this->getCompanyWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesIdGetWithHttpInfo
+     * Operation getCompanyWithHttpInfo
      *
      * Detalle de empresa
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompany'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesIdGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1CompaniesIdGet'][0])
+    public function getCompanyWithHttpInfo($id, string $contentType = self::contentTypes['getCompany'][0])
     {
-        $request = $this->apiV1CompaniesIdGetRequest($id, $contentType);
+        $request = $this->getCompanyRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -626,6 +705,30 @@ class CompanyApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -634,19 +737,19 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdGetAsync
+     * Operation getCompanyAsync
      *
      * Detalle de empresa
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdGetAsync($id, string $contentType = self::contentTypes['apiV1CompaniesIdGet'][0])
+    public function getCompanyAsync($id, string $contentType = self::contentTypes['getCompany'][0])
     {
-        return $this->apiV1CompaniesIdGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getCompanyAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -655,20 +758,20 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdGetAsyncWithHttpInfo
+     * Operation getCompanyAsyncWithHttpInfo
      *
      * Detalle de empresa
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1CompaniesIdGet'][0])
+    public function getCompanyAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getCompany'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesIdGetRequest($id, $contentType);
+        $request = $this->getCompanyRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -694,25 +797,25 @@ class CompanyApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesIdGet'
+     * Create request for operation 'getCompany'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompany'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesIdGetRequest($id, string $contentType = self::contentTypes['apiV1CompaniesIdGet'][0])
+    public function getCompanyRequest($id, string $contentType = self::contentTypes['getCompany'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdGet'
+                'Missing the required parameter $id when calling getCompany'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling CompanyApi.apiV1CompaniesIdGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling CompanyApi.getCompany, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -736,7 +839,7 @@ class CompanyApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -770,6 +873,10 @@ class CompanyApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -793,37 +900,37 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdLogoGet
+     * Operation getCompanyLogo
      *
      * Obtener logo de la empresa (PNG/JPG)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdLogoGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompanyLogo'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesIdLogoGet($id, string $contentType = self::contentTypes['apiV1CompaniesIdLogoGet'][0])
+    public function getCompanyLogo($id, string $contentType = self::contentTypes['getCompanyLogo'][0])
     {
-        $this->apiV1CompaniesIdLogoGetWithHttpInfo($id, $contentType);
+        $this->getCompanyLogoWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesIdLogoGetWithHttpInfo
+     * Operation getCompanyLogoWithHttpInfo
      *
      * Obtener logo de la empresa (PNG/JPG)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdLogoGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompanyLogo'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesIdLogoGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1CompaniesIdLogoGet'][0])
+    public function getCompanyLogoWithHttpInfo($id, string $contentType = self::contentTypes['getCompanyLogo'][0])
     {
-        $request = $this->apiV1CompaniesIdLogoGetRequest($id, $contentType);
+        $request = $this->getCompanyLogoRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -851,6 +958,30 @@ class CompanyApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -859,19 +990,19 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdLogoGetAsync
+     * Operation getCompanyLogoAsync
      *
      * Obtener logo de la empresa (PNG/JPG)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdLogoGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompanyLogo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdLogoGetAsync($id, string $contentType = self::contentTypes['apiV1CompaniesIdLogoGet'][0])
+    public function getCompanyLogoAsync($id, string $contentType = self::contentTypes['getCompanyLogo'][0])
     {
-        return $this->apiV1CompaniesIdLogoGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getCompanyLogoAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -880,20 +1011,20 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdLogoGetAsyncWithHttpInfo
+     * Operation getCompanyLogoAsyncWithHttpInfo
      *
      * Obtener logo de la empresa (PNG/JPG)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdLogoGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompanyLogo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdLogoGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1CompaniesIdLogoGet'][0])
+    public function getCompanyLogoAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getCompanyLogo'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesIdLogoGetRequest($id, $contentType);
+        $request = $this->getCompanyLogoRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -919,25 +1050,25 @@ class CompanyApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesIdLogoGet'
+     * Create request for operation 'getCompanyLogo'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdLogoGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCompanyLogo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesIdLogoGetRequest($id, string $contentType = self::contentTypes['apiV1CompaniesIdLogoGet'][0])
+    public function getCompanyLogoRequest($id, string $contentType = self::contentTypes['getCompanyLogo'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdLogoGet'
+                'Missing the required parameter $id when calling getCompanyLogo'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling CompanyApi.apiV1CompaniesIdLogoGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling CompanyApi.getCompanyLogo, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -961,7 +1092,7 @@ class CompanyApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -995,6 +1126,10 @@ class CompanyApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1018,39 +1153,35 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdPut
+     * Operation listCompanies
      *
-     * Actualizar empresa
+     * Listar empresas emisoras
      *
-     * @param  string $id id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdPutRequest $api_v1_companies_id_put_request api_v1_companies_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCompanies'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesIdPut($id, $api_v1_companies_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdPut'][0])
+    public function listCompanies(string $contentType = self::contentTypes['listCompanies'][0])
     {
-        $this->apiV1CompaniesIdPutWithHttpInfo($id, $api_v1_companies_id_put_request, $contentType);
+        $this->listCompaniesWithHttpInfo($contentType);
     }
 
     /**
-     * Operation apiV1CompaniesIdPutWithHttpInfo
+     * Operation listCompaniesWithHttpInfo
      *
-     * Actualizar empresa
+     * Listar empresas emisoras
      *
-     * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdPutRequest $api_v1_companies_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCompanies'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesIdPutWithHttpInfo($id, $api_v1_companies_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdPut'][0])
+    public function listCompaniesWithHttpInfo(string $contentType = self::contentTypes['listCompanies'][0])
     {
-        $request = $this->apiV1CompaniesIdPutRequest($id, $api_v1_companies_id_put_request, $contentType);
+        $request = $this->listCompaniesRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1078,6 +1209,30 @@ class CompanyApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1086,20 +1241,18 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdPutAsync
+     * Operation listCompaniesAsync
      *
-     * Actualizar empresa
+     * Listar empresas emisoras
      *
-     * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdPutRequest $api_v1_companies_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCompanies'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdPutAsync($id, $api_v1_companies_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdPut'][0])
+    public function listCompaniesAsync(string $contentType = self::contentTypes['listCompanies'][0])
     {
-        return $this->apiV1CompaniesIdPutAsyncWithHttpInfo($id, $api_v1_companies_id_put_request, $contentType)
+        return $this->listCompaniesAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1108,21 +1261,19 @@ class CompanyApi
     }
 
     /**
-     * Operation apiV1CompaniesIdPutAsyncWithHttpInfo
+     * Operation listCompaniesAsyncWithHttpInfo
      *
-     * Actualizar empresa
+     * Listar empresas emisoras
      *
-     * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdPutRequest $api_v1_companies_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCompanies'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdPutAsyncWithHttpInfo($id, $api_v1_companies_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdPut'][0])
+    public function listCompaniesAsyncWithHttpInfo(string $contentType = self::contentTypes['listCompanies'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesIdPutRequest($id, $api_v1_companies_id_put_request, $contentType);
+        $request = $this->listCompaniesRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1148,32 +1299,270 @@ class CompanyApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesIdPut'
+     * Create request for operation 'listCompanies'
      *
-     * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdPutRequest $api_v1_companies_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCompanies'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesIdPutRequest($id, $api_v1_companies_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdPut'][0])
+    public function listCompaniesRequest(string $contentType = self::contentTypes['listCompanies'][0])
+    {
+
+
+        $resourcePath = '/api/v1/companies';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateCompany
+     *
+     * Actualizar empresa
+     *
+     * @param  string $id id (required)
+     * @param  \Intifact\Sdk\Model\UpdateCompanyRequest $update_company_request update_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCompany'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function updateCompany($id, $update_company_request, string $contentType = self::contentTypes['updateCompany'][0])
+    {
+        $this->updateCompanyWithHttpInfo($id, $update_company_request, $contentType);
+    }
+
+    /**
+     * Operation updateCompanyWithHttpInfo
+     *
+     * Actualizar empresa
+     *
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateCompanyRequest $update_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCompany'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateCompanyWithHttpInfo($id, $update_company_request, string $contentType = self::contentTypes['updateCompany'][0])
+    {
+        $request = $this->updateCompanyRequest($id, $update_company_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateCompanyAsync
+     *
+     * Actualizar empresa
+     *
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateCompanyRequest $update_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCompany'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateCompanyAsync($id, $update_company_request, string $contentType = self::contentTypes['updateCompany'][0])
+    {
+        return $this->updateCompanyAsyncWithHttpInfo($id, $update_company_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateCompanyAsyncWithHttpInfo
+     *
+     * Actualizar empresa
+     *
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateCompanyRequest $update_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCompany'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateCompanyAsyncWithHttpInfo($id, $update_company_request, string $contentType = self::contentTypes['updateCompany'][0])
+    {
+        $returnType = '';
+        $request = $this->updateCompanyRequest($id, $update_company_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateCompany'
+     *
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateCompanyRequest $update_company_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCompany'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function updateCompanyRequest($id, $update_company_request, string $contentType = self::contentTypes['updateCompany'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdPut'
+                'Missing the required parameter $id when calling updateCompany'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling CompanyApi.apiV1CompaniesIdPut, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling CompanyApi.updateCompany, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
-        // verify the required parameter 'api_v1_companies_id_put_request' is set
-        if ($api_v1_companies_id_put_request === null || (is_array($api_v1_companies_id_put_request) && count($api_v1_companies_id_put_request) === 0)) {
+        // verify the required parameter 'update_company_request' is set
+        if ($update_company_request === null || (is_array($update_company_request) && count($update_company_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_companies_id_put_request when calling apiV1CompaniesIdPut'
+                'Missing the required parameter $update_company_request when calling updateCompany'
             );
         }
 
@@ -1198,22 +1587,22 @@ class CompanyApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($api_v1_companies_id_put_request)) {
+        if (isset($update_company_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_companies_id_put_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($update_company_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_companies_id_put_request;
+                $httpBody = $update_company_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1243,6 +1632,10 @@ class CompanyApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1259,231 +1652,6 @@ class CompanyApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'PUT',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1CompaniesPost
-     *
-     * Crear empresa emisora
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesPostRequest $api_v1_companies_post_request api_v1_companies_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1CompaniesPost($api_v1_companies_post_request, string $contentType = self::contentTypes['apiV1CompaniesPost'][0])
-    {
-        $this->apiV1CompaniesPostWithHttpInfo($api_v1_companies_post_request, $contentType);
-    }
-
-    /**
-     * Operation apiV1CompaniesPostWithHttpInfo
-     *
-     * Crear empresa emisora
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesPostRequest $api_v1_companies_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1CompaniesPostWithHttpInfo($api_v1_companies_post_request, string $contentType = self::contentTypes['apiV1CompaniesPost'][0])
-    {
-        $request = $this->apiV1CompaniesPostRequest($api_v1_companies_post_request, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1CompaniesPostAsync
-     *
-     * Crear empresa emisora
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesPostRequest $api_v1_companies_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1CompaniesPostAsync($api_v1_companies_post_request, string $contentType = self::contentTypes['apiV1CompaniesPost'][0])
-    {
-        return $this->apiV1CompaniesPostAsyncWithHttpInfo($api_v1_companies_post_request, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1CompaniesPostAsyncWithHttpInfo
-     *
-     * Crear empresa emisora
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesPostRequest $api_v1_companies_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1CompaniesPostAsyncWithHttpInfo($api_v1_companies_post_request, string $contentType = self::contentTypes['apiV1CompaniesPost'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1CompaniesPostRequest($api_v1_companies_post_request, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1CompaniesPost'
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesPostRequest $api_v1_companies_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1CompaniesPostRequest($api_v1_companies_post_request, string $contentType = self::contentTypes['apiV1CompaniesPost'][0])
-    {
-
-        // verify the required parameter 'api_v1_companies_post_request' is set
-        if ($api_v1_companies_post_request === null || (is_array($api_v1_companies_post_request) && count($api_v1_companies_post_request) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_companies_post_request when calling apiV1CompaniesPost'
-            );
-        }
-
-
-        $resourcePath = '/api/v1/companies';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (isset($api_v1_companies_post_request)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_companies_post_request), JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                $httpBody = $api_v1_companies_post_request;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

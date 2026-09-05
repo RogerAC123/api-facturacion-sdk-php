@@ -74,22 +74,22 @@ class DocumentsApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1CdrConsultarPost' => [
+        'consultarCdr' => [
             'application/json',
         ],
-        'apiV1DocumentsGet' => [
+        'getDocument' => [
             'application/json',
         ],
-        'apiV1DocumentsIdGet' => [
+        'getNextCorrelativo' => [
             'application/json',
         ],
-        'apiV1DocumentsIdRecoverPost' => [
+        'listDocuments' => [
             'application/json',
         ],
-        'apiV1DocumentsIdRetryPost' => [
+        'reconcileDocument' => [
             'application/json',
         ],
-        'apiV1DocumentsNextCorrelativoGet' => [
+        'retryDocument' => [
             'application/json',
         ],
     ];
@@ -141,38 +141,38 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1CdrConsultarPost
+     * Operation consultarCdr
      *
      * Consultar el CDR de un comprobante en SUNAT por referencia
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest $api_v1_cdr_consultar_post_request api_v1_cdr_consultar_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CdrConsultarPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ConsultarCdrRequest $consultar_cdr_request consultar_cdr_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\ConsultarCdr200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1CdrConsultarPost($api_v1_cdr_consultar_post_request, string $contentType = self::contentTypes['apiV1CdrConsultarPost'][0])
+    public function consultarCdr($consultar_cdr_request, string $contentType = self::contentTypes['consultarCdr'][0])
     {
-        list($response) = $this->apiV1CdrConsultarPostWithHttpInfo($api_v1_cdr_consultar_post_request, $contentType);
+        list($response) = $this->consultarCdrWithHttpInfo($consultar_cdr_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1CdrConsultarPostWithHttpInfo
+     * Operation consultarCdrWithHttpInfo
      *
      * Consultar el CDR de un comprobante en SUNAT por referencia
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest $api_v1_cdr_consultar_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CdrConsultarPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ConsultarCdrRequest $consultar_cdr_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\ConsultarCdr200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CdrConsultarPostWithHttpInfo($api_v1_cdr_consultar_post_request, string $contentType = self::contentTypes['apiV1CdrConsultarPost'][0])
+    public function consultarCdrWithHttpInfo($consultar_cdr_request, string $contentType = self::contentTypes['consultarCdr'][0])
     {
-        $request = $this->apiV1CdrConsultarPostRequest($api_v1_cdr_consultar_post_request, $contentType);
+        $request = $this->consultarCdrRequest($consultar_cdr_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -200,19 +200,37 @@ class DocumentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response',
+                        '\Intifact\Sdk\Model\ConsultarCdr200Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -234,7 +252,7 @@ class DocumentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response',
+                '\Intifact\Sdk\Model\ConsultarCdr200Response',
                 $request,
                 $response,
             );
@@ -243,7 +261,7 @@ class DocumentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response',
+                        '\Intifact\Sdk\Model\ConsultarCdr200Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -251,7 +269,23 @@ class DocumentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -259,7 +293,15 @@ class DocumentsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -272,19 +314,19 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1CdrConsultarPostAsync
+     * Operation consultarCdrAsync
      *
      * Consultar el CDR de un comprobante en SUNAT por referencia
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest $api_v1_cdr_consultar_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CdrConsultarPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ConsultarCdrRequest $consultar_cdr_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CdrConsultarPostAsync($api_v1_cdr_consultar_post_request, string $contentType = self::contentTypes['apiV1CdrConsultarPost'][0])
+    public function consultarCdrAsync($consultar_cdr_request, string $contentType = self::contentTypes['consultarCdr'][0])
     {
-        return $this->apiV1CdrConsultarPostAsyncWithHttpInfo($api_v1_cdr_consultar_post_request, $contentType)
+        return $this->consultarCdrAsyncWithHttpInfo($consultar_cdr_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -293,20 +335,20 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1CdrConsultarPostAsyncWithHttpInfo
+     * Operation consultarCdrAsyncWithHttpInfo
      *
      * Consultar el CDR de un comprobante en SUNAT por referencia
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest $api_v1_cdr_consultar_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CdrConsultarPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ConsultarCdrRequest $consultar_cdr_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CdrConsultarPostAsyncWithHttpInfo($api_v1_cdr_consultar_post_request, string $contentType = self::contentTypes['apiV1CdrConsultarPost'][0])
+    public function consultarCdrAsyncWithHttpInfo($consultar_cdr_request, string $contentType = self::contentTypes['consultarCdr'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response';
-        $request = $this->apiV1CdrConsultarPostRequest($api_v1_cdr_consultar_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\ConsultarCdr200Response';
+        $request = $this->consultarCdrRequest($consultar_cdr_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -345,21 +387,21 @@ class DocumentsApi
     }
 
     /**
-     * Create request for operation 'apiV1CdrConsultarPost'
+     * Create request for operation 'consultarCdr'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest $api_v1_cdr_consultar_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CdrConsultarPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ConsultarCdrRequest $consultar_cdr_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CdrConsultarPostRequest($api_v1_cdr_consultar_post_request, string $contentType = self::contentTypes['apiV1CdrConsultarPost'][0])
+    public function consultarCdrRequest($consultar_cdr_request, string $contentType = self::contentTypes['consultarCdr'][0])
     {
 
-        // verify the required parameter 'api_v1_cdr_consultar_post_request' is set
-        if ($api_v1_cdr_consultar_post_request === null || (is_array($api_v1_cdr_consultar_post_request) && count($api_v1_cdr_consultar_post_request) === 0)) {
+        // verify the required parameter 'consultar_cdr_request' is set
+        if ($consultar_cdr_request === null || (is_array($consultar_cdr_request) && count($consultar_cdr_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_cdr_consultar_post_request when calling apiV1CdrConsultarPost'
+                'Missing the required parameter $consultar_cdr_request when calling consultarCdr'
             );
         }
 
@@ -382,16 +424,16 @@ class DocumentsApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_cdr_consultar_post_request)) {
+        if (isset($consultar_cdr_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_cdr_consultar_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($consultar_cdr_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_cdr_consultar_post_request;
+                $httpBody = $consultar_cdr_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -421,6 +463,10 @@ class DocumentsApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -444,56 +490,295 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsGet
+     * Operation getDocument
      *
-     * Listar documentos con filtros y paginación
+     * Detalle completo de un documento
      *
-     * @param  string|null $ruc ruc (optional)
-     * @param  string|null $tipo_doc tipo_doc (optional)
-     * @param  string|null $serie serie (optional)
-     * @param  string|null $estado estado (optional)
-     * @param  string|null $env env (optional)
-     * @param  string|null $fecha_desde fecha_desde (optional)
-     * @param  string|null $fecha_hasta fecha_hasta (optional)
-     * @param  string|null $cliente_num_doc cliente_num_doc (optional)
-     * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $limit limit (optional, default to 20)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsGet'] to see the possible values for this operation
+     * @param  string $id id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDocument'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1DocumentsGet200Response
+     * @return void
      */
-    public function apiV1DocumentsGet($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['apiV1DocumentsGet'][0])
+    public function getDocument($id, string $contentType = self::contentTypes['getDocument'][0])
     {
-        list($response) = $this->apiV1DocumentsGetWithHttpInfo($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        $this->getDocumentWithHttpInfo($id, $contentType);
+    }
+
+    /**
+     * Operation getDocumentWithHttpInfo
+     *
+     * Detalle completo de un documento
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDocument'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getDocumentWithHttpInfo($id, string $contentType = self::contentTypes['getDocument'][0])
+    {
+        $request = $this->getDocumentRequest($id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getDocumentAsync
+     *
+     * Detalle completo de un documento
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDocument'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getDocumentAsync($id, string $contentType = self::contentTypes['getDocument'][0])
+    {
+        return $this->getDocumentAsyncWithHttpInfo($id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getDocumentAsyncWithHttpInfo
+     *
+     * Detalle completo de un documento
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDocument'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getDocumentAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getDocument'][0])
+    {
+        $returnType = '';
+        $request = $this->getDocumentRequest($id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getDocument'
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDocument'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getDocumentRequest($id, string $contentType = self::contentTypes['getDocument'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getDocument'
+            );
+        }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling DocumentsApi.getDocument, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
+
+        $resourcePath = '/api/v1/documents/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getNextCorrelativo
+     *
+     * Obtener el siguiente correlativo disponible para una serie
+     *
+     * @param  string $company_ruc company_ruc (required)
+     * @param  string $tipo_doc tipo_doc (required)
+     * @param  string $serie serie (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNextCorrelativo'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\GetNextCorrelativo200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function getNextCorrelativo($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['getNextCorrelativo'][0])
+    {
+        list($response) = $this->getNextCorrelativoWithHttpInfo($company_ruc, $tipo_doc, $serie, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1DocumentsGetWithHttpInfo
+     * Operation getNextCorrelativoWithHttpInfo
      *
-     * Listar documentos con filtros y paginación
+     * Obtener el siguiente correlativo disponible para una serie
      *
-     * @param  string|null $ruc (optional)
-     * @param  string|null $tipo_doc (optional)
-     * @param  string|null $serie (optional)
-     * @param  string|null $estado (optional)
-     * @param  string|null $env (optional)
-     * @param  string|null $fecha_desde (optional)
-     * @param  string|null $fecha_hasta (optional)
-     * @param  string|null $cliente_num_doc (optional)
-     * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional, default to 20)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsGet'] to see the possible values for this operation
+     * @param  string $company_ruc (required)
+     * @param  string $tipo_doc (required)
+     * @param  string $serie (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNextCorrelativo'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1DocumentsGet200Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\GetNextCorrelativo200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DocumentsGetWithHttpInfo($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['apiV1DocumentsGet'][0])
+    public function getNextCorrelativoWithHttpInfo($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['getNextCorrelativo'][0])
     {
-        $request = $this->apiV1DocumentsGetRequest($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        $request = $this->getNextCorrelativoRequest($company_ruc, $tipo_doc, $serie, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -521,7 +806,31 @@ class DocumentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1DocumentsGet200Response',
+                        '\Intifact\Sdk\Model\GetNextCorrelativo200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -543,7 +852,7 @@ class DocumentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1DocumentsGet200Response',
+                '\Intifact\Sdk\Model\GetNextCorrelativo200Response',
                 $request,
                 $response,
             );
@@ -552,7 +861,39 @@ class DocumentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1DocumentsGet200Response',
+                        '\Intifact\Sdk\Model\GetNextCorrelativo200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -565,28 +906,21 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsGetAsync
+     * Operation getNextCorrelativoAsync
      *
-     * Listar documentos con filtros y paginación
+     * Obtener el siguiente correlativo disponible para una serie
      *
-     * @param  string|null $ruc (optional)
-     * @param  string|null $tipo_doc (optional)
-     * @param  string|null $serie (optional)
-     * @param  string|null $estado (optional)
-     * @param  string|null $env (optional)
-     * @param  string|null $fecha_desde (optional)
-     * @param  string|null $fecha_hasta (optional)
-     * @param  string|null $cliente_num_doc (optional)
-     * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional, default to 20)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsGet'] to see the possible values for this operation
+     * @param  string $company_ruc (required)
+     * @param  string $tipo_doc (required)
+     * @param  string $serie (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNextCorrelativo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DocumentsGetAsync($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['apiV1DocumentsGet'][0])
+    public function getNextCorrelativoAsync($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['getNextCorrelativo'][0])
     {
-        return $this->apiV1DocumentsGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType)
+        return $this->getNextCorrelativoAsyncWithHttpInfo($company_ruc, $tipo_doc, $serie, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -595,29 +929,22 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsGetAsyncWithHttpInfo
+     * Operation getNextCorrelativoAsyncWithHttpInfo
      *
-     * Listar documentos con filtros y paginación
+     * Obtener el siguiente correlativo disponible para una serie
      *
-     * @param  string|null $ruc (optional)
-     * @param  string|null $tipo_doc (optional)
-     * @param  string|null $serie (optional)
-     * @param  string|null $estado (optional)
-     * @param  string|null $env (optional)
-     * @param  string|null $fecha_desde (optional)
-     * @param  string|null $fecha_hasta (optional)
-     * @param  string|null $cliente_num_doc (optional)
-     * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional, default to 20)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsGet'] to see the possible values for this operation
+     * @param  string $company_ruc (required)
+     * @param  string $tipo_doc (required)
+     * @param  string $serie (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNextCorrelativo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DocumentsGetAsyncWithHttpInfo($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['apiV1DocumentsGet'][0])
+    public function getNextCorrelativoAsyncWithHttpInfo($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['getNextCorrelativo'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1DocumentsGet200Response';
-        $request = $this->apiV1DocumentsGetRequest($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        $returnType = '\Intifact\Sdk\Model\GetNextCorrelativo200Response';
+        $request = $this->getNextCorrelativoRequest($company_ruc, $tipo_doc, $serie, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -656,7 +983,189 @@ class DocumentsApi
     }
 
     /**
-     * Create request for operation 'apiV1DocumentsGet'
+     * Create request for operation 'getNextCorrelativo'
+     *
+     * @param  string $company_ruc (required)
+     * @param  string $tipo_doc (required)
+     * @param  string $serie (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNextCorrelativo'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getNextCorrelativoRequest($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['getNextCorrelativo'][0])
+    {
+
+        // verify the required parameter 'company_ruc' is set
+        if ($company_ruc === null || (is_array($company_ruc) && count($company_ruc) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $company_ruc when calling getNextCorrelativo'
+            );
+        }
+        if (strlen($company_ruc) > 11) {
+            throw new \InvalidArgumentException('invalid length for "$company_ruc" when calling DocumentsApi.getNextCorrelativo, must be smaller than or equal to 11.');
+        }
+        if (strlen($company_ruc) < 11) {
+            throw new \InvalidArgumentException('invalid length for "$company_ruc" when calling DocumentsApi.getNextCorrelativo, must be bigger than or equal to 11.');
+        }
+        
+        // verify the required parameter 'tipo_doc' is set
+        if ($tipo_doc === null || (is_array($tipo_doc) && count($tipo_doc) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $tipo_doc when calling getNextCorrelativo'
+            );
+        }
+        if (strlen($tipo_doc) > 2) {
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling DocumentsApi.getNextCorrelativo, must be smaller than or equal to 2.');
+        }
+        if (strlen($tipo_doc) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling DocumentsApi.getNextCorrelativo, must be bigger than or equal to 1.');
+        }
+        
+        // verify the required parameter 'serie' is set
+        if ($serie === null || (is_array($serie) && count($serie) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $serie when calling getNextCorrelativo'
+            );
+        }
+        if (strlen($serie) > 4) {
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling DocumentsApi.getNextCorrelativo, must be smaller than or equal to 4.');
+        }
+        if (strlen($serie) < 4) {
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling DocumentsApi.getNextCorrelativo, must be bigger than or equal to 4.');
+        }
+        
+
+        $resourcePath = '/api/v1/documents/next-correlativo';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $company_ruc,
+            'companyRuc', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $tipo_doc,
+            'tipoDoc', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $serie,
+            'serie', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listDocuments
+     *
+     * Listar documentos con filtros y paginación
+     *
+     * @param  string|null $ruc ruc (optional)
+     * @param  string|null $tipo_doc tipo_doc (optional)
+     * @param  string|null $serie serie (optional)
+     * @param  string|null $estado estado (optional)
+     * @param  string|null $env env (optional)
+     * @param  string|null $fecha_desde fecha_desde (optional)
+     * @param  string|null $fecha_hasta fecha_hasta (optional)
+     * @param  string|null $cliente_num_doc cliente_num_doc (optional)
+     * @param  int|null $page page (optional, default to 1)
+     * @param  int|null $limit limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDocuments'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\ListDocuments200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function listDocuments($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    {
+        list($response) = $this->listDocumentsWithHttpInfo($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation listDocumentsWithHttpInfo
+     *
+     * Listar documentos con filtros y paginación
      *
      * @param  string|null $ruc (optional)
      * @param  string|null $tipo_doc (optional)
@@ -668,19 +1177,244 @@ class DocumentsApi
      * @param  string|null $cliente_num_doc (optional)
      * @param  int|null $page (optional, default to 1)
      * @param  int|null $limit (optional, default to 20)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDocuments'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\ListDocuments200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listDocumentsWithHttpInfo($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    {
+        $request = $this->listDocumentsRequest($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\ListDocuments200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\ListDocuments200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\ListDocuments200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listDocumentsAsync
+     *
+     * Listar documentos con filtros y paginación
+     *
+     * @param  string|null $ruc (optional)
+     * @param  string|null $tipo_doc (optional)
+     * @param  string|null $serie (optional)
+     * @param  string|null $estado (optional)
+     * @param  string|null $env (optional)
+     * @param  string|null $fecha_desde (optional)
+     * @param  string|null $fecha_hasta (optional)
+     * @param  string|null $cliente_num_doc (optional)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDocuments'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listDocumentsAsync($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    {
+        return $this->listDocumentsAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listDocumentsAsyncWithHttpInfo
+     *
+     * Listar documentos con filtros y paginación
+     *
+     * @param  string|null $ruc (optional)
+     * @param  string|null $tipo_doc (optional)
+     * @param  string|null $serie (optional)
+     * @param  string|null $estado (optional)
+     * @param  string|null $env (optional)
+     * @param  string|null $fecha_desde (optional)
+     * @param  string|null $fecha_hasta (optional)
+     * @param  string|null $cliente_num_doc (optional)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDocuments'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listDocumentsAsyncWithHttpInfo($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\ListDocuments200Response';
+        $request = $this->listDocumentsRequest($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listDocuments'
+     *
+     * @param  string|null $ruc (optional)
+     * @param  string|null $tipo_doc (optional)
+     * @param  string|null $serie (optional)
+     * @param  string|null $estado (optional)
+     * @param  string|null $env (optional)
+     * @param  string|null $fecha_desde (optional)
+     * @param  string|null $fecha_hasta (optional)
+     * @param  string|null $cliente_num_doc (optional)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDocuments'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DocumentsGetRequest($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['apiV1DocumentsGet'][0])
+    public function listDocumentsRequest($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
     {
 
         if ($ruc !== null && strlen($ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling DocumentsApi.apiV1DocumentsGet, must be smaller than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling DocumentsApi.listDocuments, must be smaller than or equal to 11.');
         }
         if ($ruc !== null && strlen($ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling DocumentsApi.apiV1DocumentsGet, must be bigger than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling DocumentsApi.listDocuments, must be bigger than or equal to 11.');
         }
         
 
@@ -691,17 +1425,17 @@ class DocumentsApi
 
 
         if ($page !== null && $page > 9007199254740991) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling DocumentsApi.apiV1DocumentsGet, must be smaller than or equal to 9007199254740991.');
+            throw new \InvalidArgumentException('invalid value for "$page" when calling DocumentsApi.listDocuments, must be smaller than or equal to 9007199254740991.');
         }
         if ($page !== null && $page <= 0) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling DocumentsApi.apiV1DocumentsGet, must be bigger than 0.');
+            throw new \InvalidArgumentException('invalid value for "$page" when calling DocumentsApi.listDocuments, must be bigger than 0.');
         }
         
         if ($limit !== null && $limit > 100) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling DocumentsApi.apiV1DocumentsGet, must be smaller than or equal to 100.');
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling DocumentsApi.listDocuments, must be smaller than or equal to 100.');
         }
         if ($limit !== null && $limit < 1) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling DocumentsApi.apiV1DocumentsGet, must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling DocumentsApi.listDocuments, must be bigger than or equal to 1.');
         }
         
 
@@ -841,6 +1575,10 @@ class DocumentsApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -864,263 +1602,38 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsIdGet
-     *
-     * Detalle completo de un documento
-     *
-     * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1DocumentsIdGet($id, string $contentType = self::contentTypes['apiV1DocumentsIdGet'][0])
-    {
-        $this->apiV1DocumentsIdGetWithHttpInfo($id, $contentType);
-    }
-
-    /**
-     * Operation apiV1DocumentsIdGetWithHttpInfo
-     *
-     * Detalle completo de un documento
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1DocumentsIdGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DocumentsIdGet'][0])
-    {
-        $request = $this->apiV1DocumentsIdGetRequest($id, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1DocumentsIdGetAsync
-     *
-     * Detalle completo de un documento
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1DocumentsIdGetAsync($id, string $contentType = self::contentTypes['apiV1DocumentsIdGet'][0])
-    {
-        return $this->apiV1DocumentsIdGetAsyncWithHttpInfo($id, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1DocumentsIdGetAsyncWithHttpInfo
-     *
-     * Detalle completo de un documento
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1DocumentsIdGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DocumentsIdGet'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1DocumentsIdGetRequest($id, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1DocumentsIdGet'
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1DocumentsIdGetRequest($id, string $contentType = self::contentTypes['apiV1DocumentsIdGet'][0])
-    {
-
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1DocumentsIdGet'
-            );
-        }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling DocumentsApi.apiV1DocumentsIdGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
-        }
-        
-
-        $resourcePath = '/api/v1/documents/{id}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{id}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1DocumentsIdRecoverPost
+     * Operation reconcileDocument
      *
      * Reconciliar un documento con SUNAT (consulta de CDR, solo master)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRecoverPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reconcileDocument'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\ReconcileDocument200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1DocumentsIdRecoverPost($id, string $contentType = self::contentTypes['apiV1DocumentsIdRecoverPost'][0])
+    public function reconcileDocument($id, string $contentType = self::contentTypes['reconcileDocument'][0])
     {
-        list($response) = $this->apiV1DocumentsIdRecoverPostWithHttpInfo($id, $contentType);
+        list($response) = $this->reconcileDocumentWithHttpInfo($id, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1DocumentsIdRecoverPostWithHttpInfo
+     * Operation reconcileDocumentWithHttpInfo
      *
      * Reconciliar un documento con SUNAT (consulta de CDR, solo master)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRecoverPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reconcileDocument'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\ReconcileDocument200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DocumentsIdRecoverPostWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DocumentsIdRecoverPost'][0])
+    public function reconcileDocumentWithHttpInfo($id, string $contentType = self::contentTypes['reconcileDocument'][0])
     {
-        $request = $this->apiV1DocumentsIdRecoverPostRequest($id, $contentType);
+        $request = $this->reconcileDocumentRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1148,25 +1661,37 @@ class DocumentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response',
+                        '\Intifact\Sdk\Model\ReconcileDocument200Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1188,7 +1713,7 @@ class DocumentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response',
+                '\Intifact\Sdk\Model\ReconcileDocument200Response',
                 $request,
                 $response,
             );
@@ -1197,7 +1722,7 @@ class DocumentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response',
+                        '\Intifact\Sdk\Model\ReconcileDocument200Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1205,7 +1730,15 @@ class DocumentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1213,7 +1746,7 @@ class DocumentsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1221,7 +1754,15 @@ class DocumentsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1234,19 +1775,19 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsIdRecoverPostAsync
+     * Operation reconcileDocumentAsync
      *
      * Reconciliar un documento con SUNAT (consulta de CDR, solo master)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRecoverPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reconcileDocument'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DocumentsIdRecoverPostAsync($id, string $contentType = self::contentTypes['apiV1DocumentsIdRecoverPost'][0])
+    public function reconcileDocumentAsync($id, string $contentType = self::contentTypes['reconcileDocument'][0])
     {
-        return $this->apiV1DocumentsIdRecoverPostAsyncWithHttpInfo($id, $contentType)
+        return $this->reconcileDocumentAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1255,20 +1796,20 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsIdRecoverPostAsyncWithHttpInfo
+     * Operation reconcileDocumentAsyncWithHttpInfo
      *
      * Reconciliar un documento con SUNAT (consulta de CDR, solo master)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRecoverPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reconcileDocument'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DocumentsIdRecoverPostAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DocumentsIdRecoverPost'][0])
+    public function reconcileDocumentAsyncWithHttpInfo($id, string $contentType = self::contentTypes['reconcileDocument'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response';
-        $request = $this->apiV1DocumentsIdRecoverPostRequest($id, $contentType);
+        $returnType = '\Intifact\Sdk\Model\ReconcileDocument200Response';
+        $request = $this->reconcileDocumentRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1307,25 +1848,25 @@ class DocumentsApi
     }
 
     /**
-     * Create request for operation 'apiV1DocumentsIdRecoverPost'
+     * Create request for operation 'reconcileDocument'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRecoverPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reconcileDocument'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DocumentsIdRecoverPostRequest($id, string $contentType = self::contentTypes['apiV1DocumentsIdRecoverPost'][0])
+    public function reconcileDocumentRequest($id, string $contentType = self::contentTypes['reconcileDocument'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1DocumentsIdRecoverPost'
+                'Missing the required parameter $id when calling reconcileDocument'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling DocumentsApi.apiV1DocumentsIdRecoverPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling DocumentsApi.reconcileDocument, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1383,6 +1924,10 @@ class DocumentsApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1406,38 +1951,38 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsIdRetryPost
+     * Operation retryDocument
      *
      * Re-encolar un documento fallido
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRetryPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['retryDocument'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\RetryDocument202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1DocumentsIdRetryPost($id, string $contentType = self::contentTypes['apiV1DocumentsIdRetryPost'][0])
+    public function retryDocument($id, string $contentType = self::contentTypes['retryDocument'][0])
     {
-        list($response) = $this->apiV1DocumentsIdRetryPostWithHttpInfo($id, $contentType);
+        list($response) = $this->retryDocumentWithHttpInfo($id, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1DocumentsIdRetryPostWithHttpInfo
+     * Operation retryDocumentWithHttpInfo
      *
      * Re-encolar un documento fallido
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRetryPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['retryDocument'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\RetryDocument202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DocumentsIdRetryPostWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DocumentsIdRetryPost'][0])
+    public function retryDocumentWithHttpInfo($id, string $contentType = self::contentTypes['retryDocument'][0])
     {
-        $request = $this->apiV1DocumentsIdRetryPostRequest($id, $contentType);
+        $request = $this->retryDocumentRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1465,13 +2010,31 @@ class DocumentsApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response',
+                        '\Intifact\Sdk\Model\RetryDocument202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1493,7 +2056,7 @@ class DocumentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response',
+                '\Intifact\Sdk\Model\RetryDocument202Response',
                 $request,
                 $response,
             );
@@ -1502,7 +2065,7 @@ class DocumentsApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response',
+                        '\Intifact\Sdk\Model\RetryDocument202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1510,7 +2073,31 @@ class DocumentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1523,19 +2110,19 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsIdRetryPostAsync
+     * Operation retryDocumentAsync
      *
      * Re-encolar un documento fallido
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRetryPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['retryDocument'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DocumentsIdRetryPostAsync($id, string $contentType = self::contentTypes['apiV1DocumentsIdRetryPost'][0])
+    public function retryDocumentAsync($id, string $contentType = self::contentTypes['retryDocument'][0])
     {
-        return $this->apiV1DocumentsIdRetryPostAsyncWithHttpInfo($id, $contentType)
+        return $this->retryDocumentAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1544,20 +2131,20 @@ class DocumentsApi
     }
 
     /**
-     * Operation apiV1DocumentsIdRetryPostAsyncWithHttpInfo
+     * Operation retryDocumentAsyncWithHttpInfo
      *
      * Re-encolar un documento fallido
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRetryPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['retryDocument'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DocumentsIdRetryPostAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DocumentsIdRetryPost'][0])
+    public function retryDocumentAsyncWithHttpInfo($id, string $contentType = self::contentTypes['retryDocument'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response';
-        $request = $this->apiV1DocumentsIdRetryPostRequest($id, $contentType);
+        $returnType = '\Intifact\Sdk\Model\RetryDocument202Response';
+        $request = $this->retryDocumentRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1596,25 +2183,25 @@ class DocumentsApi
     }
 
     /**
-     * Create request for operation 'apiV1DocumentsIdRetryPost'
+     * Create request for operation 'retryDocument'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsIdRetryPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['retryDocument'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DocumentsIdRetryPostRequest($id, string $contentType = self::contentTypes['apiV1DocumentsIdRetryPost'][0])
+    public function retryDocumentRequest($id, string $contentType = self::contentTypes['retryDocument'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1DocumentsIdRetryPost'
+                'Missing the required parameter $id when calling retryDocument'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling DocumentsApi.apiV1DocumentsIdRetryPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling DocumentsApi.retryDocument, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1672,6 +2259,10 @@ class DocumentsApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1688,353 +2279,6 @@ class DocumentsApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1DocumentsNextCorrelativoGet
-     *
-     * Obtener el siguiente correlativo disponible para una serie
-     *
-     * @param  string $company_ruc company_ruc (required)
-     * @param  string $tipo_doc tipo_doc (required)
-     * @param  string $serie serie (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsNextCorrelativoGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
-     */
-    public function apiV1DocumentsNextCorrelativoGet($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['apiV1DocumentsNextCorrelativoGet'][0])
-    {
-        list($response) = $this->apiV1DocumentsNextCorrelativoGetWithHttpInfo($company_ruc, $tipo_doc, $serie, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation apiV1DocumentsNextCorrelativoGetWithHttpInfo
-     *
-     * Obtener el siguiente correlativo disponible para una serie
-     *
-     * @param  string $company_ruc (required)
-     * @param  string $tipo_doc (required)
-     * @param  string $serie (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsNextCorrelativoGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1DocumentsNextCorrelativoGetWithHttpInfo($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['apiV1DocumentsNextCorrelativoGet'][0])
-    {
-        $request = $this->apiV1DocumentsNextCorrelativoGetRequest($company_ruc, $tipo_doc, $serie, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response',
-                        $request,
-                        $response,
-                    );
-                case 404:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-            
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1DocumentsNextCorrelativoGetAsync
-     *
-     * Obtener el siguiente correlativo disponible para una serie
-     *
-     * @param  string $company_ruc (required)
-     * @param  string $tipo_doc (required)
-     * @param  string $serie (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsNextCorrelativoGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1DocumentsNextCorrelativoGetAsync($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['apiV1DocumentsNextCorrelativoGet'][0])
-    {
-        return $this->apiV1DocumentsNextCorrelativoGetAsyncWithHttpInfo($company_ruc, $tipo_doc, $serie, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1DocumentsNextCorrelativoGetAsyncWithHttpInfo
-     *
-     * Obtener el siguiente correlativo disponible para una serie
-     *
-     * @param  string $company_ruc (required)
-     * @param  string $tipo_doc (required)
-     * @param  string $serie (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsNextCorrelativoGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1DocumentsNextCorrelativoGetAsyncWithHttpInfo($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['apiV1DocumentsNextCorrelativoGet'][0])
-    {
-        $returnType = '\Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response';
-        $request = $this->apiV1DocumentsNextCorrelativoGetRequest($company_ruc, $tipo_doc, $serie, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1DocumentsNextCorrelativoGet'
-     *
-     * @param  string $company_ruc (required)
-     * @param  string $tipo_doc (required)
-     * @param  string $serie (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DocumentsNextCorrelativoGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1DocumentsNextCorrelativoGetRequest($company_ruc, $tipo_doc, $serie, string $contentType = self::contentTypes['apiV1DocumentsNextCorrelativoGet'][0])
-    {
-
-        // verify the required parameter 'company_ruc' is set
-        if ($company_ruc === null || (is_array($company_ruc) && count($company_ruc) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $company_ruc when calling apiV1DocumentsNextCorrelativoGet'
-            );
-        }
-        if (strlen($company_ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$company_ruc" when calling DocumentsApi.apiV1DocumentsNextCorrelativoGet, must be smaller than or equal to 11.');
-        }
-        if (strlen($company_ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$company_ruc" when calling DocumentsApi.apiV1DocumentsNextCorrelativoGet, must be bigger than or equal to 11.');
-        }
-        
-        // verify the required parameter 'tipo_doc' is set
-        if ($tipo_doc === null || (is_array($tipo_doc) && count($tipo_doc) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $tipo_doc when calling apiV1DocumentsNextCorrelativoGet'
-            );
-        }
-        if (strlen($tipo_doc) > 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling DocumentsApi.apiV1DocumentsNextCorrelativoGet, must be smaller than or equal to 2.');
-        }
-        if (strlen($tipo_doc) < 1) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling DocumentsApi.apiV1DocumentsNextCorrelativoGet, must be bigger than or equal to 1.');
-        }
-        
-        // verify the required parameter 'serie' is set
-        if ($serie === null || (is_array($serie) && count($serie) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $serie when calling apiV1DocumentsNextCorrelativoGet'
-            );
-        }
-        if (strlen($serie) > 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling DocumentsApi.apiV1DocumentsNextCorrelativoGet, must be smaller than or equal to 4.');
-        }
-        if (strlen($serie) < 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling DocumentsApi.apiV1DocumentsNextCorrelativoGet, must be bigger than or equal to 4.');
-        }
-        
-
-        $resourcePath = '/api/v1/documents/next-correlativo';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $company_ruc,
-            'companyRuc', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            true // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $tipo_doc,
-            'tipoDoc', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            true // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $serie,
-            'serie', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            true // required
-        ) ?? []);
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

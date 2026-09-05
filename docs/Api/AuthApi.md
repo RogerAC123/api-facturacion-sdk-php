@@ -6,21 +6,129 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1AuthLoginPost()**](AuthApi.md#apiV1AuthLoginPost) | **POST** /api/v1/auth/login | Login email+password |
-| [**apiV1AuthLogoutPost()**](AuthApi.md#apiV1AuthLogoutPost) | **POST** /api/v1/auth/logout | Cerrar sesión actual (revoca refresh) |
-| [**apiV1AuthMeGet()**](AuthApi.md#apiV1AuthMeGet) | **GET** /api/v1/auth/me | Datos del usuario actual |
-| [**apiV1AuthRefreshPost()**](AuthApi.md#apiV1AuthRefreshPost) | **POST** /api/v1/auth/refresh | Renovar access token con refresh cookie |
-| [**apiV1AuthSessionsGet()**](AuthApi.md#apiV1AuthSessionsGet) | **GET** /api/v1/auth/sessions | Lista de sesiones activas del usuario |
-| [**apiV1AuthSessionsIdDelete()**](AuthApi.md#apiV1AuthSessionsIdDelete) | **DELETE** /api/v1/auth/sessions/{id} | Revocar una sesión activa por ID |
-| [**apiV1AuthSignupPost()**](AuthApi.md#apiV1AuthSignupPost) | **POST** /api/v1/auth/signup | Registro público: crea Tenant + User + sesión |
-| [**apiV1AuthVerifyEmailGet()**](AuthApi.md#apiV1AuthVerifyEmailGet) | **GET** /api/v1/auth/verify-email | Confirmar email con token (one-time, 24h) |
-| [**apiV1AuthVerifyEmailResendPost()**](AuthApi.md#apiV1AuthVerifyEmailResendPost) | **POST** /api/v1/auth/verify-email/resend | Re-enviar email de verificación al usuario logueado |
+| [**getCurrentUser()**](AuthApi.md#getCurrentUser) | **GET** /api/v1/auth/me | Datos del usuario actual |
+| [**listSessions()**](AuthApi.md#listSessions) | **GET** /api/v1/auth/sessions | Lista de sesiones activas del usuario |
+| [**login()**](AuthApi.md#login) | **POST** /api/v1/auth/login | Login email+password |
+| [**logout()**](AuthApi.md#logout) | **POST** /api/v1/auth/logout | Cerrar sesión actual (revoca refresh) |
+| [**refreshToken()**](AuthApi.md#refreshToken) | **POST** /api/v1/auth/refresh | Renovar access token con refresh cookie |
+| [**resendVerificationEmail()**](AuthApi.md#resendVerificationEmail) | **POST** /api/v1/auth/verify-email/resend | Re-enviar email de verificación al usuario logueado |
+| [**revokeSession()**](AuthApi.md#revokeSession) | **DELETE** /api/v1/auth/sessions/{id} | Revocar una sesión activa por ID |
+| [**signup()**](AuthApi.md#signup) | **POST** /api/v1/auth/signup | Registro público: crea Tenant + User + sesión |
+| [**verifyEmail()**](AuthApi.md#verifyEmail) | **GET** /api/v1/auth/verify-email | Confirmar email con token (one-time, 24h) |
 
 
-## `apiV1AuthLoginPost()`
+## `getCurrentUser()`
 
 ```php
-apiV1AuthLoginPost($api_v1_auth_login_post_request)
+getCurrentUser()
+```
+
+Datos del usuario actual
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $apiInstance->getCurrentUser();
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->getCurrentUser: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `listSessions()`
+
+```php
+listSessions()
+```
+
+Lista de sesiones activas del usuario
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $apiInstance->listSessions();
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->listSessions: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `login()`
+
+```php
+login($login_request)
 ```
 
 Login email+password
@@ -38,12 +146,12 @@ $apiInstance = new Intifact\Sdk\Api\AuthApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$api_v1_auth_login_post_request = new \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest(); // \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest
+$login_request = new \Intifact\Sdk\Model\LoginRequest(); // \Intifact\Sdk\Model\LoginRequest
 
 try {
-    $apiInstance->apiV1AuthLoginPost($api_v1_auth_login_post_request);
+    $apiInstance->login($login_request);
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthLoginPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->login: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -51,7 +159,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_auth_login_post_request** | [**\Intifact\Sdk\Model\ApiV1AuthLoginPostRequest**](../Model/ApiV1AuthLoginPostRequest.md)|  | |
+| **login_request** | [**\Intifact\Sdk\Model\LoginRequest**](../Model/LoginRequest.md)|  | |
 
 ### Return type
 
@@ -70,10 +178,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1AuthLogoutPost()`
+## `logout()`
 
 ```php
-apiV1AuthLogoutPost()
+logout()
 ```
 
 Cerrar sesión actual (revoca refresh)
@@ -93,9 +201,9 @@ $apiInstance = new Intifact\Sdk\Api\AuthApi(
 );
 
 try {
-    $apiInstance->apiV1AuthLogoutPost();
+    $apiInstance->logout();
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthLogoutPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->logout: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -120,60 +228,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1AuthMeGet()`
+## `refreshToken()`
 
 ```php
-apiV1AuthMeGet()
-```
-
-Datos del usuario actual
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Intifact\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-
-try {
-    $apiInstance->apiV1AuthMeGet();
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthMeGet: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `apiV1AuthRefreshPost()`
-
-```php
-apiV1AuthRefreshPost()
+refreshToken()
 ```
 
 Renovar access token con refresh cookie
@@ -193,9 +251,9 @@ $apiInstance = new Intifact\Sdk\Api\AuthApi(
 );
 
 try {
-    $apiInstance->apiV1AuthRefreshPost();
+    $apiInstance->refreshToken();
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthRefreshPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->refreshToken: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -220,13 +278,13 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1AuthSessionsGet()`
+## `resendVerificationEmail()`
 
 ```php
-apiV1AuthSessionsGet()
+resendVerificationEmail()
 ```
 
-Lista de sesiones activas del usuario
+Re-enviar email de verificación al usuario logueado
 
 ### Example
 
@@ -235,17 +293,21 @@ Lista de sesiones activas del usuario
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 
 try {
-    $apiInstance->apiV1AuthSessionsGet();
+    $apiInstance->resendVerificationEmail();
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthSessionsGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->resendVerificationEmail: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -259,21 +321,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1AuthSessionsIdDelete()`
+## `revokeSession()`
 
 ```php
-apiV1AuthSessionsIdDelete($id)
+revokeSession($id)
 ```
 
 Revocar una sesión activa por ID
@@ -285,18 +347,22 @@ Revocar una sesión activa por ID
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1AuthSessionsIdDelete($id);
+    $apiInstance->revokeSession($id);
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthSessionsIdDelete: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->revokeSession: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -312,21 +378,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1AuthSignupPost()`
+## `signup()`
 
 ```php
-apiV1AuthSignupPost($api_v1_auth_signup_post_request)
+signup($signup_request)
 ```
 
 Registro público: crea Tenant + User + sesión
@@ -344,12 +410,12 @@ $apiInstance = new Intifact\Sdk\Api\AuthApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$api_v1_auth_signup_post_request = new \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest(); // \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest
+$signup_request = new \Intifact\Sdk\Model\SignupRequest(); // \Intifact\Sdk\Model\SignupRequest
 
 try {
-    $apiInstance->apiV1AuthSignupPost($api_v1_auth_signup_post_request);
+    $apiInstance->signup($signup_request);
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthSignupPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->signup: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -357,7 +423,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_auth_signup_post_request** | [**\Intifact\Sdk\Model\ApiV1AuthSignupPostRequest**](../Model/ApiV1AuthSignupPostRequest.md)|  | |
+| **signup_request** | [**\Intifact\Sdk\Model\SignupRequest**](../Model/SignupRequest.md)|  | |
 
 ### Return type
 
@@ -376,10 +442,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1AuthVerifyEmailGet()`
+## `verifyEmail()`
 
 ```php
-apiV1AuthVerifyEmailGet($token)
+verifyEmail($token)
 ```
 
 Confirmar email con token (one-time, 24h)
@@ -400,9 +466,9 @@ $apiInstance = new Intifact\Sdk\Api\AuthApi(
 $token = 'token_example'; // string
 
 try {
-    $apiInstance->apiV1AuthVerifyEmailGet($token);
+    $apiInstance->verifyEmail($token);
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthVerifyEmailGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->verifyEmail: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -411,56 +477,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **token** | **string**|  | |
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `apiV1AuthVerifyEmailResendPost()`
-
-```php
-apiV1AuthVerifyEmailResendPost()
-```
-
-Re-enviar email de verificación al usuario logueado
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Intifact\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-
-try {
-    $apiInstance->apiV1AuthVerifyEmailResendPost();
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->apiV1AuthVerifyEmailResendPost: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
 
 ### Return type
 

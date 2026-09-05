@@ -6,17 +6,17 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1InvoiceComputePost()**](InvoiceApi.md#apiV1InvoiceComputePost) | **POST** /api/v1/invoice/compute | Calcular importes (IGV, descuentos, totales) sin emitir |
-| [**apiV1InvoiceIdCdrGet()**](InvoiceApi.md#apiV1InvoiceIdCdrGet) | **GET** /api/v1/invoice/{id}/cdr | Descargar CDR (constancia de SUNAT) |
-| [**apiV1InvoiceIdPdfGet()**](InvoiceApi.md#apiV1InvoiceIdPdfGet) | **GET** /api/v1/invoice/{id}/pdf | Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS) |
-| [**apiV1InvoiceIdXmlGet()**](InvoiceApi.md#apiV1InvoiceIdXmlGet) | **GET** /api/v1/invoice/{id}/xml | Descargar XML firmado |
-| [**apiV1InvoiceSendPost()**](InvoiceApi.md#apiV1InvoiceSendPost) | **POST** /api/v1/invoice/send | Enviar factura (01) o boleta (03) a SUNAT |
+| [**computeInvoice()**](InvoiceApi.md#computeInvoice) | **POST** /api/v1/invoice/compute | Calcular importes (IGV, descuentos, totales) sin emitir |
+| [**getInvoiceCdr()**](InvoiceApi.md#getInvoiceCdr) | **GET** /api/v1/invoice/{id}/cdr | Descargar CDR (constancia de SUNAT) |
+| [**getInvoicePdf()**](InvoiceApi.md#getInvoicePdf) | **GET** /api/v1/invoice/{id}/pdf | Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS) |
+| [**getInvoiceXml()**](InvoiceApi.md#getInvoiceXml) | **GET** /api/v1/invoice/{id}/xml | Descargar XML firmado |
+| [**sendInvoice()**](InvoiceApi.md#sendInvoice) | **POST** /api/v1/invoice/send | Enviar factura (01) o boleta (03) a SUNAT |
 
 
-## `apiV1InvoiceComputePost()`
+## `computeInvoice()`
 
 ```php
-apiV1InvoiceComputePost($api_v1_invoice_compute_post_request): \Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response
+computeInvoice($compute_invoice_request): \Intifact\Sdk\Model\ComputeInvoice200Response
 ```
 
 Calcular importes (IGV, descuentos, totales) sin emitir
@@ -30,19 +30,23 @@ Motor de cálculo: recibe ítems crudos (cantidad, valorUnitario sin IGV, afecta
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\InvoiceApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_invoice_compute_post_request = new \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest(); // \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest
+$compute_invoice_request = new \Intifact\Sdk\Model\ComputeInvoiceRequest(); // \Intifact\Sdk\Model\ComputeInvoiceRequest
 
 try {
-    $result = $apiInstance->apiV1InvoiceComputePost($api_v1_invoice_compute_post_request);
+    $result = $apiInstance->computeInvoice($compute_invoice_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling InvoiceApi->apiV1InvoiceComputePost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling InvoiceApi->computeInvoice: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -50,15 +54,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_invoice_compute_post_request** | [**\Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest**](../Model/ApiV1InvoiceComputePostRequest.md)|  | |
+| **compute_invoice_request** | [**\Intifact\Sdk\Model\ComputeInvoiceRequest**](../Model/ComputeInvoiceRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response**](../Model/ApiV1InvoiceComputePost200Response.md)
+[**\Intifact\Sdk\Model\ComputeInvoice200Response**](../Model/ComputeInvoice200Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
@@ -69,10 +73,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1InvoiceIdCdrGet()`
+## `getInvoiceCdr()`
 
 ```php
-apiV1InvoiceIdCdrGet($id)
+getInvoiceCdr($id)
 ```
 
 Descargar CDR (constancia de SUNAT)
@@ -84,18 +88,22 @@ Descargar CDR (constancia de SUNAT)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\InvoiceApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1InvoiceIdCdrGet($id);
+    $apiInstance->getInvoiceCdr($id);
 } catch (Exception $e) {
-    echo 'Exception when calling InvoiceApi->apiV1InvoiceIdCdrGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling InvoiceApi->getInvoiceCdr: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -111,21 +119,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1InvoiceIdPdfGet()`
+## `getInvoicePdf()`
 
 ```php
-apiV1InvoiceIdPdfGet($id, $format)
+getInvoicePdf($id, $format)
 ```
 
 Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS)
@@ -137,19 +145,23 @@ Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\InvoiceApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 $format = 'a4'; // string
 
 try {
-    $apiInstance->apiV1InvoiceIdPdfGet($id, $format);
+    $apiInstance->getInvoicePdf($id, $format);
 } catch (Exception $e) {
-    echo 'Exception when calling InvoiceApi->apiV1InvoiceIdPdfGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling InvoiceApi->getInvoicePdf: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -166,21 +178,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1InvoiceIdXmlGet()`
+## `getInvoiceXml()`
 
 ```php
-apiV1InvoiceIdXmlGet($id)
+getInvoiceXml($id)
 ```
 
 Descargar XML firmado
@@ -192,18 +204,22 @@ Descargar XML firmado
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\InvoiceApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1InvoiceIdXmlGet($id);
+    $apiInstance->getInvoiceXml($id);
 } catch (Exception $e) {
-    echo 'Exception when calling InvoiceApi->apiV1InvoiceIdXmlGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling InvoiceApi->getInvoiceXml: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -219,21 +235,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1InvoiceSendPost()`
+## `sendInvoice()`
 
 ```php
-apiV1InvoiceSendPost($api_v1_invoice_send_post_request): \Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response
+sendInvoice($send_invoice_request): \Intifact\Sdk\Model\SendInvoice202Response
 ```
 
 Enviar factura (01) o boleta (03) a SUNAT
@@ -247,19 +263,23 @@ Genera el XML UBL 2.1, lo firma digitalmente y lo encola para envío asíncrono 
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\InvoiceApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_invoice_send_post_request = new \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest(); // \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest
+$send_invoice_request = new \Intifact\Sdk\Model\SendInvoiceRequest(); // \Intifact\Sdk\Model\SendInvoiceRequest
 
 try {
-    $result = $apiInstance->apiV1InvoiceSendPost($api_v1_invoice_send_post_request);
+    $result = $apiInstance->sendInvoice($send_invoice_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling InvoiceApi->apiV1InvoiceSendPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling InvoiceApi->sendInvoice: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -267,15 +287,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_invoice_send_post_request** | [**\Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest**](../Model/ApiV1InvoiceSendPostRequest.md)|  | |
+| **send_invoice_request** | [**\Intifact\Sdk\Model\SendInvoiceRequest**](../Model/SendInvoiceRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response**](../Model/ApiV1InvoiceSendPost202Response.md)
+[**\Intifact\Sdk\Model\SendInvoice202Response**](../Model/SendInvoice202Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 

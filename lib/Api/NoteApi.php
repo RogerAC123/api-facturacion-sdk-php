@@ -74,19 +74,19 @@ class NoteApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1NoteComputePost' => [
+        'computeNote' => [
             'application/json',
         ],
-        'apiV1NoteIdCdrGet' => [
+        'getNoteCdr' => [
             'application/json',
         ],
-        'apiV1NoteIdPdfGet' => [
+        'getNotePdf' => [
             'application/json',
         ],
-        'apiV1NoteIdXmlGet' => [
+        'getNoteXml' => [
             'application/json',
         ],
-        'apiV1NoteSendPost' => [
+        'sendNote' => [
             'application/json',
         ],
     ];
@@ -138,38 +138,38 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteComputePost
+     * Operation computeNote
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteComputePostRequest $api_v1_note_compute_post_request api_v1_note_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeNote'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response
+     * @return \Intifact\Sdk\Model\ComputeInvoice200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1NoteComputePost($api_v1_note_compute_post_request, string $contentType = self::contentTypes['apiV1NoteComputePost'][0])
+    public function computeNote($compute_invoice_request, string $contentType = self::contentTypes['computeNote'][0])
     {
-        list($response) = $this->apiV1NoteComputePostWithHttpInfo($api_v1_note_compute_post_request, $contentType);
+        list($response) = $this->computeNoteWithHttpInfo($compute_invoice_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1NoteComputePostWithHttpInfo
+     * Operation computeNoteWithHttpInfo
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteComputePostRequest $api_v1_note_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeNote'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\ComputeInvoice200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1NoteComputePostWithHttpInfo($api_v1_note_compute_post_request, string $contentType = self::contentTypes['apiV1NoteComputePost'][0])
+    public function computeNoteWithHttpInfo($compute_invoice_request, string $contentType = self::contentTypes['computeNote'][0])
     {
-        $request = $this->apiV1NoteComputePostRequest($api_v1_note_compute_post_request, $contentType);
+        $request = $this->computeNoteRequest($compute_invoice_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -197,7 +197,25 @@ class NoteApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response',
+                        '\Intifact\Sdk\Model\ComputeInvoice200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -219,7 +237,7 @@ class NoteApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response',
+                '\Intifact\Sdk\Model\ComputeInvoice200Response',
                 $request,
                 $response,
             );
@@ -228,7 +246,31 @@ class NoteApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response',
+                        '\Intifact\Sdk\Model\ComputeInvoice200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -241,19 +283,19 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteComputePostAsync
+     * Operation computeNoteAsync
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteComputePostRequest $api_v1_note_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeNote'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteComputePostAsync($api_v1_note_compute_post_request, string $contentType = self::contentTypes['apiV1NoteComputePost'][0])
+    public function computeNoteAsync($compute_invoice_request, string $contentType = self::contentTypes['computeNote'][0])
     {
-        return $this->apiV1NoteComputePostAsyncWithHttpInfo($api_v1_note_compute_post_request, $contentType)
+        return $this->computeNoteAsyncWithHttpInfo($compute_invoice_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -262,20 +304,20 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteComputePostAsyncWithHttpInfo
+     * Operation computeNoteAsyncWithHttpInfo
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteComputePostRequest $api_v1_note_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeNote'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteComputePostAsyncWithHttpInfo($api_v1_note_compute_post_request, string $contentType = self::contentTypes['apiV1NoteComputePost'][0])
+    public function computeNoteAsyncWithHttpInfo($compute_invoice_request, string $contentType = self::contentTypes['computeNote'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response';
-        $request = $this->apiV1NoteComputePostRequest($api_v1_note_compute_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\ComputeInvoice200Response';
+        $request = $this->computeNoteRequest($compute_invoice_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -314,21 +356,21 @@ class NoteApi
     }
 
     /**
-     * Create request for operation 'apiV1NoteComputePost'
+     * Create request for operation 'computeNote'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteComputePostRequest $api_v1_note_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeNote'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1NoteComputePostRequest($api_v1_note_compute_post_request, string $contentType = self::contentTypes['apiV1NoteComputePost'][0])
+    public function computeNoteRequest($compute_invoice_request, string $contentType = self::contentTypes['computeNote'][0])
     {
 
-        // verify the required parameter 'api_v1_note_compute_post_request' is set
-        if ($api_v1_note_compute_post_request === null || (is_array($api_v1_note_compute_post_request) && count($api_v1_note_compute_post_request) === 0)) {
+        // verify the required parameter 'compute_invoice_request' is set
+        if ($compute_invoice_request === null || (is_array($compute_invoice_request) && count($compute_invoice_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_note_compute_post_request when calling apiV1NoteComputePost'
+                'Missing the required parameter $compute_invoice_request when calling computeNote'
             );
         }
 
@@ -351,16 +393,16 @@ class NoteApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_note_compute_post_request)) {
+        if (isset($compute_invoice_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_note_compute_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($compute_invoice_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_note_compute_post_request;
+                $httpBody = $compute_invoice_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -390,6 +432,10 @@ class NoteApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -413,37 +459,37 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdCdrGet
+     * Operation getNoteCdr
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1NoteIdCdrGet($id, string $contentType = self::contentTypes['apiV1NoteIdCdrGet'][0])
+    public function getNoteCdr($id, string $contentType = self::contentTypes['getNoteCdr'][0])
     {
-        $this->apiV1NoteIdCdrGetWithHttpInfo($id, $contentType);
+        $this->getNoteCdrWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1NoteIdCdrGetWithHttpInfo
+     * Operation getNoteCdrWithHttpInfo
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1NoteIdCdrGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1NoteIdCdrGet'][0])
+    public function getNoteCdrWithHttpInfo($id, string $contentType = self::contentTypes['getNoteCdr'][0])
     {
-        $request = $this->apiV1NoteIdCdrGetRequest($id, $contentType);
+        $request = $this->getNoteCdrRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -471,6 +517,30 @@ class NoteApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -479,19 +549,19 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdCdrGetAsync
+     * Operation getNoteCdrAsync
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteIdCdrGetAsync($id, string $contentType = self::contentTypes['apiV1NoteIdCdrGet'][0])
+    public function getNoteCdrAsync($id, string $contentType = self::contentTypes['getNoteCdr'][0])
     {
-        return $this->apiV1NoteIdCdrGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getNoteCdrAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -500,20 +570,20 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdCdrGetAsyncWithHttpInfo
+     * Operation getNoteCdrAsyncWithHttpInfo
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteIdCdrGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1NoteIdCdrGet'][0])
+    public function getNoteCdrAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getNoteCdr'][0])
     {
         $returnType = '';
-        $request = $this->apiV1NoteIdCdrGetRequest($id, $contentType);
+        $request = $this->getNoteCdrRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -539,25 +609,25 @@ class NoteApi
     }
 
     /**
-     * Create request for operation 'apiV1NoteIdCdrGet'
+     * Create request for operation 'getNoteCdr'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1NoteIdCdrGetRequest($id, string $contentType = self::contentTypes['apiV1NoteIdCdrGet'][0])
+    public function getNoteCdrRequest($id, string $contentType = self::contentTypes['getNoteCdr'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1NoteIdCdrGet'
+                'Missing the required parameter $id when calling getNoteCdr'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling NoteApi.apiV1NoteIdCdrGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling NoteApi.getNoteCdr, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -581,7 +651,7 @@ class NoteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -615,6 +685,10 @@ class NoteApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -638,37 +712,37 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdPdfGet
+     * Operation getNotePdf
      *
      * Obtener PDF de la nota
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNotePdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1NoteIdPdfGet($id, string $contentType = self::contentTypes['apiV1NoteIdPdfGet'][0])
+    public function getNotePdf($id, string $contentType = self::contentTypes['getNotePdf'][0])
     {
-        $this->apiV1NoteIdPdfGetWithHttpInfo($id, $contentType);
+        $this->getNotePdfWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1NoteIdPdfGetWithHttpInfo
+     * Operation getNotePdfWithHttpInfo
      *
      * Obtener PDF de la nota
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNotePdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1NoteIdPdfGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1NoteIdPdfGet'][0])
+    public function getNotePdfWithHttpInfo($id, string $contentType = self::contentTypes['getNotePdf'][0])
     {
-        $request = $this->apiV1NoteIdPdfGetRequest($id, $contentType);
+        $request = $this->getNotePdfRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -696,6 +770,30 @@ class NoteApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -704,19 +802,19 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdPdfGetAsync
+     * Operation getNotePdfAsync
      *
      * Obtener PDF de la nota
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNotePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteIdPdfGetAsync($id, string $contentType = self::contentTypes['apiV1NoteIdPdfGet'][0])
+    public function getNotePdfAsync($id, string $contentType = self::contentTypes['getNotePdf'][0])
     {
-        return $this->apiV1NoteIdPdfGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getNotePdfAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -725,20 +823,20 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdPdfGetAsyncWithHttpInfo
+     * Operation getNotePdfAsyncWithHttpInfo
      *
      * Obtener PDF de la nota
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNotePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteIdPdfGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1NoteIdPdfGet'][0])
+    public function getNotePdfAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getNotePdf'][0])
     {
         $returnType = '';
-        $request = $this->apiV1NoteIdPdfGetRequest($id, $contentType);
+        $request = $this->getNotePdfRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -764,25 +862,25 @@ class NoteApi
     }
 
     /**
-     * Create request for operation 'apiV1NoteIdPdfGet'
+     * Create request for operation 'getNotePdf'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNotePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1NoteIdPdfGetRequest($id, string $contentType = self::contentTypes['apiV1NoteIdPdfGet'][0])
+    public function getNotePdfRequest($id, string $contentType = self::contentTypes['getNotePdf'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1NoteIdPdfGet'
+                'Missing the required parameter $id when calling getNotePdf'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling NoteApi.apiV1NoteIdPdfGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling NoteApi.getNotePdf, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -806,7 +904,7 @@ class NoteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -840,6 +938,10 @@ class NoteApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -863,37 +965,37 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdXmlGet
+     * Operation getNoteXml
      *
      * Descargar XML firmado
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1NoteIdXmlGet($id, string $contentType = self::contentTypes['apiV1NoteIdXmlGet'][0])
+    public function getNoteXml($id, string $contentType = self::contentTypes['getNoteXml'][0])
     {
-        $this->apiV1NoteIdXmlGetWithHttpInfo($id, $contentType);
+        $this->getNoteXmlWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1NoteIdXmlGetWithHttpInfo
+     * Operation getNoteXmlWithHttpInfo
      *
      * Descargar XML firmado
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1NoteIdXmlGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1NoteIdXmlGet'][0])
+    public function getNoteXmlWithHttpInfo($id, string $contentType = self::contentTypes['getNoteXml'][0])
     {
-        $request = $this->apiV1NoteIdXmlGetRequest($id, $contentType);
+        $request = $this->getNoteXmlRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -921,6 +1023,30 @@ class NoteApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -929,19 +1055,19 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdXmlGetAsync
+     * Operation getNoteXmlAsync
      *
      * Descargar XML firmado
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteIdXmlGetAsync($id, string $contentType = self::contentTypes['apiV1NoteIdXmlGet'][0])
+    public function getNoteXmlAsync($id, string $contentType = self::contentTypes['getNoteXml'][0])
     {
-        return $this->apiV1NoteIdXmlGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getNoteXmlAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -950,20 +1076,20 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteIdXmlGetAsyncWithHttpInfo
+     * Operation getNoteXmlAsyncWithHttpInfo
      *
      * Descargar XML firmado
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteIdXmlGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1NoteIdXmlGet'][0])
+    public function getNoteXmlAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getNoteXml'][0])
     {
         $returnType = '';
-        $request = $this->apiV1NoteIdXmlGetRequest($id, $contentType);
+        $request = $this->getNoteXmlRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -989,25 +1115,25 @@ class NoteApi
     }
 
     /**
-     * Create request for operation 'apiV1NoteIdXmlGet'
+     * Create request for operation 'getNoteXml'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getNoteXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1NoteIdXmlGetRequest($id, string $contentType = self::contentTypes['apiV1NoteIdXmlGet'][0])
+    public function getNoteXmlRequest($id, string $contentType = self::contentTypes['getNoteXml'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1NoteIdXmlGet'
+                'Missing the required parameter $id when calling getNoteXml'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling NoteApi.apiV1NoteIdXmlGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling NoteApi.getNoteXml, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1031,7 +1157,7 @@ class NoteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1065,6 +1191,10 @@ class NoteApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1088,38 +1218,38 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteSendPost
+     * Operation sendNote
      *
      * Enviar nota de crédito (07) o débito (08) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteSendPostRequest $api_v1_note_send_post_request api_v1_note_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendNoteRequest $send_note_request send_note_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendNote'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1NoteSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1NoteSendPost($api_v1_note_send_post_request, string $contentType = self::contentTypes['apiV1NoteSendPost'][0])
+    public function sendNote($send_note_request, string $contentType = self::contentTypes['sendNote'][0])
     {
-        list($response) = $this->apiV1NoteSendPostWithHttpInfo($api_v1_note_send_post_request, $contentType);
+        list($response) = $this->sendNoteWithHttpInfo($send_note_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1NoteSendPostWithHttpInfo
+     * Operation sendNoteWithHttpInfo
      *
      * Enviar nota de crédito (07) o débito (08) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteSendPostRequest $api_v1_note_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendNoteRequest $send_note_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendNote'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1NoteSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1NoteSendPostWithHttpInfo($api_v1_note_send_post_request, string $contentType = self::contentTypes['apiV1NoteSendPost'][0])
+    public function sendNoteWithHttpInfo($send_note_request, string $contentType = self::contentTypes['sendNote'][0])
     {
-        $request = $this->apiV1NoteSendPostRequest($api_v1_note_send_post_request, $contentType);
+        $request = $this->sendNoteRequest($send_note_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1147,19 +1277,37 @@ class NoteApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
                 case 409:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1181,7 +1329,7 @@ class NoteApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
+                '\Intifact\Sdk\Model\SendInvoice202Response',
                 $request,
                 $response,
             );
@@ -1190,7 +1338,7 @@ class NoteApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1198,7 +1346,23 @@ class NoteApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1206,7 +1370,15 @@ class NoteApi
                 case 409:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1219,19 +1391,19 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteSendPostAsync
+     * Operation sendNoteAsync
      *
      * Enviar nota de crédito (07) o débito (08) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteSendPostRequest $api_v1_note_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendNoteRequest $send_note_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendNote'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteSendPostAsync($api_v1_note_send_post_request, string $contentType = self::contentTypes['apiV1NoteSendPost'][0])
+    public function sendNoteAsync($send_note_request, string $contentType = self::contentTypes['sendNote'][0])
     {
-        return $this->apiV1NoteSendPostAsyncWithHttpInfo($api_v1_note_send_post_request, $contentType)
+        return $this->sendNoteAsyncWithHttpInfo($send_note_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1240,20 +1412,20 @@ class NoteApi
     }
 
     /**
-     * Operation apiV1NoteSendPostAsyncWithHttpInfo
+     * Operation sendNoteAsyncWithHttpInfo
      *
      * Enviar nota de crédito (07) o débito (08) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteSendPostRequest $api_v1_note_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendNoteRequest $send_note_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendNote'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1NoteSendPostAsyncWithHttpInfo($api_v1_note_send_post_request, string $contentType = self::contentTypes['apiV1NoteSendPost'][0])
+    public function sendNoteAsyncWithHttpInfo($send_note_request, string $contentType = self::contentTypes['sendNote'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response';
-        $request = $this->apiV1NoteSendPostRequest($api_v1_note_send_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendInvoice202Response';
+        $request = $this->sendNoteRequest($send_note_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1292,21 +1464,21 @@ class NoteApi
     }
 
     /**
-     * Create request for operation 'apiV1NoteSendPost'
+     * Create request for operation 'sendNote'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1NoteSendPostRequest $api_v1_note_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1NoteSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendNoteRequest $send_note_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendNote'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1NoteSendPostRequest($api_v1_note_send_post_request, string $contentType = self::contentTypes['apiV1NoteSendPost'][0])
+    public function sendNoteRequest($send_note_request, string $contentType = self::contentTypes['sendNote'][0])
     {
 
-        // verify the required parameter 'api_v1_note_send_post_request' is set
-        if ($api_v1_note_send_post_request === null || (is_array($api_v1_note_send_post_request) && count($api_v1_note_send_post_request) === 0)) {
+        // verify the required parameter 'send_note_request' is set
+        if ($send_note_request === null || (is_array($send_note_request) && count($send_note_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_note_send_post_request when calling apiV1NoteSendPost'
+                'Missing the required parameter $send_note_request when calling sendNote'
             );
         }
 
@@ -1329,16 +1501,16 @@ class NoteApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_note_send_post_request)) {
+        if (isset($send_note_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_note_send_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_note_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_note_send_post_request;
+                $httpBody = $send_note_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1368,6 +1540,10 @@ class NoteApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

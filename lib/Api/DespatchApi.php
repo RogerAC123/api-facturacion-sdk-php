@@ -74,22 +74,22 @@ class DespatchApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1DespatchIdCdrGet' => [
+        'getDespatchCdr' => [
             'application/json',
         ],
-        'apiV1DespatchIdPdfGet' => [
+        'getDespatchPdf' => [
             'application/json',
         ],
-        'apiV1DespatchIdXmlGet' => [
+        'getDespatchXml' => [
             'application/json',
         ],
-        'apiV1DespatchSendMultiPost' => [
+        'sendDespatch' => [
             'application/json',
         ],
-        'apiV1DespatchSendPost' => [
+        'sendDespatchMulti' => [
             'application/json',
         ],
-        'apiV1DespatchTransportistaSendPost' => [
+        'sendDespatchTransportista' => [
             'application/json',
         ],
     ];
@@ -141,37 +141,37 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdCdrGet
+     * Operation getDespatchCdr
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1DespatchIdCdrGet($id, string $contentType = self::contentTypes['apiV1DespatchIdCdrGet'][0])
+    public function getDespatchCdr($id, string $contentType = self::contentTypes['getDespatchCdr'][0])
     {
-        $this->apiV1DespatchIdCdrGetWithHttpInfo($id, $contentType);
+        $this->getDespatchCdrWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1DespatchIdCdrGetWithHttpInfo
+     * Operation getDespatchCdrWithHttpInfo
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DespatchIdCdrGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DespatchIdCdrGet'][0])
+    public function getDespatchCdrWithHttpInfo($id, string $contentType = self::contentTypes['getDespatchCdr'][0])
     {
-        $request = $this->apiV1DespatchIdCdrGetRequest($id, $contentType);
+        $request = $this->getDespatchCdrRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -199,6 +199,30 @@ class DespatchApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -207,19 +231,19 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdCdrGetAsync
+     * Operation getDespatchCdrAsync
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchIdCdrGetAsync($id, string $contentType = self::contentTypes['apiV1DespatchIdCdrGet'][0])
+    public function getDespatchCdrAsync($id, string $contentType = self::contentTypes['getDespatchCdr'][0])
     {
-        return $this->apiV1DespatchIdCdrGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getDespatchCdrAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -228,20 +252,20 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdCdrGetAsyncWithHttpInfo
+     * Operation getDespatchCdrAsyncWithHttpInfo
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchIdCdrGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DespatchIdCdrGet'][0])
+    public function getDespatchCdrAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getDespatchCdr'][0])
     {
         $returnType = '';
-        $request = $this->apiV1DespatchIdCdrGetRequest($id, $contentType);
+        $request = $this->getDespatchCdrRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -267,25 +291,25 @@ class DespatchApi
     }
 
     /**
-     * Create request for operation 'apiV1DespatchIdCdrGet'
+     * Create request for operation 'getDespatchCdr'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DespatchIdCdrGetRequest($id, string $contentType = self::contentTypes['apiV1DespatchIdCdrGet'][0])
+    public function getDespatchCdrRequest($id, string $contentType = self::contentTypes['getDespatchCdr'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1DespatchIdCdrGet'
+                'Missing the required parameter $id when calling getDespatchCdr'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling DespatchApi.apiV1DespatchIdCdrGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling DespatchApi.getDespatchCdr, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -309,7 +333,7 @@ class DespatchApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -343,6 +367,10 @@ class DespatchApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -366,39 +394,39 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdPdfGet
+     * Operation getDespatchPdf
      *
      * Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS)
      *
      * @param  string $id id (required)
      * @param  string|null $format format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchPdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1DespatchIdPdfGet($id, $format = 'a4', string $contentType = self::contentTypes['apiV1DespatchIdPdfGet'][0])
+    public function getDespatchPdf($id, $format = 'a4', string $contentType = self::contentTypes['getDespatchPdf'][0])
     {
-        $this->apiV1DespatchIdPdfGetWithHttpInfo($id, $format, $contentType);
+        $this->getDespatchPdfWithHttpInfo($id, $format, $contentType);
     }
 
     /**
-     * Operation apiV1DespatchIdPdfGetWithHttpInfo
+     * Operation getDespatchPdfWithHttpInfo
      *
      * Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS)
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchPdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DespatchIdPdfGetWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['apiV1DespatchIdPdfGet'][0])
+    public function getDespatchPdfWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['getDespatchPdf'][0])
     {
-        $request = $this->apiV1DespatchIdPdfGetRequest($id, $format, $contentType);
+        $request = $this->getDespatchPdfRequest($id, $format, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -426,6 +454,30 @@ class DespatchApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -434,20 +486,20 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdPdfGetAsync
+     * Operation getDespatchPdfAsync
      *
      * Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS)
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchPdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchIdPdfGetAsync($id, $format = 'a4', string $contentType = self::contentTypes['apiV1DespatchIdPdfGet'][0])
+    public function getDespatchPdfAsync($id, $format = 'a4', string $contentType = self::contentTypes['getDespatchPdf'][0])
     {
-        return $this->apiV1DespatchIdPdfGetAsyncWithHttpInfo($id, $format, $contentType)
+        return $this->getDespatchPdfAsyncWithHttpInfo($id, $format, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -456,21 +508,21 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdPdfGetAsyncWithHttpInfo
+     * Operation getDespatchPdfAsyncWithHttpInfo
      *
      * Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS)
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchPdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchIdPdfGetAsyncWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['apiV1DespatchIdPdfGet'][0])
+    public function getDespatchPdfAsyncWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['getDespatchPdf'][0])
     {
         $returnType = '';
-        $request = $this->apiV1DespatchIdPdfGetRequest($id, $format, $contentType);
+        $request = $this->getDespatchPdfRequest($id, $format, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -496,26 +548,26 @@ class DespatchApi
     }
 
     /**
-     * Create request for operation 'apiV1DespatchIdPdfGet'
+     * Create request for operation 'getDespatchPdf'
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchPdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DespatchIdPdfGetRequest($id, $format = 'a4', string $contentType = self::contentTypes['apiV1DespatchIdPdfGet'][0])
+    public function getDespatchPdfRequest($id, $format = 'a4', string $contentType = self::contentTypes['getDespatchPdf'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1DespatchIdPdfGet'
+                'Missing the required parameter $id when calling getDespatchPdf'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling DespatchApi.apiV1DespatchIdPdfGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling DespatchApi.getDespatchPdf, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -549,7 +601,7 @@ class DespatchApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -583,6 +635,10 @@ class DespatchApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -606,37 +662,37 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdXmlGet
+     * Operation getDespatchXml
      *
      * Descargar XML firmado de la guía
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1DespatchIdXmlGet($id, string $contentType = self::contentTypes['apiV1DespatchIdXmlGet'][0])
+    public function getDespatchXml($id, string $contentType = self::contentTypes['getDespatchXml'][0])
     {
-        $this->apiV1DespatchIdXmlGetWithHttpInfo($id, $contentType);
+        $this->getDespatchXmlWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1DespatchIdXmlGetWithHttpInfo
+     * Operation getDespatchXmlWithHttpInfo
      *
      * Descargar XML firmado de la guía
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DespatchIdXmlGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DespatchIdXmlGet'][0])
+    public function getDespatchXmlWithHttpInfo($id, string $contentType = self::contentTypes['getDespatchXml'][0])
     {
-        $request = $this->apiV1DespatchIdXmlGetRequest($id, $contentType);
+        $request = $this->getDespatchXmlRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -664,6 +720,30 @@ class DespatchApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -672,19 +752,19 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdXmlGetAsync
+     * Operation getDespatchXmlAsync
      *
      * Descargar XML firmado de la guía
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchIdXmlGetAsync($id, string $contentType = self::contentTypes['apiV1DespatchIdXmlGet'][0])
+    public function getDespatchXmlAsync($id, string $contentType = self::contentTypes['getDespatchXml'][0])
     {
-        return $this->apiV1DespatchIdXmlGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getDespatchXmlAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -693,20 +773,20 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchIdXmlGetAsyncWithHttpInfo
+     * Operation getDespatchXmlAsyncWithHttpInfo
      *
      * Descargar XML firmado de la guía
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchIdXmlGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1DespatchIdXmlGet'][0])
+    public function getDespatchXmlAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getDespatchXml'][0])
     {
         $returnType = '';
-        $request = $this->apiV1DespatchIdXmlGetRequest($id, $contentType);
+        $request = $this->getDespatchXmlRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -732,25 +812,25 @@ class DespatchApi
     }
 
     /**
-     * Create request for operation 'apiV1DespatchIdXmlGet'
+     * Create request for operation 'getDespatchXml'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getDespatchXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DespatchIdXmlGetRequest($id, string $contentType = self::contentTypes['apiV1DespatchIdXmlGet'][0])
+    public function getDespatchXmlRequest($id, string $contentType = self::contentTypes['getDespatchXml'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1DespatchIdXmlGet'
+                'Missing the required parameter $id when calling getDespatchXml'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling DespatchApi.apiV1DespatchIdXmlGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling DespatchApi.getDespatchXml, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -774,7 +854,7 @@ class DespatchApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -808,6 +888,10 @@ class DespatchApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -831,38 +915,38 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchSendMultiPost
+     * Operation sendDespatch
      *
-     * Enviar múltiples guías de remisión por destino
+     * Enviar guía de remisión (09) via API GRE REST
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest $api_v1_despatch_send_multi_post_request api_v1_despatch_send_multi_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendMultiPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchRequest $send_despatch_request send_despatch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatch'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1DespatchSendMultiPost($api_v1_despatch_send_multi_post_request, string $contentType = self::contentTypes['apiV1DespatchSendMultiPost'][0])
+    public function sendDespatch($send_despatch_request, string $contentType = self::contentTypes['sendDespatch'][0])
     {
-        list($response) = $this->apiV1DespatchSendMultiPostWithHttpInfo($api_v1_despatch_send_multi_post_request, $contentType);
+        list($response) = $this->sendDespatchWithHttpInfo($send_despatch_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1DespatchSendMultiPostWithHttpInfo
+     * Operation sendDespatchWithHttpInfo
      *
-     * Enviar múltiples guías de remisión por destino
+     * Enviar guía de remisión (09) via API GRE REST
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest $api_v1_despatch_send_multi_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendMultiPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchRequest $send_despatch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatch'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DespatchSendMultiPostWithHttpInfo($api_v1_despatch_send_multi_post_request, string $contentType = self::contentTypes['apiV1DespatchSendMultiPost'][0])
+    public function sendDespatchWithHttpInfo($send_despatch_request, string $contentType = self::contentTypes['sendDespatch'][0])
     {
-        $request = $this->apiV1DespatchSendMultiPostRequest($api_v1_despatch_send_multi_post_request, $contentType);
+        $request = $this->sendDespatchRequest($send_despatch_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -890,13 +974,37 @@ class DespatchApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response',
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -918,7 +1026,7 @@ class DespatchApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response',
+                '\Intifact\Sdk\Model\SendInvoice202Response',
                 $request,
                 $response,
             );
@@ -927,7 +1035,7 @@ class DespatchApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response',
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -935,7 +1043,39 @@ class DespatchApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -948,19 +1088,19 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchSendMultiPostAsync
+     * Operation sendDespatchAsync
      *
-     * Enviar múltiples guías de remisión por destino
+     * Enviar guía de remisión (09) via API GRE REST
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest $api_v1_despatch_send_multi_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendMultiPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchRequest $send_despatch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchSendMultiPostAsync($api_v1_despatch_send_multi_post_request, string $contentType = self::contentTypes['apiV1DespatchSendMultiPost'][0])
+    public function sendDespatchAsync($send_despatch_request, string $contentType = self::contentTypes['sendDespatch'][0])
     {
-        return $this->apiV1DespatchSendMultiPostAsyncWithHttpInfo($api_v1_despatch_send_multi_post_request, $contentType)
+        return $this->sendDespatchAsyncWithHttpInfo($send_despatch_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -969,20 +1109,20 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchSendMultiPostAsyncWithHttpInfo
+     * Operation sendDespatchAsyncWithHttpInfo
      *
-     * Enviar múltiples guías de remisión por destino
+     * Enviar guía de remisión (09) via API GRE REST
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest $api_v1_despatch_send_multi_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendMultiPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchRequest $send_despatch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchSendMultiPostAsyncWithHttpInfo($api_v1_despatch_send_multi_post_request, string $contentType = self::contentTypes['apiV1DespatchSendMultiPost'][0])
+    public function sendDespatchAsyncWithHttpInfo($send_despatch_request, string $contentType = self::contentTypes['sendDespatch'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response';
-        $request = $this->apiV1DespatchSendMultiPostRequest($api_v1_despatch_send_multi_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendInvoice202Response';
+        $request = $this->sendDespatchRequest($send_despatch_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1021,324 +1161,21 @@ class DespatchApi
     }
 
     /**
-     * Create request for operation 'apiV1DespatchSendMultiPost'
+     * Create request for operation 'sendDespatch'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest $api_v1_despatch_send_multi_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendMultiPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1DespatchSendMultiPostRequest($api_v1_despatch_send_multi_post_request, string $contentType = self::contentTypes['apiV1DespatchSendMultiPost'][0])
-    {
-
-        // verify the required parameter 'api_v1_despatch_send_multi_post_request' is set
-        if ($api_v1_despatch_send_multi_post_request === null || (is_array($api_v1_despatch_send_multi_post_request) && count($api_v1_despatch_send_multi_post_request) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_despatch_send_multi_post_request when calling apiV1DespatchSendMultiPost'
-            );
-        }
-
-
-        $resourcePath = '/api/v1/despatch/send-multi';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (isset($api_v1_despatch_send_multi_post_request)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_despatch_send_multi_post_request), JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                $httpBody = $api_v1_despatch_send_multi_post_request;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1DespatchSendPost
-     *
-     * Enviar guía de remisión (09) via API GRE REST
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest $api_v1_despatch_send_post_request api_v1_despatch_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1NoteSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
-     */
-    public function apiV1DespatchSendPost($api_v1_despatch_send_post_request, string $contentType = self::contentTypes['apiV1DespatchSendPost'][0])
-    {
-        list($response) = $this->apiV1DespatchSendPostWithHttpInfo($api_v1_despatch_send_post_request, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation apiV1DespatchSendPostWithHttpInfo
-     *
-     * Enviar guía de remisión (09) via API GRE REST
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest $api_v1_despatch_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1NoteSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1DespatchSendPostWithHttpInfo($api_v1_despatch_send_post_request, string $contentType = self::contentTypes['apiV1DespatchSendPost'][0])
-    {
-        $request = $this->apiV1DespatchSendPostRequest($api_v1_despatch_send_post_request, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 202:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $request,
-                        $response,
-                    );
-                case 409:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-            
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 202:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 409:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1DespatchSendPostAsync
-     *
-     * Enviar guía de remisión (09) via API GRE REST
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest $api_v1_despatch_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1DespatchSendPostAsync($api_v1_despatch_send_post_request, string $contentType = self::contentTypes['apiV1DespatchSendPost'][0])
-    {
-        return $this->apiV1DespatchSendPostAsyncWithHttpInfo($api_v1_despatch_send_post_request, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1DespatchSendPostAsyncWithHttpInfo
-     *
-     * Enviar guía de remisión (09) via API GRE REST
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest $api_v1_despatch_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1DespatchSendPostAsyncWithHttpInfo($api_v1_despatch_send_post_request, string $contentType = self::contentTypes['apiV1DespatchSendPost'][0])
-    {
-        $returnType = '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response';
-        $request = $this->apiV1DespatchSendPostRequest($api_v1_despatch_send_post_request, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1DespatchSendPost'
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest $api_v1_despatch_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchRequest $send_despatch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DespatchSendPostRequest($api_v1_despatch_send_post_request, string $contentType = self::contentTypes['apiV1DespatchSendPost'][0])
+    public function sendDespatchRequest($send_despatch_request, string $contentType = self::contentTypes['sendDespatch'][0])
     {
 
-        // verify the required parameter 'api_v1_despatch_send_post_request' is set
-        if ($api_v1_despatch_send_post_request === null || (is_array($api_v1_despatch_send_post_request) && count($api_v1_despatch_send_post_request) === 0)) {
+        // verify the required parameter 'send_despatch_request' is set
+        if ($send_despatch_request === null || (is_array($send_despatch_request) && count($send_despatch_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_despatch_send_post_request when calling apiV1DespatchSendPost'
+                'Missing the required parameter $send_despatch_request when calling sendDespatch'
             );
         }
 
@@ -1361,16 +1198,16 @@ class DespatchApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_despatch_send_post_request)) {
+        if (isset($send_despatch_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_despatch_send_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_despatch_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_despatch_send_post_request;
+                $httpBody = $send_despatch_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1400,6 +1237,10 @@ class DespatchApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1423,38 +1264,38 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchTransportistaSendPost
+     * Operation sendDespatchMulti
      *
-     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     * Enviar múltiples guías de remisión por destino
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest $api_v1_despatch_transportista_send_post_request api_v1_despatch_transportista_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchTransportistaSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchMultiRequest $send_despatch_multi_request send_despatch_multi_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchMulti'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1NoteSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendDespatchMulti202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1DespatchTransportistaSendPost($api_v1_despatch_transportista_send_post_request, string $contentType = self::contentTypes['apiV1DespatchTransportistaSendPost'][0])
+    public function sendDespatchMulti($send_despatch_multi_request, string $contentType = self::contentTypes['sendDespatchMulti'][0])
     {
-        list($response) = $this->apiV1DespatchTransportistaSendPostWithHttpInfo($api_v1_despatch_transportista_send_post_request, $contentType);
+        list($response) = $this->sendDespatchMultiWithHttpInfo($send_despatch_multi_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1DespatchTransportistaSendPostWithHttpInfo
+     * Operation sendDespatchMultiWithHttpInfo
      *
-     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     * Enviar múltiples guías de remisión por destino
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest $api_v1_despatch_transportista_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchTransportistaSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchMultiRequest $send_despatch_multi_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchMulti'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1NoteSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendDespatchMulti202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1DespatchTransportistaSendPostWithHttpInfo($api_v1_despatch_transportista_send_post_request, string $contentType = self::contentTypes['apiV1DespatchTransportistaSendPost'][0])
+    public function sendDespatchMultiWithHttpInfo($send_despatch_multi_request, string $contentType = self::contentTypes['sendDespatchMulti'][0])
     {
-        $request = $this->apiV1DespatchTransportistaSendPostRequest($api_v1_despatch_transportista_send_post_request, $contentType);
+        $request = $this->sendDespatchMultiRequest($send_despatch_multi_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1482,19 +1323,31 @@ class DespatchApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
+                        '\Intifact\Sdk\Model\SendDespatchMulti202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
-                case 409:
+                case 401:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1516,7 +1369,7 @@ class DespatchApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
+                '\Intifact\Sdk\Model\SendDespatchMulti202Response',
                 $request,
                 $response,
             );
@@ -1525,7 +1378,7 @@ class DespatchApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response',
+                        '\Intifact\Sdk\Model\SendDespatchMulti202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1533,15 +1386,31 @@ class DespatchApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
                     throw $e;
-                case 409:
+                case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1554,19 +1423,19 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchTransportistaSendPostAsync
+     * Operation sendDespatchMultiAsync
      *
-     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     * Enviar múltiples guías de remisión por destino
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest $api_v1_despatch_transportista_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchTransportistaSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchMultiRequest $send_despatch_multi_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchMulti'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchTransportistaSendPostAsync($api_v1_despatch_transportista_send_post_request, string $contentType = self::contentTypes['apiV1DespatchTransportistaSendPost'][0])
+    public function sendDespatchMultiAsync($send_despatch_multi_request, string $contentType = self::contentTypes['sendDespatchMulti'][0])
     {
-        return $this->apiV1DespatchTransportistaSendPostAsyncWithHttpInfo($api_v1_despatch_transportista_send_post_request, $contentType)
+        return $this->sendDespatchMultiAsyncWithHttpInfo($send_despatch_multi_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1575,20 +1444,20 @@ class DespatchApi
     }
 
     /**
-     * Operation apiV1DespatchTransportistaSendPostAsyncWithHttpInfo
+     * Operation sendDespatchMultiAsyncWithHttpInfo
      *
-     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     * Enviar múltiples guías de remisión por destino
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest $api_v1_despatch_transportista_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchTransportistaSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchMultiRequest $send_despatch_multi_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchMulti'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1DespatchTransportistaSendPostAsyncWithHttpInfo($api_v1_despatch_transportista_send_post_request, string $contentType = self::contentTypes['apiV1DespatchTransportistaSendPost'][0])
+    public function sendDespatchMultiAsyncWithHttpInfo($send_despatch_multi_request, string $contentType = self::contentTypes['sendDespatchMulti'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1NoteSendPost202Response';
-        $request = $this->apiV1DespatchTransportistaSendPostRequest($api_v1_despatch_transportista_send_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendDespatchMulti202Response';
+        $request = $this->sendDespatchMultiRequest($send_despatch_multi_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1627,26 +1496,26 @@ class DespatchApi
     }
 
     /**
-     * Create request for operation 'apiV1DespatchTransportistaSendPost'
+     * Create request for operation 'sendDespatchMulti'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest $api_v1_despatch_transportista_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1DespatchTransportistaSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendDespatchMultiRequest $send_despatch_multi_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchMulti'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1DespatchTransportistaSendPostRequest($api_v1_despatch_transportista_send_post_request, string $contentType = self::contentTypes['apiV1DespatchTransportistaSendPost'][0])
+    public function sendDespatchMultiRequest($send_despatch_multi_request, string $contentType = self::contentTypes['sendDespatchMulti'][0])
     {
 
-        // verify the required parameter 'api_v1_despatch_transportista_send_post_request' is set
-        if ($api_v1_despatch_transportista_send_post_request === null || (is_array($api_v1_despatch_transportista_send_post_request) && count($api_v1_despatch_transportista_send_post_request) === 0)) {
+        // verify the required parameter 'send_despatch_multi_request' is set
+        if ($send_despatch_multi_request === null || (is_array($send_despatch_multi_request) && count($send_despatch_multi_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_despatch_transportista_send_post_request when calling apiV1DespatchTransportistaSendPost'
+                'Missing the required parameter $send_despatch_multi_request when calling sendDespatchMulti'
             );
         }
 
 
-        $resourcePath = '/api/v1/despatch-transportista/send';
+        $resourcePath = '/api/v1/despatch/send-multi';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1664,16 +1533,16 @@ class DespatchApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_despatch_transportista_send_post_request)) {
+        if (isset($send_despatch_multi_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_despatch_transportista_send_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_despatch_multi_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_despatch_transportista_send_post_request;
+                $httpBody = $send_despatch_multi_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1703,6 +1572,359 @@ class DespatchApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation sendDespatchTransportista
+     *
+     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     *
+     * @param  \Intifact\Sdk\Model\SendDespatchTransportistaRequest $send_despatch_transportista_request send_despatch_transportista_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchTransportista'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function sendDespatchTransportista($send_despatch_transportista_request, string $contentType = self::contentTypes['sendDespatchTransportista'][0])
+    {
+        list($response) = $this->sendDespatchTransportistaWithHttpInfo($send_despatch_transportista_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation sendDespatchTransportistaWithHttpInfo
+     *
+     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     *
+     * @param  \Intifact\Sdk\Model\SendDespatchTransportistaRequest $send_despatch_transportista_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchTransportista'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function sendDespatchTransportistaWithHttpInfo($send_despatch_transportista_request, string $contentType = self::contentTypes['sendDespatchTransportista'][0])
+    {
+        $request = $this->sendDespatchTransportistaRequest($send_despatch_transportista_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 202:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\SendInvoice202Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 202:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation sendDespatchTransportistaAsync
+     *
+     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     *
+     * @param  \Intifact\Sdk\Model\SendDespatchTransportistaRequest $send_despatch_transportista_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchTransportista'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendDespatchTransportistaAsync($send_despatch_transportista_request, string $contentType = self::contentTypes['sendDespatchTransportista'][0])
+    {
+        return $this->sendDespatchTransportistaAsyncWithHttpInfo($send_despatch_transportista_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation sendDespatchTransportistaAsyncWithHttpInfo
+     *
+     * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
+     *
+     * @param  \Intifact\Sdk\Model\SendDespatchTransportistaRequest $send_despatch_transportista_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchTransportista'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendDespatchTransportistaAsyncWithHttpInfo($send_despatch_transportista_request, string $contentType = self::contentTypes['sendDespatchTransportista'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\SendInvoice202Response';
+        $request = $this->sendDespatchTransportistaRequest($send_despatch_transportista_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'sendDespatchTransportista'
+     *
+     * @param  \Intifact\Sdk\Model\SendDespatchTransportistaRequest $send_despatch_transportista_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendDespatchTransportista'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function sendDespatchTransportistaRequest($send_despatch_transportista_request, string $contentType = self::contentTypes['sendDespatchTransportista'][0])
+    {
+
+        // verify the required parameter 'send_despatch_transportista_request' is set
+        if ($send_despatch_transportista_request === null || (is_array($send_despatch_transportista_request) && count($send_despatch_transportista_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $send_despatch_transportista_request when calling sendDespatchTransportista'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/despatch-transportista/send';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($send_despatch_transportista_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                try {
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_despatch_transportista_request), JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                $httpBody = $send_despatch_transportista_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

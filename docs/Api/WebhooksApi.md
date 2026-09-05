@@ -6,24 +6,26 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1WebhooksGet()**](WebhooksApi.md#apiV1WebhooksGet) | **GET** /api/v1/webhooks | Listar webhooks (filtra por RUC opcional) |
-| [**apiV1WebhooksIdDelete()**](WebhooksApi.md#apiV1WebhooksIdDelete) | **DELETE** /api/v1/webhooks/{id} | Eliminar webhook (también elimina su historial de deliveries) |
-| [**apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost()**](WebhooksApi.md#apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost) | **POST** /api/v1/webhooks/{id}/deliveries/{deliveryId}/redeliver | Reintentar manualmente una entrega |
-| [**apiV1WebhooksIdDeliveriesGet()**](WebhooksApi.md#apiV1WebhooksIdDeliveriesGet) | **GET** /api/v1/webhooks/{id}/deliveries | Log de entregas del webhook |
-| [**apiV1WebhooksIdGet()**](WebhooksApi.md#apiV1WebhooksIdGet) | **GET** /api/v1/webhooks/{id} | Detalle de webhook (sin secret) |
-| [**apiV1WebhooksIdPut()**](WebhooksApi.md#apiV1WebhooksIdPut) | **PUT** /api/v1/webhooks/{id} | Actualizar webhook (url, eventos, activación) |
-| [**apiV1WebhooksIdRotateSecretPost()**](WebhooksApi.md#apiV1WebhooksIdRotateSecretPost) | **POST** /api/v1/webhooks/{id}/rotate-secret | Rotar el secret de firma (devuelto UNA sola vez) |
-| [**apiV1WebhooksIdTestPost()**](WebhooksApi.md#apiV1WebhooksIdTestPost) | **POST** /api/v1/webhooks/{id}/test | Enviar un evento de prueba (webhook.test) |
-| [**apiV1WebhooksPost()**](WebhooksApi.md#apiV1WebhooksPost) | **POST** /api/v1/webhooks | Crear endpoint webhook |
+| [**createWebhook()**](WebhooksApi.md#createWebhook) | **POST** /api/v1/webhooks | Crear endpoint webhook |
+| [**deleteWebhook()**](WebhooksApi.md#deleteWebhook) | **DELETE** /api/v1/webhooks/{id} | Eliminar webhook (también elimina su historial de deliveries) |
+| [**getWebhook()**](WebhooksApi.md#getWebhook) | **GET** /api/v1/webhooks/{id} | Detalle de webhook (sin secret) |
+| [**listWebhookDeliveries()**](WebhooksApi.md#listWebhookDeliveries) | **GET** /api/v1/webhooks/{id}/deliveries | Log de entregas del webhook |
+| [**listWebhooks()**](WebhooksApi.md#listWebhooks) | **GET** /api/v1/webhooks | Listar webhooks (filtra por RUC opcional) |
+| [**redeliverWebhookDelivery()**](WebhooksApi.md#redeliverWebhookDelivery) | **POST** /api/v1/webhooks/{id}/deliveries/{deliveryId}/redeliver | Reintentar manualmente una entrega |
+| [**rotateWebhookSecret()**](WebhooksApi.md#rotateWebhookSecret) | **POST** /api/v1/webhooks/{id}/rotate-secret | Rotar el secret de firma (devuelto UNA sola vez) |
+| [**testWebhook()**](WebhooksApi.md#testWebhook) | **POST** /api/v1/webhooks/{id}/test | Enviar un evento de prueba (webhook.test) |
+| [**updateWebhook()**](WebhooksApi.md#updateWebhook) | **PUT** /api/v1/webhooks/{id} | Actualizar webhook (url, eventos, activación) |
 
 
-## `apiV1WebhooksGet()`
+## `createWebhook()`
 
 ```php
-apiV1WebhooksGet($ruc)
+createWebhook($create_webhook_request)
 ```
 
-Listar webhooks (filtra por RUC opcional)
+Crear endpoint webhook
+
+Registra una URL que recibirá POSTs cuando ocurran los eventos suscritos. Sin `empresaRuc` el webhook cubre TODAS las empresas de tu cuenta (un solo secret; el `empresaRuc` viaja en cada payload). La respuesta incluye el `secret` (mostrado UNA sola vez) — guárdalo para verificar las firmas HMAC-SHA256.
 
 ### Example
 
@@ -32,18 +34,22 @@ Listar webhooks (filtra por RUC opcional)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$ruc = 'ruc_example'; // string
+$create_webhook_request = new \Intifact\Sdk\Model\CreateWebhookRequest(); // \Intifact\Sdk\Model\CreateWebhookRequest
 
 try {
-    $apiInstance->apiV1WebhooksGet($ruc);
+    $apiInstance->createWebhook($create_webhook_request);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->createWebhook: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -51,7 +57,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **ruc** | **string**|  | [optional] |
+| **create_webhook_request** | [**\Intifact\Sdk\Model\CreateWebhookRequest**](../Model/CreateWebhookRequest.md)|  | |
 
 ### Return type
 
@@ -59,21 +65,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdDelete()`
+## `deleteWebhook()`
 
 ```php
-apiV1WebhooksIdDelete($id)
+deleteWebhook($id)
 ```
 
 Eliminar webhook (también elimina su historial de deliveries)
@@ -85,18 +91,22 @@ Eliminar webhook (también elimina su historial de deliveries)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdDelete($id);
+    $apiInstance->deleteWebhook($id);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdDelete: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->deleteWebhook: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -112,24 +122,24 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost()`
+## `getWebhook()`
 
 ```php
-apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost($id, $delivery_id)
+getWebhook($id)
 ```
 
-Reintentar manualmente una entrega
+Detalle de webhook (sin secret)
 
 ### Example
 
@@ -138,19 +148,22 @@ Reintentar manualmente una entrega
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
-$delivery_id = 'delivery_id_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost($id, $delivery_id);
+    $apiInstance->getWebhook($id);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->getWebhook: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -159,7 +172,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
-| **delivery_id** | **string**|  | |
 
 ### Return type
 
@@ -167,21 +179,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdDeliveriesGet()`
+## `listWebhookDeliveries()`
 
 ```php
-apiV1WebhooksIdDeliveriesGet($id, $limit, $success)
+listWebhookDeliveries($id, $limit, $success)
 ```
 
 Log de entregas del webhook
@@ -193,20 +205,24 @@ Log de entregas del webhook
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 $limit = 50; // int
 $success = 'success_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdDeliveriesGet($id, $limit, $success);
+    $apiInstance->listWebhookDeliveries($id, $limit, $success);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdDeliveriesGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->listWebhookDeliveries: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -224,24 +240,24 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdGet()`
+## `listWebhooks()`
 
 ```php
-apiV1WebhooksIdGet($id)
+listWebhooks($ruc)
 ```
 
-Detalle de webhook (sin secret)
+Listar webhooks (filtra por RUC opcional)
 
 ### Example
 
@@ -250,18 +266,22 @@ Detalle de webhook (sin secret)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$id = 'id_example'; // string
+$ruc = 'ruc_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdGet($id);
+    $apiInstance->listWebhooks($ruc);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->listWebhooks: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -269,7 +289,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **id** | **string**|  | |
+| **ruc** | **string**|  | [optional] |
 
 ### Return type
 
@@ -277,24 +297,24 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdPut()`
+## `redeliverWebhookDelivery()`
 
 ```php
-apiV1WebhooksIdPut($id, $api_v1_webhooks_id_put_request)
+redeliverWebhookDelivery($id, $delivery_id)
 ```
 
-Actualizar webhook (url, eventos, activación)
+Reintentar manualmente una entrega
 
 ### Example
 
@@ -303,19 +323,23 @@ Actualizar webhook (url, eventos, activación)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
-$api_v1_webhooks_id_put_request = new \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest(); // \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest
+$delivery_id = 'delivery_id_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdPut($id, $api_v1_webhooks_id_put_request);
+    $apiInstance->redeliverWebhookDelivery($id, $delivery_id);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdPut: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->redeliverWebhookDelivery: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -324,7 +348,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
-| **api_v1_webhooks_id_put_request** | [**\Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest**](../Model/ApiV1WebhooksIdPutRequest.md)|  | |
+| **delivery_id** | **string**|  | |
 
 ### Return type
 
@@ -332,21 +356,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`
-- **Accept**: Not defined
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdRotateSecretPost()`
+## `rotateWebhookSecret()`
 
 ```php
-apiV1WebhooksIdRotateSecretPost($id)
+rotateWebhookSecret($id)
 ```
 
 Rotar el secret de firma (devuelto UNA sola vez)
@@ -360,18 +384,22 @@ Genera un nuevo secret HMAC y lo devuelve una única vez. Las firmas de entregas
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdRotateSecretPost($id);
+    $apiInstance->rotateWebhookSecret($id);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdRotateSecretPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->rotateWebhookSecret: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -387,21 +415,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksIdTestPost()`
+## `testWebhook()`
 
 ```php
-apiV1WebhooksIdTestPost($id)
+testWebhook($id)
 ```
 
 Enviar un evento de prueba (webhook.test)
@@ -413,18 +441,22 @@ Enviar un evento de prueba (webhook.test)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1WebhooksIdTestPost($id);
+    $apiInstance->testWebhook($id);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksIdTestPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->testWebhook: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -440,26 +472,24 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1WebhooksPost()`
+## `updateWebhook()`
 
 ```php
-apiV1WebhooksPost($api_v1_webhooks_post_request)
+updateWebhook($id, $update_webhook_request)
 ```
 
-Crear endpoint webhook
-
-Registra una URL que recibirá POSTs cuando ocurran los eventos suscritos. Sin `empresaRuc` el webhook cubre TODAS las empresas de tu cuenta (un solo secret; el `empresaRuc` viaja en cada payload). La respuesta incluye el `secret` (mostrado UNA sola vez) — guárdalo para verificar las firmas HMAC-SHA256.
+Actualizar webhook (url, eventos, activación)
 
 ### Example
 
@@ -468,18 +498,23 @@ Registra una URL que recibirá POSTs cuando ocurran los eventos suscritos. Sin `
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\WebhooksApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_webhooks_post_request = new \Intifact\Sdk\Model\ApiV1WebhooksPostRequest(); // \Intifact\Sdk\Model\ApiV1WebhooksPostRequest
+$id = 'id_example'; // string
+$update_webhook_request = new \Intifact\Sdk\Model\UpdateWebhookRequest(); // \Intifact\Sdk\Model\UpdateWebhookRequest
 
 try {
-    $apiInstance->apiV1WebhooksPost($api_v1_webhooks_post_request);
+    $apiInstance->updateWebhook($id, $update_webhook_request);
 } catch (Exception $e) {
-    echo 'Exception when calling WebhooksApi->apiV1WebhooksPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WebhooksApi->updateWebhook: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -487,7 +522,8 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_webhooks_post_request** | [**\Intifact\Sdk\Model\ApiV1WebhooksPostRequest**](../Model/ApiV1WebhooksPostRequest.md)|  | |
+| **id** | **string**|  | |
+| **update_webhook_request** | [**\Intifact\Sdk\Model\UpdateWebhookRequest**](../Model/UpdateWebhookRequest.md)|  | |
 
 ### Return type
 
@@ -495,12 +531,12 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)

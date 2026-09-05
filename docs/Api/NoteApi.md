@@ -6,17 +6,17 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1NoteComputePost()**](NoteApi.md#apiV1NoteComputePost) | **POST** /api/v1/note/compute | Calcular importes (IGV, descuentos, totales) sin emitir |
-| [**apiV1NoteIdCdrGet()**](NoteApi.md#apiV1NoteIdCdrGet) | **GET** /api/v1/note/{id}/cdr | Descargar CDR (constancia de SUNAT) |
-| [**apiV1NoteIdPdfGet()**](NoteApi.md#apiV1NoteIdPdfGet) | **GET** /api/v1/note/{id}/pdf | Obtener PDF de la nota |
-| [**apiV1NoteIdXmlGet()**](NoteApi.md#apiV1NoteIdXmlGet) | **GET** /api/v1/note/{id}/xml | Descargar XML firmado |
-| [**apiV1NoteSendPost()**](NoteApi.md#apiV1NoteSendPost) | **POST** /api/v1/note/send | Enviar nota de crédito (07) o débito (08) a SUNAT |
+| [**computeNote()**](NoteApi.md#computeNote) | **POST** /api/v1/note/compute | Calcular importes (IGV, descuentos, totales) sin emitir |
+| [**getNoteCdr()**](NoteApi.md#getNoteCdr) | **GET** /api/v1/note/{id}/cdr | Descargar CDR (constancia de SUNAT) |
+| [**getNotePdf()**](NoteApi.md#getNotePdf) | **GET** /api/v1/note/{id}/pdf | Obtener PDF de la nota |
+| [**getNoteXml()**](NoteApi.md#getNoteXml) | **GET** /api/v1/note/{id}/xml | Descargar XML firmado |
+| [**sendNote()**](NoteApi.md#sendNote) | **POST** /api/v1/note/send | Enviar nota de crédito (07) o débito (08) a SUNAT |
 
 
-## `apiV1NoteComputePost()`
+## `computeNote()`
 
 ```php
-apiV1NoteComputePost($api_v1_note_compute_post_request): \Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response
+computeNote($compute_invoice_request): \Intifact\Sdk\Model\ComputeInvoice200Response
 ```
 
 Calcular importes (IGV, descuentos, totales) sin emitir
@@ -30,19 +30,23 @@ Motor de cálculo para notas: recibe ítems crudos (cantidad, valorUnitario sin 
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\NoteApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_note_compute_post_request = new \Intifact\Sdk\Model\ApiV1NoteComputePostRequest(); // \Intifact\Sdk\Model\ApiV1NoteComputePostRequest
+$compute_invoice_request = new \Intifact\Sdk\Model\ComputeInvoiceRequest(); // \Intifact\Sdk\Model\ComputeInvoiceRequest
 
 try {
-    $result = $apiInstance->apiV1NoteComputePost($api_v1_note_compute_post_request);
+    $result = $apiInstance->computeNote($compute_invoice_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling NoteApi->apiV1NoteComputePost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling NoteApi->computeNote: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -50,15 +54,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_note_compute_post_request** | [**\Intifact\Sdk\Model\ApiV1NoteComputePostRequest**](../Model/ApiV1NoteComputePostRequest.md)|  | |
+| **compute_invoice_request** | [**\Intifact\Sdk\Model\ComputeInvoiceRequest**](../Model/ComputeInvoiceRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response**](../Model/ApiV1InvoiceComputePost200Response.md)
+[**\Intifact\Sdk\Model\ComputeInvoice200Response**](../Model/ComputeInvoice200Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
@@ -69,10 +73,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1NoteIdCdrGet()`
+## `getNoteCdr()`
 
 ```php
-apiV1NoteIdCdrGet($id)
+getNoteCdr($id)
 ```
 
 Descargar CDR (constancia de SUNAT)
@@ -84,18 +88,22 @@ Descargar CDR (constancia de SUNAT)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\NoteApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1NoteIdCdrGet($id);
+    $apiInstance->getNoteCdr($id);
 } catch (Exception $e) {
-    echo 'Exception when calling NoteApi->apiV1NoteIdCdrGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling NoteApi->getNoteCdr: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -111,21 +119,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1NoteIdPdfGet()`
+## `getNotePdf()`
 
 ```php
-apiV1NoteIdPdfGet($id)
+getNotePdf($id)
 ```
 
 Obtener PDF de la nota
@@ -137,18 +145,22 @@ Obtener PDF de la nota
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\NoteApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1NoteIdPdfGet($id);
+    $apiInstance->getNotePdf($id);
 } catch (Exception $e) {
-    echo 'Exception when calling NoteApi->apiV1NoteIdPdfGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling NoteApi->getNotePdf: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -164,21 +176,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1NoteIdXmlGet()`
+## `getNoteXml()`
 
 ```php
-apiV1NoteIdXmlGet($id)
+getNoteXml($id)
 ```
 
 Descargar XML firmado
@@ -190,18 +202,22 @@ Descargar XML firmado
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\NoteApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1NoteIdXmlGet($id);
+    $apiInstance->getNoteXml($id);
 } catch (Exception $e) {
-    echo 'Exception when calling NoteApi->apiV1NoteIdXmlGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling NoteApi->getNoteXml: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -217,21 +233,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1NoteSendPost()`
+## `sendNote()`
 
 ```php
-apiV1NoteSendPost($api_v1_note_send_post_request): \Intifact\Sdk\Model\ApiV1NoteSendPost202Response
+sendNote($send_note_request): \Intifact\Sdk\Model\SendInvoice202Response
 ```
 
 Enviar nota de crédito (07) o débito (08) a SUNAT
@@ -245,19 +261,23 @@ Genera XML UBL 2.1, firma y encola. Responde 202. Consultar GET /documents/{id} 
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\NoteApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_note_send_post_request = new \Intifact\Sdk\Model\ApiV1NoteSendPostRequest(); // \Intifact\Sdk\Model\ApiV1NoteSendPostRequest
+$send_note_request = new \Intifact\Sdk\Model\SendNoteRequest(); // \Intifact\Sdk\Model\SendNoteRequest
 
 try {
-    $result = $apiInstance->apiV1NoteSendPost($api_v1_note_send_post_request);
+    $result = $apiInstance->sendNote($send_note_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling NoteApi->apiV1NoteSendPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling NoteApi->sendNote: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -265,15 +285,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_note_send_post_request** | [**\Intifact\Sdk\Model\ApiV1NoteSendPostRequest**](../Model/ApiV1NoteSendPostRequest.md)|  | |
+| **send_note_request** | [**\Intifact\Sdk\Model\SendNoteRequest**](../Model/SendNoteRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1NoteSendPost202Response**](../Model/ApiV1NoteSendPost202Response.md)
+[**\Intifact\Sdk\Model\SendInvoice202Response**](../Model/SendInvoice202Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 

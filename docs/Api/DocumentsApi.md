@@ -6,18 +6,18 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1CdrConsultarPost()**](DocumentsApi.md#apiV1CdrConsultarPost) | **POST** /api/v1/cdr/consultar | Consultar el CDR de un comprobante en SUNAT por referencia |
-| [**apiV1DocumentsGet()**](DocumentsApi.md#apiV1DocumentsGet) | **GET** /api/v1/documents | Listar documentos con filtros y paginación |
-| [**apiV1DocumentsIdGet()**](DocumentsApi.md#apiV1DocumentsIdGet) | **GET** /api/v1/documents/{id} | Detalle completo de un documento |
-| [**apiV1DocumentsIdRecoverPost()**](DocumentsApi.md#apiV1DocumentsIdRecoverPost) | **POST** /api/v1/documents/{id}/recover | Reconciliar un documento con SUNAT (consulta de CDR, solo master) |
-| [**apiV1DocumentsIdRetryPost()**](DocumentsApi.md#apiV1DocumentsIdRetryPost) | **POST** /api/v1/documents/{id}/retry | Re-encolar un documento fallido |
-| [**apiV1DocumentsNextCorrelativoGet()**](DocumentsApi.md#apiV1DocumentsNextCorrelativoGet) | **GET** /api/v1/documents/next-correlativo | Obtener el siguiente correlativo disponible para una serie |
+| [**consultarCdr()**](DocumentsApi.md#consultarCdr) | **POST** /api/v1/cdr/consultar | Consultar el CDR de un comprobante en SUNAT por referencia |
+| [**getDocument()**](DocumentsApi.md#getDocument) | **GET** /api/v1/documents/{id} | Detalle completo de un documento |
+| [**getNextCorrelativo()**](DocumentsApi.md#getNextCorrelativo) | **GET** /api/v1/documents/next-correlativo | Obtener el siguiente correlativo disponible para una serie |
+| [**listDocuments()**](DocumentsApi.md#listDocuments) | **GET** /api/v1/documents | Listar documentos con filtros y paginación |
+| [**reconcileDocument()**](DocumentsApi.md#reconcileDocument) | **POST** /api/v1/documents/{id}/recover | Reconciliar un documento con SUNAT (consulta de CDR, solo master) |
+| [**retryDocument()**](DocumentsApi.md#retryDocument) | **POST** /api/v1/documents/{id}/retry | Re-encolar un documento fallido |
 
 
-## `apiV1CdrConsultarPost()`
+## `consultarCdr()`
 
 ```php
-apiV1CdrConsultarPost($api_v1_cdr_consultar_post_request): \Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response
+consultarCdr($consultar_cdr_request): \Intifact\Sdk\Model\ConsultarCdr200Response
 ```
 
 Consultar el CDR de un comprobante en SUNAT por referencia
@@ -31,19 +31,23 @@ Recupera el CDR oficial (billConsultService / getStatusCdr) de un comprobante 01
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DocumentsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_cdr_consultar_post_request = new \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest(); // \Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest
+$consultar_cdr_request = new \Intifact\Sdk\Model\ConsultarCdrRequest(); // \Intifact\Sdk\Model\ConsultarCdrRequest
 
 try {
-    $result = $apiInstance->apiV1CdrConsultarPost($api_v1_cdr_consultar_post_request);
+    $result = $apiInstance->consultarCdr($consultar_cdr_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DocumentsApi->apiV1CdrConsultarPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DocumentsApi->consultarCdr: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -51,15 +55,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_cdr_consultar_post_request** | [**\Intifact\Sdk\Model\ApiV1CdrConsultarPostRequest**](../Model/ApiV1CdrConsultarPostRequest.md)|  | |
+| **consultar_cdr_request** | [**\Intifact\Sdk\Model\ConsultarCdrRequest**](../Model/ConsultarCdrRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1CdrConsultarPost200Response**](../Model/ApiV1CdrConsultarPost200Response.md)
+[**\Intifact\Sdk\Model\ConsultarCdr200Response**](../Model/ConsultarCdr200Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
@@ -70,10 +74,131 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DocumentsGet()`
+## `getDocument()`
 
 ```php
-apiV1DocumentsGet($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit): \Intifact\Sdk\Model\ApiV1DocumentsGet200Response
+getDocument($id)
+```
+
+Detalle completo de un documento
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\DocumentsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string
+
+try {
+    $apiInstance->getDocument($id);
+} catch (Exception $e) {
+    echo 'Exception when calling DocumentsApi->getDocument: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**|  | |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getNextCorrelativo()`
+
+```php
+getNextCorrelativo($company_ruc, $tipo_doc, $serie): \Intifact\Sdk\Model\GetNextCorrelativo200Response
+```
+
+Obtener el siguiente correlativo disponible para una serie
+
+Busca el correlativo más alto existente para la combinación empresa+tipoDoc+serie y retorna el siguiente. Útil para auto-numeración.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\DocumentsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$company_ruc = 'company_ruc_example'; // string
+$tipo_doc = 'tipo_doc_example'; // string
+$serie = 'serie_example'; // string
+
+try {
+    $result = $apiInstance->getNextCorrelativo($company_ruc, $tipo_doc, $serie);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DocumentsApi->getNextCorrelativo: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **company_ruc** | **string**|  | |
+| **tipo_doc** | **string**|  | |
+| **serie** | **string**|  | |
+
+### Return type
+
+[**\Intifact\Sdk\Model\GetNextCorrelativo200Response**](../Model/GetNextCorrelativo200Response.md)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `listDocuments()`
+
+```php
+listDocuments($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit): \Intifact\Sdk\Model\ListDocuments200Response
 ```
 
 Listar documentos con filtros y paginación
@@ -85,11 +210,15 @@ Listar documentos con filtros y paginación
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DocumentsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $ruc = 'ruc_example'; // string
 $tipo_doc = 'tipo_doc_example'; // string
@@ -103,10 +232,10 @@ $page = 1; // int
 $limit = 20; // int
 
 try {
-    $result = $apiInstance->apiV1DocumentsGet($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit);
+    $result = $apiInstance->listDocuments($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DocumentsApi->apiV1DocumentsGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DocumentsApi->listDocuments: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -127,11 +256,11 @@ try {
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1DocumentsGet200Response**](../Model/ApiV1DocumentsGet200Response.md)
+[**\Intifact\Sdk\Model\ListDocuments200Response**](../Model/ListDocuments200Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
@@ -142,63 +271,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DocumentsIdGet()`
+## `reconcileDocument()`
 
 ```php
-apiV1DocumentsIdGet($id)
-```
-
-Detalle completo de un documento
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Intifact\Sdk\Api\DocumentsApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$id = 'id_example'; // string
-
-try {
-    $apiInstance->apiV1DocumentsIdGet($id);
-} catch (Exception $e) {
-    echo 'Exception when calling DocumentsApi->apiV1DocumentsIdGet: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **id** | **string**|  | |
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `apiV1DocumentsIdRecoverPost()`
-
-```php
-apiV1DocumentsIdRecoverPost($id): \Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response
+reconcileDocument($id): \Intifact\Sdk\Model\ReconcileDocument200Response
 ```
 
 Reconciliar un documento con SUNAT (consulta de CDR, solo master)
@@ -212,19 +288,23 @@ Consulta el estado REAL en SUNAT (getStatusCdr / billConsultService) SIN reenvia
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DocumentsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $result = $apiInstance->apiV1DocumentsIdRecoverPost($id);
+    $result = $apiInstance->reconcileDocument($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DocumentsApi->apiV1DocumentsIdRecoverPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DocumentsApi->reconcileDocument: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -236,11 +316,11 @@ try {
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1DocumentsIdRecoverPost200Response**](../Model/ApiV1DocumentsIdRecoverPost200Response.md)
+[**\Intifact\Sdk\Model\ReconcileDocument200Response**](../Model/ReconcileDocument200Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
@@ -251,10 +331,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DocumentsIdRetryPost()`
+## `retryDocument()`
 
 ```php
-apiV1DocumentsIdRetryPost($id): \Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response
+retryDocument($id): \Intifact\Sdk\Model\RetryDocument202Response
 ```
 
 Re-encolar un documento fallido
@@ -268,19 +348,23 @@ Re-encolar un documento fallido
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DocumentsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $result = $apiInstance->apiV1DocumentsIdRetryPost($id);
+    $result = $apiInstance->retryDocument($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DocumentsApi->apiV1DocumentsIdRetryPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DocumentsApi->retryDocument: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -292,71 +376,11 @@ try {
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1DocumentsIdRetryPost202Response**](../Model/ApiV1DocumentsIdRetryPost202Response.md)
+[**\Intifact\Sdk\Model\RetryDocument202Response**](../Model/RetryDocument202Response.md)
 
 ### Authorization
 
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `apiV1DocumentsNextCorrelativoGet()`
-
-```php
-apiV1DocumentsNextCorrelativoGet($company_ruc, $tipo_doc, $serie): \Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response
-```
-
-Obtener el siguiente correlativo disponible para una serie
-
-Busca el correlativo más alto existente para la combinación empresa+tipoDoc+serie y retorna el siguiente. Útil para auto-numeración.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Intifact\Sdk\Api\DocumentsApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$company_ruc = 'company_ruc_example'; // string
-$tipo_doc = 'tipo_doc_example'; // string
-$serie = 'serie_example'; // string
-
-try {
-    $result = $apiInstance->apiV1DocumentsNextCorrelativoGet($company_ruc, $tipo_doc, $serie);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling DocumentsApi->apiV1DocumentsNextCorrelativoGet: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **company_ruc** | **string**|  | |
-| **tipo_doc** | **string**|  | |
-| **serie** | **string**|  | |
-
-### Return type
-
-[**\Intifact\Sdk\Model\ApiV1DocumentsNextCorrelativoGet200Response**](../Model/ApiV1DocumentsNextCorrelativoGet200Response.md)
-
-### Authorization
-
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 

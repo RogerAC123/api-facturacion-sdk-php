@@ -6,13 +6,13 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1QueuesStatsGet()**](QueuesApi.md#apiV1QueuesStatsGet) | **GET** /api/v1/queues/stats | Estado de las colas BullMQ |
+| [**getQueueStats()**](QueuesApi.md#getQueueStats) | **GET** /api/v1/queues/stats | Estado de las colas BullMQ |
 
 
-## `apiV1QueuesStatsGet()`
+## `getQueueStats()`
 
 ```php
-apiV1QueuesStatsGet(): \Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response
+getQueueStats(): \Intifact\Sdk\Model\GetQueueStats200Response
 ```
 
 Estado de las colas BullMQ
@@ -24,18 +24,22 @@ Estado de las colas BullMQ
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\QueuesApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 
 try {
-    $result = $apiInstance->apiV1QueuesStatsGet();
+    $result = $apiInstance->getQueueStats();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling QueuesApi->apiV1QueuesStatsGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling QueuesApi->getQueueStats: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -45,11 +49,11 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response**](../Model/ApiV1QueuesStatsGet200Response.md)
+[**\Intifact\Sdk\Model\GetQueueStats200Response**](../Model/GetQueueStats200Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 

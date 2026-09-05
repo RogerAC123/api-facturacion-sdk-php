@@ -74,13 +74,13 @@ class PublicApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1PublicConsultarRucTipoDocSerieNumeroGet' => [
+        'consultarComprobante' => [
             'application/json',
         ],
-        'apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet' => [
+        'consultarComprobantePdf' => [
             'application/json',
         ],
-        'apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet' => [
+        'consultarComprobanteXml' => [
             'application/json',
         ],
     ];
@@ -132,7 +132,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroGet
+     * Operation consultarComprobante
      *
      * Consultar un comprobante (público, sin auth)
      *
@@ -143,19 +143,19 @@ class PublicApi
      * @param  float|null $total total (optional)
      * @param  string|null $fecha fecha (optional)
      * @param  string|null $receptor receptor (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobante'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroGet($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'][0])
+    public function consultarComprobante($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobante'][0])
     {
-        $this->apiV1PublicConsultarRucTipoDocSerieNumeroGetWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
+        $this->consultarComprobanteWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroGetWithHttpInfo
+     * Operation consultarComprobanteWithHttpInfo
      *
      * Consultar un comprobante (público, sin auth)
      *
@@ -166,15 +166,15 @@ class PublicApi
      * @param  float|null $total (optional)
      * @param  string|null $fecha (optional)
      * @param  string|null $receptor (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobante'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroGetWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'][0])
+    public function consultarComprobanteWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobante'][0])
     {
-        $request = $this->apiV1PublicConsultarRucTipoDocSerieNumeroGetRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
+        $request = $this->consultarComprobanteRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -210,7 +210,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroGetAsync
+     * Operation consultarComprobanteAsync
      *
      * Consultar un comprobante (público, sin auth)
      *
@@ -221,14 +221,14 @@ class PublicApi
      * @param  float|null $total (optional)
      * @param  string|null $fecha (optional)
      * @param  string|null $receptor (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobante'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroGetAsync($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'][0])
+    public function consultarComprobanteAsync($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobante'][0])
     {
-        return $this->apiV1PublicConsultarRucTipoDocSerieNumeroGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType)
+        return $this->consultarComprobanteAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -237,7 +237,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroGetAsyncWithHttpInfo
+     * Operation consultarComprobanteAsyncWithHttpInfo
      *
      * Consultar un comprobante (público, sin auth)
      *
@@ -248,15 +248,15 @@ class PublicApi
      * @param  float|null $total (optional)
      * @param  string|null $fecha (optional)
      * @param  string|null $receptor (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobante'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'][0])
+    public function consultarComprobanteAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobante'][0])
     {
         $returnType = '';
-        $request = $this->apiV1PublicConsultarRucTipoDocSerieNumeroGetRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
+        $request = $this->consultarComprobanteRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -282,7 +282,7 @@ class PublicApi
     }
 
     /**
-     * Create request for operation 'apiV1PublicConsultarRucTipoDocSerieNumeroGet'
+     * Create request for operation 'consultarComprobante'
      *
      * @param  string $ruc (required)
      * @param  string $tipo_doc (required)
@@ -291,64 +291,64 @@ class PublicApi
      * @param  float|null $total (optional)
      * @param  string|null $fecha (optional)
      * @param  string|null $receptor (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobante'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroGetRequest($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroGet'][0])
+    public function consultarComprobanteRequest($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobante'][0])
     {
 
         // verify the required parameter 'ruc' is set
         if ($ruc === null || (is_array($ruc) && count($ruc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $ruc when calling apiV1PublicConsultarRucTipoDocSerieNumeroGet'
+                'Missing the required parameter $ruc when calling consultarComprobante'
             );
         }
         if (strlen($ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be smaller than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.consultarComprobante, must be smaller than or equal to 11.');
         }
         if (strlen($ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be bigger than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.consultarComprobante, must be bigger than or equal to 11.');
         }
         
         // verify the required parameter 'tipo_doc' is set
         if ($tipo_doc === null || (is_array($tipo_doc) && count($tipo_doc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $tipo_doc when calling apiV1PublicConsultarRucTipoDocSerieNumeroGet'
+                'Missing the required parameter $tipo_doc when calling consultarComprobante'
             );
         }
         if (strlen($tipo_doc) > 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be smaller than or equal to 2.');
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.consultarComprobante, must be smaller than or equal to 2.');
         }
         if (strlen($tipo_doc) < 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be bigger than or equal to 2.');
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.consultarComprobante, must be bigger than or equal to 2.');
         }
         
         // verify the required parameter 'serie' is set
         if ($serie === null || (is_array($serie) && count($serie) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $serie when calling apiV1PublicConsultarRucTipoDocSerieNumeroGet'
+                'Missing the required parameter $serie when calling consultarComprobante'
             );
         }
         if (strlen($serie) > 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be smaller than or equal to 4.');
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.consultarComprobante, must be smaller than or equal to 4.');
         }
         if (strlen($serie) < 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be bigger than or equal to 4.');
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.consultarComprobante, must be bigger than or equal to 4.');
         }
         
         // verify the required parameter 'numero' is set
         if ($numero === null || (is_array($numero) && count($numero) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $numero when calling apiV1PublicConsultarRucTipoDocSerieNumeroGet'
+                'Missing the required parameter $numero when calling consultarComprobante'
             );
         }
         if (strlen($numero) > 8) {
-            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be smaller than or equal to 8.');
+            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.consultarComprobante, must be smaller than or equal to 8.');
         }
         if (strlen($numero) < 1) {
-            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroGet, must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.consultarComprobante, must be bigger than or equal to 1.');
         }
         
 
@@ -483,7 +483,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet
+     * Operation consultarComprobantePdf
      *
      * Descargar PDF del comprobante (público)
      *
@@ -491,19 +491,22 @@ class PublicApi
      * @param  string $tipo_doc tipo_doc (required)
      * @param  string $serie serie (required)
      * @param  string $numero numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'] to see the possible values for this operation
+     * @param  float|null $total total (optional)
+     * @param  string|null $fecha fecha (optional)
+     * @param  string|null $receptor receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobantePdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'][0])
+    public function consultarComprobantePdf($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobantePdf'][0])
     {
-        $this->apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $contentType);
+        $this->consultarComprobantePdfWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetWithHttpInfo
+     * Operation consultarComprobantePdfWithHttpInfo
      *
      * Descargar PDF del comprobante (público)
      *
@@ -511,15 +514,18 @@ class PublicApi
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobantePdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetWithHttpInfo($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'][0])
+    public function consultarComprobantePdfWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobantePdf'][0])
     {
-        $request = $this->apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetRequest($ruc, $tipo_doc, $serie, $numero, $contentType);
+        $request = $this->consultarComprobantePdfRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -555,7 +561,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetAsync
+     * Operation consultarComprobantePdfAsync
      *
      * Descargar PDF del comprobante (público)
      *
@@ -563,14 +569,17 @@ class PublicApi
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobantePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetAsync($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'][0])
+    public function consultarComprobantePdfAsync($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobantePdf'][0])
     {
-        return $this->apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $contentType)
+        return $this->consultarComprobantePdfAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -579,7 +588,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetAsyncWithHttpInfo
+     * Operation consultarComprobantePdfAsyncWithHttpInfo
      *
      * Descargar PDF del comprobante (público)
      *
@@ -587,15 +596,18 @@ class PublicApi
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobantePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'][0])
+    public function consultarComprobantePdfAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobantePdf'][0])
     {
         $returnType = '';
-        $request = $this->apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetRequest($ruc, $tipo_doc, $serie, $numero, $contentType);
+        $request = $this->consultarComprobantePdfRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -621,72 +633,78 @@ class PublicApi
     }
 
     /**
-     * Create request for operation 'apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'
+     * Create request for operation 'consultarComprobantePdf'
      *
      * @param  string $ruc (required)
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobantePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroPdfGetRequest($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'][0])
+    public function consultarComprobantePdfRequest($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobantePdf'][0])
     {
 
         // verify the required parameter 'ruc' is set
         if ($ruc === null || (is_array($ruc) && count($ruc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $ruc when calling apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'
+                'Missing the required parameter $ruc when calling consultarComprobantePdf'
             );
         }
         if (strlen($ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be smaller than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.consultarComprobantePdf, must be smaller than or equal to 11.');
         }
         if (strlen($ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be bigger than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.consultarComprobantePdf, must be bigger than or equal to 11.');
         }
         
         // verify the required parameter 'tipo_doc' is set
         if ($tipo_doc === null || (is_array($tipo_doc) && count($tipo_doc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $tipo_doc when calling apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'
+                'Missing the required parameter $tipo_doc when calling consultarComprobantePdf'
             );
         }
         if (strlen($tipo_doc) > 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be smaller than or equal to 2.');
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.consultarComprobantePdf, must be smaller than or equal to 2.');
         }
         if (strlen($tipo_doc) < 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be bigger than or equal to 2.');
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.consultarComprobantePdf, must be bigger than or equal to 2.');
         }
         
         // verify the required parameter 'serie' is set
         if ($serie === null || (is_array($serie) && count($serie) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $serie when calling apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'
+                'Missing the required parameter $serie when calling consultarComprobantePdf'
             );
         }
         if (strlen($serie) > 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be smaller than or equal to 4.');
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.consultarComprobantePdf, must be smaller than or equal to 4.');
         }
         if (strlen($serie) < 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be bigger than or equal to 4.');
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.consultarComprobantePdf, must be bigger than or equal to 4.');
         }
         
         // verify the required parameter 'numero' is set
         if ($numero === null || (is_array($numero) && count($numero) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $numero when calling apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet'
+                'Missing the required parameter $numero when calling consultarComprobantePdf'
             );
         }
         if (strlen($numero) > 8) {
-            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be smaller than or equal to 8.');
+            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.consultarComprobantePdf, must be smaller than or equal to 8.');
         }
         if (strlen($numero) < 1) {
-            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet, must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.consultarComprobantePdf, must be bigger than or equal to 1.');
         }
         
+
+
+
 
         $resourcePath = '/api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero}/pdf';
         $formParams = [];
@@ -695,6 +713,33 @@ class PublicApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $total,
+            'total', // param base name
+            'number', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $fecha,
+            'fecha', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $receptor,
+            'receptor', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -789,7 +834,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet
+     * Operation consultarComprobanteXml
      *
      * Descargar XML firmado (público)
      *
@@ -797,19 +842,22 @@ class PublicApi
      * @param  string $tipo_doc tipo_doc (required)
      * @param  string $serie serie (required)
      * @param  string $numero numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'] to see the possible values for this operation
+     * @param  float|null $total total (optional)
+     * @param  string|null $fecha fecha (optional)
+     * @param  string|null $receptor receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobanteXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'][0])
+    public function consultarComprobanteXml($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobanteXml'][0])
     {
-        $this->apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $contentType);
+        $this->consultarComprobanteXmlWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetWithHttpInfo
+     * Operation consultarComprobanteXmlWithHttpInfo
      *
      * Descargar XML firmado (público)
      *
@@ -817,15 +865,18 @@ class PublicApi
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobanteXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetWithHttpInfo($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'][0])
+    public function consultarComprobanteXmlWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobanteXml'][0])
     {
-        $request = $this->apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetRequest($ruc, $tipo_doc, $serie, $numero, $contentType);
+        $request = $this->consultarComprobanteXmlRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -861,7 +912,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetAsync
+     * Operation consultarComprobanteXmlAsync
      *
      * Descargar XML firmado (público)
      *
@@ -869,14 +920,17 @@ class PublicApi
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobanteXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetAsync($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'][0])
+    public function consultarComprobanteXmlAsync($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobanteXml'][0])
     {
-        return $this->apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $contentType)
+        return $this->consultarComprobanteXmlAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -885,7 +939,7 @@ class PublicApi
     }
 
     /**
-     * Operation apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetAsyncWithHttpInfo
+     * Operation consultarComprobanteXmlAsyncWithHttpInfo
      *
      * Descargar XML firmado (público)
      *
@@ -893,15 +947,18 @@ class PublicApi
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobanteXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'][0])
+    public function consultarComprobanteXmlAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobanteXml'][0])
     {
         $returnType = '';
-        $request = $this->apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetRequest($ruc, $tipo_doc, $serie, $numero, $contentType);
+        $request = $this->consultarComprobanteXmlRequest($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -927,72 +984,78 @@ class PublicApi
     }
 
     /**
-     * Create request for operation 'apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'
+     * Create request for operation 'consultarComprobanteXml'
      *
      * @param  string $ruc (required)
      * @param  string $tipo_doc (required)
      * @param  string $serie (required)
      * @param  string $numero (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'] to see the possible values for this operation
+     * @param  float|null $total (optional)
+     * @param  string|null $fecha (optional)
+     * @param  string|null $receptor (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['consultarComprobanteXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1PublicConsultarRucTipoDocSerieNumeroXmlGetRequest($ruc, $tipo_doc, $serie, $numero, string $contentType = self::contentTypes['apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'][0])
+    public function consultarComprobanteXmlRequest($ruc, $tipo_doc, $serie, $numero, $total = null, $fecha = null, $receptor = null, string $contentType = self::contentTypes['consultarComprobanteXml'][0])
     {
 
         // verify the required parameter 'ruc' is set
         if ($ruc === null || (is_array($ruc) && count($ruc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $ruc when calling apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'
+                'Missing the required parameter $ruc when calling consultarComprobanteXml'
             );
         }
         if (strlen($ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be smaller than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.consultarComprobanteXml, must be smaller than or equal to 11.');
         }
         if (strlen($ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be bigger than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling PublicApi.consultarComprobanteXml, must be bigger than or equal to 11.');
         }
         
         // verify the required parameter 'tipo_doc' is set
         if ($tipo_doc === null || (is_array($tipo_doc) && count($tipo_doc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $tipo_doc when calling apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'
+                'Missing the required parameter $tipo_doc when calling consultarComprobanteXml'
             );
         }
         if (strlen($tipo_doc) > 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be smaller than or equal to 2.');
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.consultarComprobanteXml, must be smaller than or equal to 2.');
         }
         if (strlen($tipo_doc) < 2) {
-            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be bigger than or equal to 2.');
+            throw new \InvalidArgumentException('invalid length for "$tipo_doc" when calling PublicApi.consultarComprobanteXml, must be bigger than or equal to 2.');
         }
         
         // verify the required parameter 'serie' is set
         if ($serie === null || (is_array($serie) && count($serie) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $serie when calling apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'
+                'Missing the required parameter $serie when calling consultarComprobanteXml'
             );
         }
         if (strlen($serie) > 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be smaller than or equal to 4.');
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.consultarComprobanteXml, must be smaller than or equal to 4.');
         }
         if (strlen($serie) < 4) {
-            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be bigger than or equal to 4.');
+            throw new \InvalidArgumentException('invalid length for "$serie" when calling PublicApi.consultarComprobanteXml, must be bigger than or equal to 4.');
         }
         
         // verify the required parameter 'numero' is set
         if ($numero === null || (is_array($numero) && count($numero) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $numero when calling apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet'
+                'Missing the required parameter $numero when calling consultarComprobanteXml'
             );
         }
         if (strlen($numero) > 8) {
-            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be smaller than or equal to 8.');
+            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.consultarComprobanteXml, must be smaller than or equal to 8.');
         }
         if (strlen($numero) < 1) {
-            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet, must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid length for "$numero" when calling PublicApi.consultarComprobanteXml, must be bigger than or equal to 1.');
         }
         
+
+
+
 
         $resourcePath = '/api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero}/xml';
         $formParams = [];
@@ -1001,6 +1064,33 @@ class PublicApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $total,
+            'total', // param base name
+            'number', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $fecha,
+            'fecha', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $receptor,
+            'receptor', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params

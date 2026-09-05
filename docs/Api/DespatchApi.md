@@ -6,18 +6,18 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1DespatchIdCdrGet()**](DespatchApi.md#apiV1DespatchIdCdrGet) | **GET** /api/v1/despatch/{id}/cdr | Descargar CDR (constancia de SUNAT) |
-| [**apiV1DespatchIdPdfGet()**](DespatchApi.md#apiV1DespatchIdPdfGet) | **GET** /api/v1/despatch/{id}/pdf | Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS) |
-| [**apiV1DespatchIdXmlGet()**](DespatchApi.md#apiV1DespatchIdXmlGet) | **GET** /api/v1/despatch/{id}/xml | Descargar XML firmado de la guía |
-| [**apiV1DespatchSendMultiPost()**](DespatchApi.md#apiV1DespatchSendMultiPost) | **POST** /api/v1/despatch/send-multi | Enviar múltiples guías de remisión por destino |
-| [**apiV1DespatchSendPost()**](DespatchApi.md#apiV1DespatchSendPost) | **POST** /api/v1/despatch/send | Enviar guía de remisión (09) via API GRE REST |
-| [**apiV1DespatchTransportistaSendPost()**](DespatchApi.md#apiV1DespatchTransportistaSendPost) | **POST** /api/v1/despatch-transportista/send | Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST |
+| [**getDespatchCdr()**](DespatchApi.md#getDespatchCdr) | **GET** /api/v1/despatch/{id}/cdr | Descargar CDR (constancia de SUNAT) |
+| [**getDespatchPdf()**](DespatchApi.md#getDespatchPdf) | **GET** /api/v1/despatch/{id}/pdf | Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS) |
+| [**getDespatchXml()**](DespatchApi.md#getDespatchXml) | **GET** /api/v1/despatch/{id}/xml | Descargar XML firmado de la guía |
+| [**sendDespatch()**](DespatchApi.md#sendDespatch) | **POST** /api/v1/despatch/send | Enviar guía de remisión (09) via API GRE REST |
+| [**sendDespatchMulti()**](DespatchApi.md#sendDespatchMulti) | **POST** /api/v1/despatch/send-multi | Enviar múltiples guías de remisión por destino |
+| [**sendDespatchTransportista()**](DespatchApi.md#sendDespatchTransportista) | **POST** /api/v1/despatch-transportista/send | Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST |
 
 
-## `apiV1DespatchIdCdrGet()`
+## `getDespatchCdr()`
 
 ```php
-apiV1DespatchIdCdrGet($id)
+getDespatchCdr($id)
 ```
 
 Descargar CDR (constancia de SUNAT)
@@ -29,18 +29,22 @@ Descargar CDR (constancia de SUNAT)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DespatchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1DespatchIdCdrGet($id);
+    $apiInstance->getDespatchCdr($id);
 } catch (Exception $e) {
-    echo 'Exception when calling DespatchApi->apiV1DespatchIdCdrGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DespatchApi->getDespatchCdr: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -56,21 +60,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DespatchIdPdfGet()`
+## `getDespatchPdf()`
 
 ```php
-apiV1DespatchIdPdfGet($id, $format)
+getDespatchPdf($id, $format)
 ```
 
 Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS)
@@ -82,19 +86,23 @@ Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS)
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DespatchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 $format = 'a4'; // string
 
 try {
-    $apiInstance->apiV1DespatchIdPdfGet($id, $format);
+    $apiInstance->getDespatchPdf($id, $format);
 } catch (Exception $e) {
-    echo 'Exception when calling DespatchApi->apiV1DespatchIdPdfGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DespatchApi->getDespatchPdf: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -111,21 +119,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DespatchIdXmlGet()`
+## `getDespatchXml()`
 
 ```php
-apiV1DespatchIdXmlGet($id)
+getDespatchXml($id)
 ```
 
 Descargar XML firmado de la guía
@@ -137,18 +145,22 @@ Descargar XML firmado de la guía
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DespatchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $id = 'id_example'; // string
 
 try {
-    $apiInstance->apiV1DespatchIdXmlGet($id);
+    $apiInstance->getDespatchXml($id);
 } catch (Exception $e) {
-    echo 'Exception when calling DespatchApi->apiV1DespatchIdXmlGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DespatchApi->getDespatchXml: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -164,77 +176,21 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `apiV1DespatchSendMultiPost()`
-
-```php
-apiV1DespatchSendMultiPost($api_v1_despatch_send_multi_post_request): \Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response
-```
-
-Enviar múltiples guías de remisión por destino
-
-Recibe datos comunes de transporte + array de destinos. Genera una guía por cada destino con correlativo auto-asignado. Cada guía se encola independientemente para envío a SUNAT GRE.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Intifact\Sdk\Api\DespatchApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$api_v1_despatch_send_multi_post_request = new \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest(); // \Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest
-
-try {
-    $result = $apiInstance->apiV1DespatchSendMultiPost($api_v1_despatch_send_multi_post_request);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling DespatchApi->apiV1DespatchSendMultiPost: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **api_v1_despatch_send_multi_post_request** | [**\Intifact\Sdk\Model\ApiV1DespatchSendMultiPostRequest**](../Model/ApiV1DespatchSendMultiPostRequest.md)|  | |
-
-### Return type
-
-[**\Intifact\Sdk\Model\ApiV1DespatchSendMultiPost202Response**](../Model/ApiV1DespatchSendMultiPost202Response.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DespatchSendPost()`
+## `sendDespatch()`
 
 ```php
-apiV1DespatchSendPost($api_v1_despatch_send_post_request): \Intifact\Sdk\Model\ApiV1NoteSendPost202Response
+sendDespatch($send_despatch_request): \Intifact\Sdk\Model\SendInvoice202Response
 ```
 
 Enviar guía de remisión (09) via API GRE REST
@@ -248,19 +204,23 @@ Genera XML UBL 2.1, firma y encola. El worker obtiene token OAuth2, envía a SUN
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DespatchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_despatch_send_post_request = new \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest(); // \Intifact\Sdk\Model\ApiV1DespatchSendPostRequest
+$send_despatch_request = new \Intifact\Sdk\Model\SendDespatchRequest(); // \Intifact\Sdk\Model\SendDespatchRequest
 
 try {
-    $result = $apiInstance->apiV1DespatchSendPost($api_v1_despatch_send_post_request);
+    $result = $apiInstance->sendDespatch($send_despatch_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DespatchApi->apiV1DespatchSendPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DespatchApi->sendDespatch: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -268,15 +228,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_despatch_send_post_request** | [**\Intifact\Sdk\Model\ApiV1DespatchSendPostRequest**](../Model/ApiV1DespatchSendPostRequest.md)|  | |
+| **send_despatch_request** | [**\Intifact\Sdk\Model\SendDespatchRequest**](../Model/SendDespatchRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1NoteSendPost202Response**](../Model/ApiV1NoteSendPost202Response.md)
+[**\Intifact\Sdk\Model\SendInvoice202Response**](../Model/SendInvoice202Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 
@@ -287,10 +247,70 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1DespatchTransportistaSendPost()`
+## `sendDespatchMulti()`
 
 ```php
-apiV1DespatchTransportistaSendPost($api_v1_despatch_transportista_send_post_request): \Intifact\Sdk\Model\ApiV1NoteSendPost202Response
+sendDespatchMulti($send_despatch_multi_request): \Intifact\Sdk\Model\SendDespatchMulti202Response
+```
+
+Enviar múltiples guías de remisión por destino
+
+Recibe datos comunes de transporte + array de destinos. Genera una guía por cada destino con correlativo auto-asignado. Cada guía se encola independientemente para envío a SUNAT GRE.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\DespatchApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$send_despatch_multi_request = new \Intifact\Sdk\Model\SendDespatchMultiRequest(); // \Intifact\Sdk\Model\SendDespatchMultiRequest
+
+try {
+    $result = $apiInstance->sendDespatchMulti($send_despatch_multi_request);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DespatchApi->sendDespatchMulti: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **send_despatch_multi_request** | [**\Intifact\Sdk\Model\SendDespatchMultiRequest**](../Model/SendDespatchMultiRequest.md)|  | |
+
+### Return type
+
+[**\Intifact\Sdk\Model\SendDespatchMulti202Response**](../Model/SendDespatchMulti202Response.md)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `sendDespatchTransportista()`
+
+```php
+sendDespatchTransportista($send_despatch_transportista_request): \Intifact\Sdk\Model\SendInvoice202Response
 ```
 
 Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST
@@ -304,19 +324,23 @@ Guía emitida por la empresa de transporte (emisor=transportista). Incluye remit
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new Intifact\Sdk\Api\DespatchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$api_v1_despatch_transportista_send_post_request = new \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest(); // \Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest
+$send_despatch_transportista_request = new \Intifact\Sdk\Model\SendDespatchTransportistaRequest(); // \Intifact\Sdk\Model\SendDespatchTransportistaRequest
 
 try {
-    $result = $apiInstance->apiV1DespatchTransportistaSendPost($api_v1_despatch_transportista_send_post_request);
+    $result = $apiInstance->sendDespatchTransportista($send_despatch_transportista_request);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DespatchApi->apiV1DespatchTransportistaSendPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DespatchApi->sendDespatchTransportista: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -324,15 +348,15 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **api_v1_despatch_transportista_send_post_request** | [**\Intifact\Sdk\Model\ApiV1DespatchTransportistaSendPostRequest**](../Model/ApiV1DespatchTransportistaSendPostRequest.md)|  | |
+| **send_despatch_transportista_request** | [**\Intifact\Sdk\Model\SendDespatchTransportistaRequest**](../Model/SendDespatchTransportistaRequest.md)|  | |
 
 ### Return type
 
-[**\Intifact\Sdk\Model\ApiV1NoteSendPost202Response**](../Model/ApiV1NoteSendPost202Response.md)
+[**\Intifact\Sdk\Model\SendInvoice202Response**](../Model/SendInvoice202Response.md)
 
 ### Authorization
 
-No authorization required
+[apiKey](../../README.md#apiKey)
 
 ### HTTP request headers
 

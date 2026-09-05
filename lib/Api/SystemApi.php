@@ -74,10 +74,7 @@ class SystemApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1CatalogsGet' => [
-            'application/json',
-        ],
-        'apiV1CatalogsKeyGet' => [
+        'getCatalog' => [
             'application/json',
         ],
         'healthGet' => [
@@ -87,6 +84,9 @@ class SystemApi
             'application/json',
         ],
         'internalWebhooksStatsGet' => [
+            'application/json',
+        ],
+        'listCatalogs' => [
             'application/json',
         ],
     ];
@@ -138,36 +138,37 @@ class SystemApi
     }
 
     /**
-     * Operation apiV1CatalogsGet
+     * Operation getCatalog
      *
-     * Listar catálogos SUNAT (código → descripción)
+     * Obtener un catálogo por clave
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsGet'] to see the possible values for this operation
+     * @param  string|null $key key (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCatalog'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1CatalogsGet200Response
+     * @return void
      */
-    public function apiV1CatalogsGet(string $contentType = self::contentTypes['apiV1CatalogsGet'][0])
+    public function getCatalog($key, string $contentType = self::contentTypes['getCatalog'][0])
     {
-        list($response) = $this->apiV1CatalogsGetWithHttpInfo($contentType);
-        return $response;
+        $this->getCatalogWithHttpInfo($key, $contentType);
     }
 
     /**
-     * Operation apiV1CatalogsGetWithHttpInfo
+     * Operation getCatalogWithHttpInfo
      *
-     * Listar catálogos SUNAT (código → descripción)
+     * Obtener un catálogo por clave
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsGet'] to see the possible values for this operation
+     * @param  string|null $key (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCatalog'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1CatalogsGet200Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CatalogsGetWithHttpInfo(string $contentType = self::contentTypes['apiV1CatalogsGet'][0])
+    public function getCatalogWithHttpInfo($key, string $contentType = self::contentTypes['getCatalog'][0])
     {
-        $request = $this->apiV1CatalogsGetRequest($contentType);
+        $request = $this->getCatalogRequest($key, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -192,41 +193,29 @@ class SystemApi
             $statusCode = $response->getStatusCode();
 
 
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1CatalogsGet200Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-            
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1CatalogsGet200Response',
-                $request,
-                $response,
-            );
+            return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
+                case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1CatalogsGet200Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -239,18 +228,19 @@ class SystemApi
     }
 
     /**
-     * Operation apiV1CatalogsGetAsync
+     * Operation getCatalogAsync
      *
-     * Listar catálogos SUNAT (código → descripción)
+     * Obtener un catálogo por clave
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsGet'] to see the possible values for this operation
+     * @param  string|null $key (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCatalog'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CatalogsGetAsync(string $contentType = self::contentTypes['apiV1CatalogsGet'][0])
+    public function getCatalogAsync($key, string $contentType = self::contentTypes['getCatalog'][0])
     {
-        return $this->apiV1CatalogsGetAsyncWithHttpInfo($contentType)
+        return $this->getCatalogAsyncWithHttpInfo($key, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -259,38 +249,26 @@ class SystemApi
     }
 
     /**
-     * Operation apiV1CatalogsGetAsyncWithHttpInfo
+     * Operation getCatalogAsyncWithHttpInfo
      *
-     * Listar catálogos SUNAT (código → descripción)
+     * Obtener un catálogo por clave
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsGet'] to see the possible values for this operation
+     * @param  string|null $key (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCatalog'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CatalogsGetAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1CatalogsGet'][0])
+    public function getCatalogAsyncWithHttpInfo($key, string $contentType = self::contentTypes['getCatalog'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1CatalogsGet200Response';
-        $request = $this->apiV1CatalogsGetRequest($contentType);
+        $returnType = '';
+        $request = $this->getCatalogRequest($key, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -310,18 +288,26 @@ class SystemApi
     }
 
     /**
-     * Create request for operation 'apiV1CatalogsGet'
+     * Create request for operation 'getCatalog'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsGet'] to see the possible values for this operation
+     * @param  string|null $key (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCatalog'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CatalogsGetRequest(string $contentType = self::contentTypes['apiV1CatalogsGet'][0])
+    public function getCatalogRequest($key, string $contentType = self::contentTypes['getCatalog'][0])
     {
 
+        // verify the required parameter 'key' is set
+        if ($key === null || (is_array($key) && count($key) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $key when calling getCatalog'
+            );
+        }
 
-        $resourcePath = '/api/v1/catalogs';
+
+        $resourcePath = '/api/v1/catalogs/{key}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -330,6 +316,14 @@ class SystemApi
 
 
 
+        // path params
+        if ($key !== null) {
+            $resourcePath = str_replace(
+                '{key}',
+                ObjectSerializer::toPathValue($key),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
@@ -367,228 +361,10 @@ class SystemApi
             }
         }
 
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1CatalogsKeyGet
-     *
-     * Obtener un catálogo por clave
-     *
-     * @param  string|null $key key (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsKeyGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1CatalogsKeyGet($key, string $contentType = self::contentTypes['apiV1CatalogsKeyGet'][0])
-    {
-        $this->apiV1CatalogsKeyGetWithHttpInfo($key, $contentType);
-    }
-
-    /**
-     * Operation apiV1CatalogsKeyGetWithHttpInfo
-     *
-     * Obtener un catálogo por clave
-     *
-     * @param  string|null $key (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsKeyGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1CatalogsKeyGetWithHttpInfo($key, string $contentType = self::contentTypes['apiV1CatalogsKeyGet'][0])
-    {
-        $request = $this->apiV1CatalogsKeyGetRequest($key, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1CatalogsKeyGetAsync
-     *
-     * Obtener un catálogo por clave
-     *
-     * @param  string|null $key (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsKeyGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1CatalogsKeyGetAsync($key, string $contentType = self::contentTypes['apiV1CatalogsKeyGet'][0])
-    {
-        return $this->apiV1CatalogsKeyGetAsyncWithHttpInfo($key, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1CatalogsKeyGetAsyncWithHttpInfo
-     *
-     * Obtener un catálogo por clave
-     *
-     * @param  string|null $key (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsKeyGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1CatalogsKeyGetAsyncWithHttpInfo($key, string $contentType = self::contentTypes['apiV1CatalogsKeyGet'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1CatalogsKeyGetRequest($key, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1CatalogsKeyGet'
-     *
-     * @param  string|null $key (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CatalogsKeyGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1CatalogsKeyGetRequest($key, string $contentType = self::contentTypes['apiV1CatalogsKeyGet'][0])
-    {
-
-        // verify the required parameter 'key' is set
-        if ($key === null || (is_array($key) && count($key) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $key when calling apiV1CatalogsKeyGet'
-            );
-        }
-
-
-        $resourcePath = '/api/v1/catalogs/{key}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($key !== null) {
-            $resourcePath = str_replace(
-                '{key}',
-                ObjectSerializer::toPathValue($key),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -872,6 +648,30 @@ class SystemApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -980,7 +780,7 @@ class SystemApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1014,6 +814,10 @@ class SystemApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1095,6 +899,30 @@ class SystemApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1203,7 +1031,7 @@ class SystemApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1237,6 +1065,308 @@ class SystemApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listCatalogs
+     *
+     * Listar catálogos SUNAT (código → descripción)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalogs'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\ListCatalogs200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function listCatalogs(string $contentType = self::contentTypes['listCatalogs'][0])
+    {
+        list($response) = $this->listCatalogsWithHttpInfo($contentType);
+        return $response;
+    }
+
+    /**
+     * Operation listCatalogsWithHttpInfo
+     *
+     * Listar catálogos SUNAT (código → descripción)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalogs'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\ListCatalogs200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listCatalogsWithHttpInfo(string $contentType = self::contentTypes['listCatalogs'][0])
+    {
+        $request = $this->listCatalogsRequest($contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\ListCatalogs200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\ListCatalogs200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\ListCatalogs200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listCatalogsAsync
+     *
+     * Listar catálogos SUNAT (código → descripción)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalogs'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listCatalogsAsync(string $contentType = self::contentTypes['listCatalogs'][0])
+    {
+        return $this->listCatalogsAsyncWithHttpInfo($contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listCatalogsAsyncWithHttpInfo
+     *
+     * Listar catálogos SUNAT (código → descripción)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalogs'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listCatalogsAsyncWithHttpInfo(string $contentType = self::contentTypes['listCatalogs'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\ListCatalogs200Response';
+        $request = $this->listCatalogsRequest($contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listCatalogs'
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalogs'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listCatalogsRequest(string $contentType = self::contentTypes['listCatalogs'][0])
+    {
+
+
+        $resourcePath = '/api/v1/catalogs';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

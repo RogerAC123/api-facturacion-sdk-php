@@ -74,7 +74,7 @@ class QueuesApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1QueuesStatsGet' => [
+        'getQueueStats' => [
             'application/json',
         ],
     ];
@@ -126,36 +126,36 @@ class QueuesApi
     }
 
     /**
-     * Operation apiV1QueuesStatsGet
+     * Operation getQueueStats
      *
      * Estado de las colas BullMQ
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1QueuesStatsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getQueueStats'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\GetQueueStats200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1QueuesStatsGet(string $contentType = self::contentTypes['apiV1QueuesStatsGet'][0])
+    public function getQueueStats(string $contentType = self::contentTypes['getQueueStats'][0])
     {
-        list($response) = $this->apiV1QueuesStatsGetWithHttpInfo($contentType);
+        list($response) = $this->getQueueStatsWithHttpInfo($contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1QueuesStatsGetWithHttpInfo
+     * Operation getQueueStatsWithHttpInfo
      *
      * Estado de las colas BullMQ
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1QueuesStatsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getQueueStats'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\GetQueueStats200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1QueuesStatsGetWithHttpInfo(string $contentType = self::contentTypes['apiV1QueuesStatsGet'][0])
+    public function getQueueStatsWithHttpInfo(string $contentType = self::contentTypes['getQueueStats'][0])
     {
-        $request = $this->apiV1QueuesStatsGetRequest($contentType);
+        $request = $this->getQueueStatsRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -183,13 +183,25 @@ class QueuesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response',
+                        '\Intifact\Sdk\Model\GetQueueStats200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -211,7 +223,7 @@ class QueuesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response',
+                '\Intifact\Sdk\Model\GetQueueStats200Response',
                 $request,
                 $response,
             );
@@ -220,7 +232,15 @@ class QueuesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response',
+                        '\Intifact\Sdk\Model\GetQueueStats200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -228,7 +248,15 @@ class QueuesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -241,18 +269,18 @@ class QueuesApi
     }
 
     /**
-     * Operation apiV1QueuesStatsGetAsync
+     * Operation getQueueStatsAsync
      *
      * Estado de las colas BullMQ
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1QueuesStatsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getQueueStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1QueuesStatsGetAsync(string $contentType = self::contentTypes['apiV1QueuesStatsGet'][0])
+    public function getQueueStatsAsync(string $contentType = self::contentTypes['getQueueStats'][0])
     {
-        return $this->apiV1QueuesStatsGetAsyncWithHttpInfo($contentType)
+        return $this->getQueueStatsAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -261,19 +289,19 @@ class QueuesApi
     }
 
     /**
-     * Operation apiV1QueuesStatsGetAsyncWithHttpInfo
+     * Operation getQueueStatsAsyncWithHttpInfo
      *
      * Estado de las colas BullMQ
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1QueuesStatsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getQueueStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1QueuesStatsGetAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1QueuesStatsGet'][0])
+    public function getQueueStatsAsyncWithHttpInfo(string $contentType = self::contentTypes['getQueueStats'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1QueuesStatsGet200Response';
-        $request = $this->apiV1QueuesStatsGetRequest($contentType);
+        $returnType = '\Intifact\Sdk\Model\GetQueueStats200Response';
+        $request = $this->getQueueStatsRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -312,14 +340,14 @@ class QueuesApi
     }
 
     /**
-     * Create request for operation 'apiV1QueuesStatsGet'
+     * Create request for operation 'getQueueStats'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1QueuesStatsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getQueueStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1QueuesStatsGetRequest(string $contentType = self::contentTypes['apiV1QueuesStatsGet'][0])
+    public function getQueueStatsRequest(string $contentType = self::contentTypes['getQueueStats'][0])
     {
 
 
@@ -369,6 +397,10 @@ class QueuesApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

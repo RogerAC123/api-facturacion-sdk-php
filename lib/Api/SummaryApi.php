@@ -74,19 +74,19 @@ class SummaryApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1BoletaCancelPost' => [
+        'cancelBoleta' => [
             'application/json',
         ],
-        'apiV1InvoiceCancelPost' => [
+        'cancelInvoice' => [
             'application/json',
         ],
-        'apiV1SummarySendPost' => [
+        'getTicketStatus' => [
             'application/json',
         ],
-        'apiV1TicketTicketStatusGet' => [
+        'sendSummary' => [
             'application/json',
         ],
-        'apiV1VoidedSendPost' => [
+        'sendVoided' => [
             'application/json',
         ],
     ];
@@ -138,38 +138,38 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1BoletaCancelPost
+     * Operation cancelBoleta
      *
      * Anular boleta via resumen diario (estado&#x3D;3)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1BoletaCancelPostRequest $api_v1_boleta_cancel_post_request api_v1_boleta_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1BoletaCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelBoletaRequest $cancel_boleta_request cancel_boleta_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelBoleta'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1BoletaCancelPost($api_v1_boleta_cancel_post_request, string $contentType = self::contentTypes['apiV1BoletaCancelPost'][0])
+    public function cancelBoleta($cancel_boleta_request, string $contentType = self::contentTypes['cancelBoleta'][0])
     {
-        list($response) = $this->apiV1BoletaCancelPostWithHttpInfo($api_v1_boleta_cancel_post_request, $contentType);
+        list($response) = $this->cancelBoletaWithHttpInfo($cancel_boleta_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1BoletaCancelPostWithHttpInfo
+     * Operation cancelBoletaWithHttpInfo
      *
      * Anular boleta via resumen diario (estado&#x3D;3)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1BoletaCancelPostRequest $api_v1_boleta_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1BoletaCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelBoletaRequest $cancel_boleta_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelBoleta'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1BoletaCancelPostWithHttpInfo($api_v1_boleta_cancel_post_request, string $contentType = self::contentTypes['apiV1BoletaCancelPost'][0])
+    public function cancelBoletaWithHttpInfo($cancel_boleta_request, string $contentType = self::contentTypes['cancelBoleta'][0])
     {
-        $request = $this->apiV1BoletaCancelPostRequest($api_v1_boleta_cancel_post_request, $contentType);
+        $request = $this->cancelBoletaRequest($cancel_boleta_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -197,13 +197,31 @@ class SummaryApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                        '\Intifact\Sdk\Model\SendSummary202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -225,7 +243,7 @@ class SummaryApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                '\Intifact\Sdk\Model\SendSummary202Response',
                 $request,
                 $response,
             );
@@ -234,7 +252,7 @@ class SummaryApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                        '\Intifact\Sdk\Model\SendSummary202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -242,7 +260,31 @@ class SummaryApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -255,19 +297,19 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1BoletaCancelPostAsync
+     * Operation cancelBoletaAsync
      *
      * Anular boleta via resumen diario (estado&#x3D;3)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1BoletaCancelPostRequest $api_v1_boleta_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1BoletaCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelBoletaRequest $cancel_boleta_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelBoleta'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1BoletaCancelPostAsync($api_v1_boleta_cancel_post_request, string $contentType = self::contentTypes['apiV1BoletaCancelPost'][0])
+    public function cancelBoletaAsync($cancel_boleta_request, string $contentType = self::contentTypes['cancelBoleta'][0])
     {
-        return $this->apiV1BoletaCancelPostAsyncWithHttpInfo($api_v1_boleta_cancel_post_request, $contentType)
+        return $this->cancelBoletaAsyncWithHttpInfo($cancel_boleta_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -276,20 +318,20 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1BoletaCancelPostAsyncWithHttpInfo
+     * Operation cancelBoletaAsyncWithHttpInfo
      *
      * Anular boleta via resumen diario (estado&#x3D;3)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1BoletaCancelPostRequest $api_v1_boleta_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1BoletaCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelBoletaRequest $cancel_boleta_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelBoleta'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1BoletaCancelPostAsyncWithHttpInfo($api_v1_boleta_cancel_post_request, string $contentType = self::contentTypes['apiV1BoletaCancelPost'][0])
+    public function cancelBoletaAsyncWithHttpInfo($cancel_boleta_request, string $contentType = self::contentTypes['cancelBoleta'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response';
-        $request = $this->apiV1BoletaCancelPostRequest($api_v1_boleta_cancel_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendSummary202Response';
+        $request = $this->cancelBoletaRequest($cancel_boleta_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -328,21 +370,21 @@ class SummaryApi
     }
 
     /**
-     * Create request for operation 'apiV1BoletaCancelPost'
+     * Create request for operation 'cancelBoleta'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1BoletaCancelPostRequest $api_v1_boleta_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1BoletaCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelBoletaRequest $cancel_boleta_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelBoleta'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1BoletaCancelPostRequest($api_v1_boleta_cancel_post_request, string $contentType = self::contentTypes['apiV1BoletaCancelPost'][0])
+    public function cancelBoletaRequest($cancel_boleta_request, string $contentType = self::contentTypes['cancelBoleta'][0])
     {
 
-        // verify the required parameter 'api_v1_boleta_cancel_post_request' is set
-        if ($api_v1_boleta_cancel_post_request === null || (is_array($api_v1_boleta_cancel_post_request) && count($api_v1_boleta_cancel_post_request) === 0)) {
+        // verify the required parameter 'cancel_boleta_request' is set
+        if ($cancel_boleta_request === null || (is_array($cancel_boleta_request) && count($cancel_boleta_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_boleta_cancel_post_request when calling apiV1BoletaCancelPost'
+                'Missing the required parameter $cancel_boleta_request when calling cancelBoleta'
             );
         }
 
@@ -365,16 +407,16 @@ class SummaryApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_boleta_cancel_post_request)) {
+        if (isset($cancel_boleta_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_boleta_cancel_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($cancel_boleta_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_boleta_cancel_post_request;
+                $httpBody = $cancel_boleta_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -404,6 +446,10 @@ class SummaryApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -427,38 +473,38 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1InvoiceCancelPost
+     * Operation cancelInvoice
      *
      * Anular factura via comunicación de baja
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceCancelPostRequest $api_v1_invoice_cancel_post_request api_v1_invoice_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelInvoiceRequest $cancel_invoice_request cancel_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelInvoice'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1InvoiceCancelPost($api_v1_invoice_cancel_post_request, string $contentType = self::contentTypes['apiV1InvoiceCancelPost'][0])
+    public function cancelInvoice($cancel_invoice_request, string $contentType = self::contentTypes['cancelInvoice'][0])
     {
-        list($response) = $this->apiV1InvoiceCancelPostWithHttpInfo($api_v1_invoice_cancel_post_request, $contentType);
+        list($response) = $this->cancelInvoiceWithHttpInfo($cancel_invoice_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1InvoiceCancelPostWithHttpInfo
+     * Operation cancelInvoiceWithHttpInfo
      *
      * Anular factura via comunicación de baja
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceCancelPostRequest $api_v1_invoice_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelInvoiceRequest $cancel_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelInvoice'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1InvoiceCancelPostWithHttpInfo($api_v1_invoice_cancel_post_request, string $contentType = self::contentTypes['apiV1InvoiceCancelPost'][0])
+    public function cancelInvoiceWithHttpInfo($cancel_invoice_request, string $contentType = self::contentTypes['cancelInvoice'][0])
     {
-        $request = $this->apiV1InvoiceCancelPostRequest($api_v1_invoice_cancel_post_request, $contentType);
+        $request = $this->cancelInvoiceRequest($cancel_invoice_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -486,13 +532,31 @@ class SummaryApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                        '\Intifact\Sdk\Model\SendSummary202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -514,7 +578,7 @@ class SummaryApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                '\Intifact\Sdk\Model\SendSummary202Response',
                 $request,
                 $response,
             );
@@ -523,7 +587,7 @@ class SummaryApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                        '\Intifact\Sdk\Model\SendSummary202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -531,7 +595,31 @@ class SummaryApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -544,19 +632,19 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1InvoiceCancelPostAsync
+     * Operation cancelInvoiceAsync
      *
      * Anular factura via comunicación de baja
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceCancelPostRequest $api_v1_invoice_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelInvoiceRequest $cancel_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceCancelPostAsync($api_v1_invoice_cancel_post_request, string $contentType = self::contentTypes['apiV1InvoiceCancelPost'][0])
+    public function cancelInvoiceAsync($cancel_invoice_request, string $contentType = self::contentTypes['cancelInvoice'][0])
     {
-        return $this->apiV1InvoiceCancelPostAsyncWithHttpInfo($api_v1_invoice_cancel_post_request, $contentType)
+        return $this->cancelInvoiceAsyncWithHttpInfo($cancel_invoice_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -565,20 +653,20 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1InvoiceCancelPostAsyncWithHttpInfo
+     * Operation cancelInvoiceAsyncWithHttpInfo
      *
      * Anular factura via comunicación de baja
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceCancelPostRequest $api_v1_invoice_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelInvoiceRequest $cancel_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceCancelPostAsyncWithHttpInfo($api_v1_invoice_cancel_post_request, string $contentType = self::contentTypes['apiV1InvoiceCancelPost'][0])
+    public function cancelInvoiceAsyncWithHttpInfo($cancel_invoice_request, string $contentType = self::contentTypes['cancelInvoice'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response';
-        $request = $this->apiV1InvoiceCancelPostRequest($api_v1_invoice_cancel_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendSummary202Response';
+        $request = $this->cancelInvoiceRequest($cancel_invoice_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -617,21 +705,21 @@ class SummaryApi
     }
 
     /**
-     * Create request for operation 'apiV1InvoiceCancelPost'
+     * Create request for operation 'cancelInvoice'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceCancelPostRequest $api_v1_invoice_cancel_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceCancelPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CancelInvoiceRequest $cancel_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1InvoiceCancelPostRequest($api_v1_invoice_cancel_post_request, string $contentType = self::contentTypes['apiV1InvoiceCancelPost'][0])
+    public function cancelInvoiceRequest($cancel_invoice_request, string $contentType = self::contentTypes['cancelInvoice'][0])
     {
 
-        // verify the required parameter 'api_v1_invoice_cancel_post_request' is set
-        if ($api_v1_invoice_cancel_post_request === null || (is_array($api_v1_invoice_cancel_post_request) && count($api_v1_invoice_cancel_post_request) === 0)) {
+        // verify the required parameter 'cancel_invoice_request' is set
+        if ($cancel_invoice_request === null || (is_array($cancel_invoice_request) && count($cancel_invoice_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_invoice_cancel_post_request when calling apiV1InvoiceCancelPost'
+                'Missing the required parameter $cancel_invoice_request when calling cancelInvoice'
             );
         }
 
@@ -654,16 +742,16 @@ class SummaryApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_invoice_cancel_post_request)) {
+        if (isset($cancel_invoice_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_invoice_cancel_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($cancel_invoice_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_invoice_cancel_post_request;
+                $httpBody = $cancel_invoice_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -693,6 +781,10 @@ class SummaryApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -716,329 +808,40 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1SummarySendPost
-     *
-     * Enviar resumen diario de boletas (RC)
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1SummarySendPostRequest $api_v1_summary_send_post_request api_v1_summary_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1SummarySendPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
-     */
-    public function apiV1SummarySendPost($api_v1_summary_send_post_request, string $contentType = self::contentTypes['apiV1SummarySendPost'][0])
-    {
-        list($response) = $this->apiV1SummarySendPostWithHttpInfo($api_v1_summary_send_post_request, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation apiV1SummarySendPostWithHttpInfo
-     *
-     * Enviar resumen diario de boletas (RC)
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1SummarySendPostRequest $api_v1_summary_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1SummarySendPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1SummarySendPostWithHttpInfo($api_v1_summary_send_post_request, string $contentType = self::contentTypes['apiV1SummarySendPost'][0])
-    {
-        $request = $this->apiV1SummarySendPostRequest($api_v1_summary_send_post_request, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 202:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-            
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 202:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1SummarySendPostAsync
-     *
-     * Enviar resumen diario de boletas (RC)
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1SummarySendPostRequest $api_v1_summary_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1SummarySendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1SummarySendPostAsync($api_v1_summary_send_post_request, string $contentType = self::contentTypes['apiV1SummarySendPost'][0])
-    {
-        return $this->apiV1SummarySendPostAsyncWithHttpInfo($api_v1_summary_send_post_request, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1SummarySendPostAsyncWithHttpInfo
-     *
-     * Enviar resumen diario de boletas (RC)
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1SummarySendPostRequest $api_v1_summary_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1SummarySendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1SummarySendPostAsyncWithHttpInfo($api_v1_summary_send_post_request, string $contentType = self::contentTypes['apiV1SummarySendPost'][0])
-    {
-        $returnType = '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response';
-        $request = $this->apiV1SummarySendPostRequest($api_v1_summary_send_post_request, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1SummarySendPost'
-     *
-     * @param  \Intifact\Sdk\Model\ApiV1SummarySendPostRequest $api_v1_summary_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1SummarySendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1SummarySendPostRequest($api_v1_summary_send_post_request, string $contentType = self::contentTypes['apiV1SummarySendPost'][0])
-    {
-
-        // verify the required parameter 'api_v1_summary_send_post_request' is set
-        if ($api_v1_summary_send_post_request === null || (is_array($api_v1_summary_send_post_request) && count($api_v1_summary_send_post_request) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_summary_send_post_request when calling apiV1SummarySendPost'
-            );
-        }
-
-
-        $resourcePath = '/api/v1/summary/send';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (isset($api_v1_summary_send_post_request)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_summary_send_post_request), JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                $httpBody = $api_v1_summary_send_post_request;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1TicketTicketStatusGet
+     * Operation getTicketStatus
      *
      * Consultar estado de ticket asíncrono (SOAP o GRE)
      *
      * @param  string $ruc ruc (required)
      * @param  string $ticket ticket (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1TicketTicketStatusGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTicketStatus'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1TicketTicketStatusGet200Response|\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet202Response
+     * @return \Intifact\Sdk\Model\GetTicketStatus200Response|\Intifact\Sdk\Model\GetTicketStatus202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1TicketTicketStatusGet($ruc, $ticket, string $contentType = self::contentTypes['apiV1TicketTicketStatusGet'][0])
+    public function getTicketStatus($ruc, $ticket, string $contentType = self::contentTypes['getTicketStatus'][0])
     {
-        list($response) = $this->apiV1TicketTicketStatusGetWithHttpInfo($ruc, $ticket, $contentType);
+        list($response) = $this->getTicketStatusWithHttpInfo($ruc, $ticket, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1TicketTicketStatusGetWithHttpInfo
+     * Operation getTicketStatusWithHttpInfo
      *
      * Consultar estado de ticket asíncrono (SOAP o GRE)
      *
      * @param  string $ruc (required)
      * @param  string $ticket (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1TicketTicketStatusGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTicketStatus'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1TicketTicketStatusGet200Response|\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet202Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\GetTicketStatus200Response|\Intifact\Sdk\Model\GetTicketStatus202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1TicketTicketStatusGetWithHttpInfo($ruc, $ticket, string $contentType = self::contentTypes['apiV1TicketTicketStatusGet'][0])
+    public function getTicketStatusWithHttpInfo($ruc, $ticket, string $contentType = self::contentTypes['getTicketStatus'][0])
     {
-        $request = $this->apiV1TicketTicketStatusGetRequest($ruc, $ticket, $contentType);
+        $request = $this->getTicketStatusRequest($ruc, $ticket, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1066,13 +869,31 @@ class SummaryApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet200Response',
+                        '\Intifact\Sdk\Model\GetTicketStatus200Response',
                         $request,
                         $response,
                     );
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet202Response',
+                        '\Intifact\Sdk\Model\GetTicketStatus202Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1094,7 +915,7 @@ class SummaryApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet200Response',
+                '\Intifact\Sdk\Model\GetTicketStatus200Response',
                 $request,
                 $response,
             );
@@ -1103,7 +924,7 @@ class SummaryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet200Response',
+                        '\Intifact\Sdk\Model\GetTicketStatus200Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1111,7 +932,31 @@ class SummaryApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet202Response',
+                        '\Intifact\Sdk\Model\GetTicketStatus202Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1124,20 +969,20 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1TicketTicketStatusGetAsync
+     * Operation getTicketStatusAsync
      *
      * Consultar estado de ticket asíncrono (SOAP o GRE)
      *
      * @param  string $ruc (required)
      * @param  string $ticket (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1TicketTicketStatusGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTicketStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1TicketTicketStatusGetAsync($ruc, $ticket, string $contentType = self::contentTypes['apiV1TicketTicketStatusGet'][0])
+    public function getTicketStatusAsync($ruc, $ticket, string $contentType = self::contentTypes['getTicketStatus'][0])
     {
-        return $this->apiV1TicketTicketStatusGetAsyncWithHttpInfo($ruc, $ticket, $contentType)
+        return $this->getTicketStatusAsyncWithHttpInfo($ruc, $ticket, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1146,21 +991,21 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1TicketTicketStatusGetAsyncWithHttpInfo
+     * Operation getTicketStatusAsyncWithHttpInfo
      *
      * Consultar estado de ticket asíncrono (SOAP o GRE)
      *
      * @param  string $ruc (required)
      * @param  string $ticket (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1TicketTicketStatusGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTicketStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1TicketTicketStatusGetAsyncWithHttpInfo($ruc, $ticket, string $contentType = self::contentTypes['apiV1TicketTicketStatusGet'][0])
+    public function getTicketStatusAsyncWithHttpInfo($ruc, $ticket, string $contentType = self::contentTypes['getTicketStatus'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1TicketTicketStatusGet200Response';
-        $request = $this->apiV1TicketTicketStatusGetRequest($ruc, $ticket, $contentType);
+        $returnType = '\Intifact\Sdk\Model\GetTicketStatus200Response';
+        $request = $this->getTicketStatusRequest($ruc, $ticket, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1199,45 +1044,45 @@ class SummaryApi
     }
 
     /**
-     * Create request for operation 'apiV1TicketTicketStatusGet'
+     * Create request for operation 'getTicketStatus'
      *
      * @param  string $ruc (required)
      * @param  string $ticket (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1TicketTicketStatusGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTicketStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1TicketTicketStatusGetRequest($ruc, $ticket, string $contentType = self::contentTypes['apiV1TicketTicketStatusGet'][0])
+    public function getTicketStatusRequest($ruc, $ticket, string $contentType = self::contentTypes['getTicketStatus'][0])
     {
 
         // verify the required parameter 'ruc' is set
         if ($ruc === null || (is_array($ruc) && count($ruc) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $ruc when calling apiV1TicketTicketStatusGet'
+                'Missing the required parameter $ruc when calling getTicketStatus'
             );
         }
         if (strlen($ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling SummaryApi.apiV1TicketTicketStatusGet, must be smaller than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling SummaryApi.getTicketStatus, must be smaller than or equal to 11.');
         }
         if (strlen($ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling SummaryApi.apiV1TicketTicketStatusGet, must be bigger than or equal to 11.');
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling SummaryApi.getTicketStatus, must be bigger than or equal to 11.');
         }
         
         // verify the required parameter 'ticket' is set
         if ($ticket === null || (is_array($ticket) && count($ticket) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $ticket when calling apiV1TicketTicketStatusGet'
+                'Missing the required parameter $ticket when calling getTicketStatus'
             );
         }
         if (strlen($ticket) > 100) {
-            throw new \InvalidArgumentException('invalid length for "$ticket" when calling SummaryApi.apiV1TicketTicketStatusGet, must be smaller than or equal to 100.');
+            throw new \InvalidArgumentException('invalid length for "$ticket" when calling SummaryApi.getTicketStatus, must be smaller than or equal to 100.');
         }
         if (strlen($ticket) < 1) {
-            throw new \InvalidArgumentException('invalid length for "$ticket" when calling SummaryApi.apiV1TicketTicketStatusGet, must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid length for "$ticket" when calling SummaryApi.getTicketStatus, must be bigger than or equal to 1.');
         }
         if (!preg_match("/^[A-Za-z0-9-]+$/", $ticket)) {
-            throw new \InvalidArgumentException("invalid value for \"ticket\" when calling SummaryApi.apiV1TicketTicketStatusGet, must conform to the pattern /^[A-Za-z0-9-]+$/.");
+            throw new \InvalidArgumentException("invalid value for \"ticket\" when calling SummaryApi.getTicketStatus, must conform to the pattern /^[A-Za-z0-9-]+$/.");
         }
         
 
@@ -1304,6 +1149,10 @@ class SummaryApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1327,38 +1176,38 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1VoidedSendPost
+     * Operation sendSummary
      *
-     * Enviar comunicación de baja (RA)
+     * Enviar resumen diario de boletas (RC)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1VoidedSendPostRequest $api_v1_voided_send_post_request api_v1_voided_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1VoidedSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendSummaryRequest $send_summary_request send_summary_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendSummary'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1VoidedSendPost($api_v1_voided_send_post_request, string $contentType = self::contentTypes['apiV1VoidedSendPost'][0])
+    public function sendSummary($send_summary_request, string $contentType = self::contentTypes['sendSummary'][0])
     {
-        list($response) = $this->apiV1VoidedSendPostWithHttpInfo($api_v1_voided_send_post_request, $contentType);
+        list($response) = $this->sendSummaryWithHttpInfo($send_summary_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1VoidedSendPostWithHttpInfo
+     * Operation sendSummaryWithHttpInfo
      *
-     * Enviar comunicación de baja (RA)
+     * Enviar resumen diario de boletas (RC)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1VoidedSendPostRequest $api_v1_voided_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1VoidedSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendSummaryRequest $send_summary_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendSummary'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1SummarySendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1VoidedSendPostWithHttpInfo($api_v1_voided_send_post_request, string $contentType = self::contentTypes['apiV1VoidedSendPost'][0])
+    public function sendSummaryWithHttpInfo($send_summary_request, string $contentType = self::contentTypes['sendSummary'][0])
     {
-        $request = $this->apiV1VoidedSendPostRequest($api_v1_voided_send_post_request, $contentType);
+        $request = $this->sendSummaryRequest($send_summary_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1386,13 +1235,31 @@ class SummaryApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                        '\Intifact\Sdk\Model\SendSummary202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1414,7 +1281,7 @@ class SummaryApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                '\Intifact\Sdk\Model\SendSummary202Response',
                 $request,
                 $response,
             );
@@ -1423,7 +1290,7 @@ class SummaryApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response',
+                        '\Intifact\Sdk\Model\SendSummary202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1431,7 +1298,31 @@ class SummaryApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1444,19 +1335,19 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1VoidedSendPostAsync
+     * Operation sendSummaryAsync
      *
-     * Enviar comunicación de baja (RA)
+     * Enviar resumen diario de boletas (RC)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1VoidedSendPostRequest $api_v1_voided_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1VoidedSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendSummaryRequest $send_summary_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendSummary'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1VoidedSendPostAsync($api_v1_voided_send_post_request, string $contentType = self::contentTypes['apiV1VoidedSendPost'][0])
+    public function sendSummaryAsync($send_summary_request, string $contentType = self::contentTypes['sendSummary'][0])
     {
-        return $this->apiV1VoidedSendPostAsyncWithHttpInfo($api_v1_voided_send_post_request, $contentType)
+        return $this->sendSummaryAsyncWithHttpInfo($send_summary_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1465,20 +1356,20 @@ class SummaryApi
     }
 
     /**
-     * Operation apiV1VoidedSendPostAsyncWithHttpInfo
+     * Operation sendSummaryAsyncWithHttpInfo
      *
-     * Enviar comunicación de baja (RA)
+     * Enviar resumen diario de boletas (RC)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1VoidedSendPostRequest $api_v1_voided_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1VoidedSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendSummaryRequest $send_summary_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendSummary'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1VoidedSendPostAsyncWithHttpInfo($api_v1_voided_send_post_request, string $contentType = self::contentTypes['apiV1VoidedSendPost'][0])
+    public function sendSummaryAsyncWithHttpInfo($send_summary_request, string $contentType = self::contentTypes['sendSummary'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1SummarySendPost202Response';
-        $request = $this->apiV1VoidedSendPostRequest($api_v1_voided_send_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendSummary202Response';
+        $request = $this->sendSummaryRequest($send_summary_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1517,26 +1408,26 @@ class SummaryApi
     }
 
     /**
-     * Create request for operation 'apiV1VoidedSendPost'
+     * Create request for operation 'sendSummary'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1VoidedSendPostRequest $api_v1_voided_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1VoidedSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendSummaryRequest $send_summary_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendSummary'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1VoidedSendPostRequest($api_v1_voided_send_post_request, string $contentType = self::contentTypes['apiV1VoidedSendPost'][0])
+    public function sendSummaryRequest($send_summary_request, string $contentType = self::contentTypes['sendSummary'][0])
     {
 
-        // verify the required parameter 'api_v1_voided_send_post_request' is set
-        if ($api_v1_voided_send_post_request === null || (is_array($api_v1_voided_send_post_request) && count($api_v1_voided_send_post_request) === 0)) {
+        // verify the required parameter 'send_summary_request' is set
+        if ($send_summary_request === null || (is_array($send_summary_request) && count($send_summary_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_voided_send_post_request when calling apiV1VoidedSendPost'
+                'Missing the required parameter $send_summary_request when calling sendSummary'
             );
         }
 
 
-        $resourcePath = '/api/v1/voided/send';
+        $resourcePath = '/api/v1/summary/send';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1554,16 +1445,16 @@ class SummaryApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_voided_send_post_request)) {
+        if (isset($send_summary_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_voided_send_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_summary_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_voided_send_post_request;
+                $httpBody = $send_summary_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1593,6 +1484,345 @@ class SummaryApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation sendVoided
+     *
+     * Enviar comunicación de baja (RA)
+     *
+     * @param  \Intifact\Sdk\Model\SendVoidedRequest $send_voided_request send_voided_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendVoided'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function sendVoided($send_voided_request, string $contentType = self::contentTypes['sendVoided'][0])
+    {
+        list($response) = $this->sendVoidedWithHttpInfo($send_voided_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation sendVoidedWithHttpInfo
+     *
+     * Enviar comunicación de baja (RA)
+     *
+     * @param  \Intifact\Sdk\Model\SendVoidedRequest $send_voided_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendVoided'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\SendSummary202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function sendVoidedWithHttpInfo($send_voided_request, string $contentType = self::contentTypes['sendVoided'][0])
+    {
+        $request = $this->sendVoidedRequest($send_voided_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 202:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\SendSummary202Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\SendSummary202Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 202:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\SendSummary202Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation sendVoidedAsync
+     *
+     * Enviar comunicación de baja (RA)
+     *
+     * @param  \Intifact\Sdk\Model\SendVoidedRequest $send_voided_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendVoided'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendVoidedAsync($send_voided_request, string $contentType = self::contentTypes['sendVoided'][0])
+    {
+        return $this->sendVoidedAsyncWithHttpInfo($send_voided_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation sendVoidedAsyncWithHttpInfo
+     *
+     * Enviar comunicación de baja (RA)
+     *
+     * @param  \Intifact\Sdk\Model\SendVoidedRequest $send_voided_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendVoided'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendVoidedAsyncWithHttpInfo($send_voided_request, string $contentType = self::contentTypes['sendVoided'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\SendSummary202Response';
+        $request = $this->sendVoidedRequest($send_voided_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'sendVoided'
+     *
+     * @param  \Intifact\Sdk\Model\SendVoidedRequest $send_voided_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendVoided'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function sendVoidedRequest($send_voided_request, string $contentType = self::contentTypes['sendVoided'][0])
+    {
+
+        // verify the required parameter 'send_voided_request' is set
+        if ($send_voided_request === null || (is_array($send_voided_request) && count($send_voided_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $send_voided_request when calling sendVoided'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/voided/send';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($send_voided_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                try {
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_voided_request), JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                $httpBody = $send_voided_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

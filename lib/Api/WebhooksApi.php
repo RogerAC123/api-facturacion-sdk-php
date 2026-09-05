@@ -74,31 +74,31 @@ class WebhooksApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1WebhooksGet' => [
+        'createWebhook' => [
             'application/json',
         ],
-        'apiV1WebhooksIdDelete' => [
+        'deleteWebhook' => [
             'application/json',
         ],
-        'apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost' => [
+        'getWebhook' => [
             'application/json',
         ],
-        'apiV1WebhooksIdDeliveriesGet' => [
+        'listWebhookDeliveries' => [
             'application/json',
         ],
-        'apiV1WebhooksIdGet' => [
+        'listWebhooks' => [
             'application/json',
         ],
-        'apiV1WebhooksIdPut' => [
+        'redeliverWebhookDelivery' => [
             'application/json',
         ],
-        'apiV1WebhooksIdRotateSecretPost' => [
+        'rotateWebhookSecret' => [
             'application/json',
         ],
-        'apiV1WebhooksIdTestPost' => [
+        'testWebhook' => [
             'application/json',
         ],
-        'apiV1WebhooksPost' => [
+        'updateWebhook' => [
             'application/json',
         ],
     ];
@@ -150,37 +150,37 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksGet
+     * Operation createWebhook
      *
-     * Listar webhooks (filtra por RUC opcional)
+     * Crear endpoint webhook
      *
-     * @param  string|null $ruc ruc (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateWebhookRequest $create_webhook_request create_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksGet($ruc = null, string $contentType = self::contentTypes['apiV1WebhooksGet'][0])
+    public function createWebhook($create_webhook_request, string $contentType = self::contentTypes['createWebhook'][0])
     {
-        $this->apiV1WebhooksGetWithHttpInfo($ruc, $contentType);
+        $this->createWebhookWithHttpInfo($create_webhook_request, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksGetWithHttpInfo
+     * Operation createWebhookWithHttpInfo
      *
-     * Listar webhooks (filtra por RUC opcional)
+     * Crear endpoint webhook
      *
-     * @param  string|null $ruc (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateWebhookRequest $create_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksGetWithHttpInfo($ruc = null, string $contentType = self::contentTypes['apiV1WebhooksGet'][0])
+    public function createWebhookWithHttpInfo($create_webhook_request, string $contentType = self::contentTypes['createWebhook'][0])
     {
-        $request = $this->apiV1WebhooksGetRequest($ruc, $contentType);
+        $request = $this->createWebhookRequest($create_webhook_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -208,6 +208,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -216,19 +240,19 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksGetAsync
+     * Operation createWebhookAsync
      *
-     * Listar webhooks (filtra por RUC opcional)
+     * Crear endpoint webhook
      *
-     * @param  string|null $ruc (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateWebhookRequest $create_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksGetAsync($ruc = null, string $contentType = self::contentTypes['apiV1WebhooksGet'][0])
+    public function createWebhookAsync($create_webhook_request, string $contentType = self::contentTypes['createWebhook'][0])
     {
-        return $this->apiV1WebhooksGetAsyncWithHttpInfo($ruc, $contentType)
+        return $this->createWebhookAsyncWithHttpInfo($create_webhook_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -237,20 +261,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksGetAsyncWithHttpInfo
+     * Operation createWebhookAsyncWithHttpInfo
      *
-     * Listar webhooks (filtra por RUC opcional)
+     * Crear endpoint webhook
      *
-     * @param  string|null $ruc (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateWebhookRequest $create_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksGetAsyncWithHttpInfo($ruc = null, string $contentType = self::contentTypes['apiV1WebhooksGet'][0])
+    public function createWebhookAsyncWithHttpInfo($create_webhook_request, string $contentType = self::contentTypes['createWebhook'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksGetRequest($ruc, $contentType);
+        $request = $this->createWebhookRequest($create_webhook_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -276,24 +300,24 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksGet'
+     * Create request for operation 'createWebhook'
      *
-     * @param  string|null $ruc (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksGet'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateWebhookRequest $create_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksGetRequest($ruc = null, string $contentType = self::contentTypes['apiV1WebhooksGet'][0])
+    public function createWebhookRequest($create_webhook_request, string $contentType = self::contentTypes['createWebhook'][0])
     {
 
-        if ($ruc !== null && strlen($ruc) > 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling WebhooksApi.apiV1WebhooksGet, must be smaller than or equal to 11.');
+        // verify the required parameter 'create_webhook_request' is set
+        if ($create_webhook_request === null || (is_array($create_webhook_request) && count($create_webhook_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $create_webhook_request when calling createWebhook'
+            );
         }
-        if ($ruc !== null && strlen($ruc) < 11) {
-            throw new \InvalidArgumentException('invalid length for "$ruc" when calling WebhooksApi.apiV1WebhooksGet, must be bigger than or equal to 11.');
-        }
-        
+
 
         $resourcePath = '/api/v1/webhooks';
         $formParams = [];
@@ -302,27 +326,29 @@ class WebhooksApi
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $ruc,
-            'ruc', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
 
 
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($create_webhook_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                try {
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($create_webhook_request), JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                $httpBody = $create_webhook_request;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -350,479 +376,10 @@ class WebhooksApi
             }
         }
 
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDelete
-     *
-     * Eliminar webhook (también elimina su historial de deliveries)
-     *
-     * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDelete'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1WebhooksIdDelete($id, string $contentType = self::contentTypes['apiV1WebhooksIdDelete'][0])
-    {
-        $this->apiV1WebhooksIdDeleteWithHttpInfo($id, $contentType);
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeleteWithHttpInfo
-     *
-     * Eliminar webhook (también elimina su historial de deliveries)
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDelete'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1WebhooksIdDeleteWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdDelete'][0])
-    {
-        $request = $this->apiV1WebhooksIdDeleteRequest($id, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeleteAsync
-     *
-     * Eliminar webhook (también elimina su historial de deliveries)
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDelete'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1WebhooksIdDeleteAsync($id, string $contentType = self::contentTypes['apiV1WebhooksIdDelete'][0])
-    {
-        return $this->apiV1WebhooksIdDeleteAsyncWithHttpInfo($id, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeleteAsyncWithHttpInfo
-     *
-     * Eliminar webhook (también elimina su historial de deliveries)
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDelete'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1WebhooksIdDeleteAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdDelete'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1WebhooksIdDeleteRequest($id, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1WebhooksIdDelete'
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDelete'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1WebhooksIdDeleteRequest($id, string $contentType = self::contentTypes['apiV1WebhooksIdDelete'][0])
-    {
-
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdDelete'
-            );
-        }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdDelete, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
-        }
-        
-
-        $resourcePath = '/api/v1/webhooks/{id}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{id}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'DELETE',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost
-     *
-     * Reintentar manualmente una entrega
-     *
-     * @param  string $id id (required)
-     * @param  string $delivery_id delivery_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost($id, $delivery_id, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'][0])
-    {
-        $this->apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostWithHttpInfo($id, $delivery_id, $contentType);
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostWithHttpInfo
-     *
-     * Reintentar manualmente una entrega
-     *
-     * @param  string $id (required)
-     * @param  string $delivery_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostWithHttpInfo($id, $delivery_id, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'][0])
-    {
-        $request = $this->apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostRequest($id, $delivery_id, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostAsync
-     *
-     * Reintentar manualmente una entrega
-     *
-     * @param  string $id (required)
-     * @param  string $delivery_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostAsync($id, $delivery_id, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'][0])
-    {
-        return $this->apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostAsyncWithHttpInfo($id, $delivery_id, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostAsyncWithHttpInfo
-     *
-     * Reintentar manualmente una entrega
-     *
-     * @param  string $id (required)
-     * @param  string $delivery_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostAsyncWithHttpInfo($id, $delivery_id, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostRequest($id, $delivery_id, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'
-     *
-     * @param  string $id (required)
-     * @param  string $delivery_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPostRequest($id, $delivery_id, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'][0])
-    {
-
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'
-            );
-        }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
-        }
-        
-        // verify the required parameter 'delivery_id' is set
-        if ($delivery_id === null || (is_array($delivery_id) && count($delivery_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $delivery_id when calling apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost'
-            );
-        }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $delivery_id)) {
-            throw new \InvalidArgumentException("invalid value for \"delivery_id\" when calling WebhooksApi.apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
-        }
-        
-
-        $resourcePath = '/api/v1/webhooks/{id}/deliveries/{deliveryId}/redeliver';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{id}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($delivery_id !== null) {
-            $resourcePath = str_replace(
-                '{deliveryId}',
-                ObjectSerializer::toPathValue($delivery_id),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -846,41 +403,37 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdDeliveriesGet
+     * Operation deleteWebhook
      *
-     * Log de entregas del webhook
+     * Eliminar webhook (también elimina su historial de deliveries)
      *
      * @param  string $id id (required)
-     * @param  int|null $limit limit (optional, default to 50)
-     * @param  string|null $success success (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksIdDeliveriesGet($id, $limit = 50, $success = null, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesGet'][0])
+    public function deleteWebhook($id, string $contentType = self::contentTypes['deleteWebhook'][0])
     {
-        $this->apiV1WebhooksIdDeliveriesGetWithHttpInfo($id, $limit, $success, $contentType);
+        $this->deleteWebhookWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksIdDeliveriesGetWithHttpInfo
+     * Operation deleteWebhookWithHttpInfo
      *
-     * Log de entregas del webhook
+     * Eliminar webhook (también elimina su historial de deliveries)
      *
      * @param  string $id (required)
-     * @param  int|null $limit (optional, default to 50)
-     * @param  string|null $success (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksIdDeliveriesGetWithHttpInfo($id, $limit = 50, $success = null, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesGet'][0])
+    public function deleteWebhookWithHttpInfo($id, string $contentType = self::contentTypes['deleteWebhook'][0])
     {
-        $request = $this->apiV1WebhooksIdDeliveriesGetRequest($id, $limit, $success, $contentType);
+        $request = $this->deleteWebhookRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -908,6 +461,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -916,21 +493,19 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdDeliveriesGetAsync
+     * Operation deleteWebhookAsync
      *
-     * Log de entregas del webhook
+     * Eliminar webhook (también elimina su historial de deliveries)
      *
      * @param  string $id (required)
-     * @param  int|null $limit (optional, default to 50)
-     * @param  string|null $success (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdDeliveriesGetAsync($id, $limit = 50, $success = null, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesGet'][0])
+    public function deleteWebhookAsync($id, string $contentType = self::contentTypes['deleteWebhook'][0])
     {
-        return $this->apiV1WebhooksIdDeliveriesGetAsyncWithHttpInfo($id, $limit, $success, $contentType)
+        return $this->deleteWebhookAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -939,22 +514,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdDeliveriesGetAsyncWithHttpInfo
+     * Operation deleteWebhookAsyncWithHttpInfo
      *
-     * Log de entregas del webhook
+     * Eliminar webhook (también elimina su historial de deliveries)
      *
      * @param  string $id (required)
-     * @param  int|null $limit (optional, default to 50)
-     * @param  string|null $success (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdDeliveriesGetAsyncWithHttpInfo($id, $limit = 50, $success = null, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesGet'][0])
+    public function deleteWebhookAsyncWithHttpInfo($id, string $contentType = self::contentTypes['deleteWebhook'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksIdDeliveriesGetRequest($id, $limit, $success, $contentType);
+        $request = $this->deleteWebhookRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -980,34 +553,548 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksIdDeliveriesGet'
+     * Create request for operation 'deleteWebhook'
      *
      * @param  string $id (required)
-     * @param  int|null $limit (optional, default to 50)
-     * @param  string|null $success (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdDeliveriesGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksIdDeliveriesGetRequest($id, $limit = 50, $success = null, string $contentType = self::contentTypes['apiV1WebhooksIdDeliveriesGet'][0])
+    public function deleteWebhookRequest($id, string $contentType = self::contentTypes['deleteWebhook'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdDeliveriesGet'
+                'Missing the required parameter $id when calling deleteWebhook'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdDeliveriesGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.deleteWebhook, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
+
+        $resourcePath = '/api/v1/webhooks/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getWebhook
+     *
+     * Detalle de webhook (sin secret)
+     *
+     * @param  string $id id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebhook'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function getWebhook($id, string $contentType = self::contentTypes['getWebhook'][0])
+    {
+        $this->getWebhookWithHttpInfo($id, $contentType);
+    }
+
+    /**
+     * Operation getWebhookWithHttpInfo
+     *
+     * Detalle de webhook (sin secret)
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebhook'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getWebhookWithHttpInfo($id, string $contentType = self::contentTypes['getWebhook'][0])
+    {
+        $request = $this->getWebhookRequest($id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getWebhookAsync
+     *
+     * Detalle de webhook (sin secret)
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebhook'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getWebhookAsync($id, string $contentType = self::contentTypes['getWebhook'][0])
+    {
+        return $this->getWebhookAsyncWithHttpInfo($id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getWebhookAsyncWithHttpInfo
+     *
+     * Detalle de webhook (sin secret)
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebhook'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getWebhookAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getWebhook'][0])
+    {
+        $returnType = '';
+        $request = $this->getWebhookRequest($id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getWebhook'
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebhook'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getWebhookRequest($id, string $contentType = self::contentTypes['getWebhook'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getWebhook'
+            );
+        }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.getWebhook, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
+
+        $resourcePath = '/api/v1/webhooks/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listWebhookDeliveries
+     *
+     * Log de entregas del webhook
+     *
+     * @param  string $id id (required)
+     * @param  int|null $limit limit (optional, default to 50)
+     * @param  string|null $success success (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhookDeliveries'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function listWebhookDeliveries($id, $limit = 50, $success = null, string $contentType = self::contentTypes['listWebhookDeliveries'][0])
+    {
+        $this->listWebhookDeliveriesWithHttpInfo($id, $limit, $success, $contentType);
+    }
+
+    /**
+     * Operation listWebhookDeliveriesWithHttpInfo
+     *
+     * Log de entregas del webhook
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $success (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhookDeliveries'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listWebhookDeliveriesWithHttpInfo($id, $limit = 50, $success = null, string $contentType = self::contentTypes['listWebhookDeliveries'][0])
+    {
+        $request = $this->listWebhookDeliveriesRequest($id, $limit, $success, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listWebhookDeliveriesAsync
+     *
+     * Log de entregas del webhook
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $success (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhookDeliveries'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listWebhookDeliveriesAsync($id, $limit = 50, $success = null, string $contentType = self::contentTypes['listWebhookDeliveries'][0])
+    {
+        return $this->listWebhookDeliveriesAsyncWithHttpInfo($id, $limit, $success, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listWebhookDeliveriesAsyncWithHttpInfo
+     *
+     * Log de entregas del webhook
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $success (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhookDeliveries'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listWebhookDeliveriesAsyncWithHttpInfo($id, $limit = 50, $success = null, string $contentType = self::contentTypes['listWebhookDeliveries'][0])
+    {
+        $returnType = '';
+        $request = $this->listWebhookDeliveriesRequest($id, $limit, $success, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listWebhookDeliveries'
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit (optional, default to 50)
+     * @param  string|null $success (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhookDeliveries'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listWebhookDeliveriesRequest($id, $limit = 50, $success = null, string $contentType = self::contentTypes['listWebhookDeliveries'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling listWebhookDeliveries'
+            );
+        }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.listWebhookDeliveries, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
         if ($limit !== null && $limit > 200) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling WebhooksApi.apiV1WebhooksIdDeliveriesGet, must be smaller than or equal to 200.');
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling WebhooksApi.listWebhookDeliveries, must be smaller than or equal to 200.');
         }
         if ($limit !== null && $limit < 1) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling WebhooksApi.apiV1WebhooksIdDeliveriesGet, must be bigger than or equal to 1.');
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling WebhooksApi.listWebhookDeliveries, must be bigger than or equal to 1.');
         }
         
 
@@ -1050,7 +1137,7 @@ class WebhooksApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1084,6 +1171,10 @@ class WebhooksApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1107,37 +1198,37 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdGet
+     * Operation listWebhooks
      *
-     * Detalle de webhook (sin secret)
+     * Listar webhooks (filtra por RUC opcional)
      *
-     * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdGet'] to see the possible values for this operation
+     * @param  string|null $ruc ruc (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhooks'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksIdGet($id, string $contentType = self::contentTypes['apiV1WebhooksIdGet'][0])
+    public function listWebhooks($ruc = null, string $contentType = self::contentTypes['listWebhooks'][0])
     {
-        $this->apiV1WebhooksIdGetWithHttpInfo($id, $contentType);
+        $this->listWebhooksWithHttpInfo($ruc, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksIdGetWithHttpInfo
+     * Operation listWebhooksWithHttpInfo
      *
-     * Detalle de webhook (sin secret)
+     * Listar webhooks (filtra por RUC opcional)
      *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdGet'] to see the possible values for this operation
+     * @param  string|null $ruc (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhooks'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksIdGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdGet'][0])
+    public function listWebhooksWithHttpInfo($ruc = null, string $contentType = self::contentTypes['listWebhooks'][0])
     {
-        $request = $this->apiV1WebhooksIdGetRequest($id, $contentType);
+        $request = $this->listWebhooksRequest($ruc, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1165,6 +1256,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1173,19 +1288,19 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdGetAsync
+     * Operation listWebhooksAsync
      *
-     * Detalle de webhook (sin secret)
+     * Listar webhooks (filtra por RUC opcional)
      *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdGet'] to see the possible values for this operation
+     * @param  string|null $ruc (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhooks'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdGetAsync($id, string $contentType = self::contentTypes['apiV1WebhooksIdGet'][0])
+    public function listWebhooksAsync($ruc = null, string $contentType = self::contentTypes['listWebhooks'][0])
     {
-        return $this->apiV1WebhooksIdGetAsyncWithHttpInfo($id, $contentType)
+        return $this->listWebhooksAsyncWithHttpInfo($ruc, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1194,20 +1309,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdGetAsyncWithHttpInfo
+     * Operation listWebhooksAsyncWithHttpInfo
      *
-     * Detalle de webhook (sin secret)
+     * Listar webhooks (filtra por RUC opcional)
      *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdGet'] to see the possible values for this operation
+     * @param  string|null $ruc (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhooks'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdGet'][0])
+    public function listWebhooksAsyncWithHttpInfo($ruc = null, string $contentType = self::contentTypes['listWebhooks'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksIdGetRequest($id, $contentType);
+        $request = $this->listWebhooksRequest($ruc, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1233,49 +1348,47 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksIdGet'
+     * Create request for operation 'listWebhooks'
      *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdGet'] to see the possible values for this operation
+     * @param  string|null $ruc (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWebhooks'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksIdGetRequest($id, string $contentType = self::contentTypes['apiV1WebhooksIdGet'][0])
+    public function listWebhooksRequest($ruc = null, string $contentType = self::contentTypes['listWebhooks'][0])
     {
 
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdGet'
-            );
+        if ($ruc !== null && strlen($ruc) > 11) {
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling WebhooksApi.listWebhooks, must be smaller than or equal to 11.');
         }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        if ($ruc !== null && strlen($ruc) < 11) {
+            throw new \InvalidArgumentException('invalid length for "$ruc" when calling WebhooksApi.listWebhooks, must be bigger than or equal to 11.');
         }
         
 
-        $resourcePath = '/api/v1/webhooks/{id}';
+        $resourcePath = '/api/v1/webhooks';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ruc,
+            'ruc', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{id}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1309,6 +1422,10 @@ class WebhooksApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1332,39 +1449,39 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdPut
+     * Operation redeliverWebhookDelivery
      *
-     * Actualizar webhook (url, eventos, activación)
+     * Reintentar manualmente una entrega
      *
      * @param  string $id id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest $api_v1_webhooks_id_put_request api_v1_webhooks_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdPut'] to see the possible values for this operation
+     * @param  string $delivery_id delivery_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['redeliverWebhookDelivery'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksIdPut($id, $api_v1_webhooks_id_put_request, string $contentType = self::contentTypes['apiV1WebhooksIdPut'][0])
+    public function redeliverWebhookDelivery($id, $delivery_id, string $contentType = self::contentTypes['redeliverWebhookDelivery'][0])
     {
-        $this->apiV1WebhooksIdPutWithHttpInfo($id, $api_v1_webhooks_id_put_request, $contentType);
+        $this->redeliverWebhookDeliveryWithHttpInfo($id, $delivery_id, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksIdPutWithHttpInfo
+     * Operation redeliverWebhookDeliveryWithHttpInfo
      *
-     * Actualizar webhook (url, eventos, activación)
+     * Reintentar manualmente una entrega
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest $api_v1_webhooks_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdPut'] to see the possible values for this operation
+     * @param  string $delivery_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['redeliverWebhookDelivery'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksIdPutWithHttpInfo($id, $api_v1_webhooks_id_put_request, string $contentType = self::contentTypes['apiV1WebhooksIdPut'][0])
+    public function redeliverWebhookDeliveryWithHttpInfo($id, $delivery_id, string $contentType = self::contentTypes['redeliverWebhookDelivery'][0])
     {
-        $request = $this->apiV1WebhooksIdPutRequest($id, $api_v1_webhooks_id_put_request, $contentType);
+        $request = $this->redeliverWebhookDeliveryRequest($id, $delivery_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1392,6 +1509,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1400,20 +1541,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdPutAsync
+     * Operation redeliverWebhookDeliveryAsync
      *
-     * Actualizar webhook (url, eventos, activación)
+     * Reintentar manualmente una entrega
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest $api_v1_webhooks_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdPut'] to see the possible values for this operation
+     * @param  string $delivery_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['redeliverWebhookDelivery'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdPutAsync($id, $api_v1_webhooks_id_put_request, string $contentType = self::contentTypes['apiV1WebhooksIdPut'][0])
+    public function redeliverWebhookDeliveryAsync($id, $delivery_id, string $contentType = self::contentTypes['redeliverWebhookDelivery'][0])
     {
-        return $this->apiV1WebhooksIdPutAsyncWithHttpInfo($id, $api_v1_webhooks_id_put_request, $contentType)
+        return $this->redeliverWebhookDeliveryAsyncWithHttpInfo($id, $delivery_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1422,21 +1563,21 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdPutAsyncWithHttpInfo
+     * Operation redeliverWebhookDeliveryAsyncWithHttpInfo
      *
-     * Actualizar webhook (url, eventos, activación)
+     * Reintentar manualmente una entrega
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest $api_v1_webhooks_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdPut'] to see the possible values for this operation
+     * @param  string $delivery_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['redeliverWebhookDelivery'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdPutAsyncWithHttpInfo($id, $api_v1_webhooks_id_put_request, string $contentType = self::contentTypes['apiV1WebhooksIdPut'][0])
+    public function redeliverWebhookDeliveryAsyncWithHttpInfo($id, $delivery_id, string $contentType = self::contentTypes['redeliverWebhookDelivery'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksIdPutRequest($id, $api_v1_webhooks_id_put_request, $contentType);
+        $request = $this->redeliverWebhookDeliveryRequest($id, $delivery_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1462,37 +1603,40 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksIdPut'
+     * Create request for operation 'redeliverWebhookDelivery'
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksIdPutRequest $api_v1_webhooks_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdPut'] to see the possible values for this operation
+     * @param  string $delivery_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['redeliverWebhookDelivery'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksIdPutRequest($id, $api_v1_webhooks_id_put_request, string $contentType = self::contentTypes['apiV1WebhooksIdPut'][0])
+    public function redeliverWebhookDeliveryRequest($id, $delivery_id, string $contentType = self::contentTypes['redeliverWebhookDelivery'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdPut'
+                'Missing the required parameter $id when calling redeliverWebhookDelivery'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdPut, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.redeliverWebhookDelivery, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
-        // verify the required parameter 'api_v1_webhooks_id_put_request' is set
-        if ($api_v1_webhooks_id_put_request === null || (is_array($api_v1_webhooks_id_put_request) && count($api_v1_webhooks_id_put_request) === 0)) {
+        // verify the required parameter 'delivery_id' is set
+        if ($delivery_id === null || (is_array($delivery_id) && count($delivery_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_webhooks_id_put_request when calling apiV1WebhooksIdPut'
+                'Missing the required parameter $delivery_id when calling redeliverWebhookDelivery'
             );
         }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $delivery_id)) {
+            throw new \InvalidArgumentException("invalid value for \"delivery_id\" when calling WebhooksApi.redeliverWebhookDelivery, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
 
-
-        $resourcePath = '/api/v1/webhooks/{id}';
+        $resourcePath = '/api/v1/webhooks/{id}/deliveries/{deliveryId}/redeliver';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1509,27 +1653,24 @@ class WebhooksApi
                 $resourcePath
             );
         }
+        // path params
+        if ($delivery_id !== null) {
+            $resourcePath = str_replace(
+                '{deliveryId}',
+                ObjectSerializer::toPathValue($delivery_id),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($api_v1_webhooks_id_put_request)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_webhooks_id_put_request), JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                $httpBody = $api_v1_webhooks_id_put_request;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1557,6 +1698,10 @@ class WebhooksApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1572,7 +1717,7 @@ class WebhooksApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'PUT',
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -1580,37 +1725,37 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdRotateSecretPost
+     * Operation rotateWebhookSecret
      *
      * Rotar el secret de firma (devuelto UNA sola vez)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdRotateSecretPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateWebhookSecret'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksIdRotateSecretPost($id, string $contentType = self::contentTypes['apiV1WebhooksIdRotateSecretPost'][0])
+    public function rotateWebhookSecret($id, string $contentType = self::contentTypes['rotateWebhookSecret'][0])
     {
-        $this->apiV1WebhooksIdRotateSecretPostWithHttpInfo($id, $contentType);
+        $this->rotateWebhookSecretWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksIdRotateSecretPostWithHttpInfo
+     * Operation rotateWebhookSecretWithHttpInfo
      *
      * Rotar el secret de firma (devuelto UNA sola vez)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdRotateSecretPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateWebhookSecret'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksIdRotateSecretPostWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdRotateSecretPost'][0])
+    public function rotateWebhookSecretWithHttpInfo($id, string $contentType = self::contentTypes['rotateWebhookSecret'][0])
     {
-        $request = $this->apiV1WebhooksIdRotateSecretPostRequest($id, $contentType);
+        $request = $this->rotateWebhookSecretRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1638,6 +1783,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1646,19 +1815,19 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdRotateSecretPostAsync
+     * Operation rotateWebhookSecretAsync
      *
      * Rotar el secret de firma (devuelto UNA sola vez)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdRotateSecretPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateWebhookSecret'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdRotateSecretPostAsync($id, string $contentType = self::contentTypes['apiV1WebhooksIdRotateSecretPost'][0])
+    public function rotateWebhookSecretAsync($id, string $contentType = self::contentTypes['rotateWebhookSecret'][0])
     {
-        return $this->apiV1WebhooksIdRotateSecretPostAsyncWithHttpInfo($id, $contentType)
+        return $this->rotateWebhookSecretAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1667,20 +1836,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdRotateSecretPostAsyncWithHttpInfo
+     * Operation rotateWebhookSecretAsyncWithHttpInfo
      *
      * Rotar el secret de firma (devuelto UNA sola vez)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdRotateSecretPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateWebhookSecret'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdRotateSecretPostAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdRotateSecretPost'][0])
+    public function rotateWebhookSecretAsyncWithHttpInfo($id, string $contentType = self::contentTypes['rotateWebhookSecret'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksIdRotateSecretPostRequest($id, $contentType);
+        $request = $this->rotateWebhookSecretRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1706,25 +1875,25 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksIdRotateSecretPost'
+     * Create request for operation 'rotateWebhookSecret'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdRotateSecretPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['rotateWebhookSecret'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksIdRotateSecretPostRequest($id, string $contentType = self::contentTypes['apiV1WebhooksIdRotateSecretPost'][0])
+    public function rotateWebhookSecretRequest($id, string $contentType = self::contentTypes['rotateWebhookSecret'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdRotateSecretPost'
+                'Missing the required parameter $id when calling rotateWebhookSecret'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdRotateSecretPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.rotateWebhookSecret, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1748,7 +1917,7 @@ class WebhooksApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1782,6 +1951,10 @@ class WebhooksApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1805,37 +1978,37 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdTestPost
+     * Operation testWebhook
      *
      * Enviar un evento de prueba (webhook.test)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdTestPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['testWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksIdTestPost($id, string $contentType = self::contentTypes['apiV1WebhooksIdTestPost'][0])
+    public function testWebhook($id, string $contentType = self::contentTypes['testWebhook'][0])
     {
-        $this->apiV1WebhooksIdTestPostWithHttpInfo($id, $contentType);
+        $this->testWebhookWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksIdTestPostWithHttpInfo
+     * Operation testWebhookWithHttpInfo
      *
      * Enviar un evento de prueba (webhook.test)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdTestPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['testWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksIdTestPostWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdTestPost'][0])
+    public function testWebhookWithHttpInfo($id, string $contentType = self::contentTypes['testWebhook'][0])
     {
-        $request = $this->apiV1WebhooksIdTestPostRequest($id, $contentType);
+        $request = $this->testWebhookRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1863,6 +2036,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1871,19 +2068,19 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdTestPostAsync
+     * Operation testWebhookAsync
      *
      * Enviar un evento de prueba (webhook.test)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdTestPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['testWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdTestPostAsync($id, string $contentType = self::contentTypes['apiV1WebhooksIdTestPost'][0])
+    public function testWebhookAsync($id, string $contentType = self::contentTypes['testWebhook'][0])
     {
-        return $this->apiV1WebhooksIdTestPostAsyncWithHttpInfo($id, $contentType)
+        return $this->testWebhookAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1892,20 +2089,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksIdTestPostAsyncWithHttpInfo
+     * Operation testWebhookAsyncWithHttpInfo
      *
      * Enviar un evento de prueba (webhook.test)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdTestPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['testWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksIdTestPostAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1WebhooksIdTestPost'][0])
+    public function testWebhookAsyncWithHttpInfo($id, string $contentType = self::contentTypes['testWebhook'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksIdTestPostRequest($id, $contentType);
+        $request = $this->testWebhookRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1931,25 +2128,25 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksIdTestPost'
+     * Create request for operation 'testWebhook'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksIdTestPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['testWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksIdTestPostRequest($id, string $contentType = self::contentTypes['apiV1WebhooksIdTestPost'][0])
+    public function testWebhookRequest($id, string $contentType = self::contentTypes['testWebhook'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1WebhooksIdTestPost'
+                'Missing the required parameter $id when calling testWebhook'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.apiV1WebhooksIdTestPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.testWebhook, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1973,7 +2170,7 @@ class WebhooksApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -2007,6 +2204,10 @@ class WebhooksApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2030,37 +2231,39 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksPost
+     * Operation updateWebhook
      *
-     * Crear endpoint webhook
+     * Actualizar webhook (url, eventos, activación)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksPostRequest $api_v1_webhooks_post_request api_v1_webhooks_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksPost'] to see the possible values for this operation
+     * @param  string $id id (required)
+     * @param  \Intifact\Sdk\Model\UpdateWebhookRequest $update_webhook_request update_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1WebhooksPost($api_v1_webhooks_post_request, string $contentType = self::contentTypes['apiV1WebhooksPost'][0])
+    public function updateWebhook($id, $update_webhook_request, string $contentType = self::contentTypes['updateWebhook'][0])
     {
-        $this->apiV1WebhooksPostWithHttpInfo($api_v1_webhooks_post_request, $contentType);
+        $this->updateWebhookWithHttpInfo($id, $update_webhook_request, $contentType);
     }
 
     /**
-     * Operation apiV1WebhooksPostWithHttpInfo
+     * Operation updateWebhookWithHttpInfo
      *
-     * Crear endpoint webhook
+     * Actualizar webhook (url, eventos, activación)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksPostRequest $api_v1_webhooks_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksPost'] to see the possible values for this operation
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateWebhookRequest $update_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebhook'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1WebhooksPostWithHttpInfo($api_v1_webhooks_post_request, string $contentType = self::contentTypes['apiV1WebhooksPost'][0])
+    public function updateWebhookWithHttpInfo($id, $update_webhook_request, string $contentType = self::contentTypes['updateWebhook'][0])
     {
-        $request = $this->apiV1WebhooksPostRequest($api_v1_webhooks_post_request, $contentType);
+        $request = $this->updateWebhookRequest($id, $update_webhook_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2088,6 +2291,30 @@ class WebhooksApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -2096,19 +2323,20 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksPostAsync
+     * Operation updateWebhookAsync
      *
-     * Crear endpoint webhook
+     * Actualizar webhook (url, eventos, activación)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksPostRequest $api_v1_webhooks_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksPost'] to see the possible values for this operation
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateWebhookRequest $update_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksPostAsync($api_v1_webhooks_post_request, string $contentType = self::contentTypes['apiV1WebhooksPost'][0])
+    public function updateWebhookAsync($id, $update_webhook_request, string $contentType = self::contentTypes['updateWebhook'][0])
     {
-        return $this->apiV1WebhooksPostAsyncWithHttpInfo($api_v1_webhooks_post_request, $contentType)
+        return $this->updateWebhookAsyncWithHttpInfo($id, $update_webhook_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2117,20 +2345,21 @@ class WebhooksApi
     }
 
     /**
-     * Operation apiV1WebhooksPostAsyncWithHttpInfo
+     * Operation updateWebhookAsyncWithHttpInfo
      *
-     * Crear endpoint webhook
+     * Actualizar webhook (url, eventos, activación)
      *
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksPostRequest $api_v1_webhooks_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksPost'] to see the possible values for this operation
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateWebhookRequest $update_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1WebhooksPostAsyncWithHttpInfo($api_v1_webhooks_post_request, string $contentType = self::contentTypes['apiV1WebhooksPost'][0])
+    public function updateWebhookAsyncWithHttpInfo($id, $update_webhook_request, string $contentType = self::contentTypes['updateWebhook'][0])
     {
         $returnType = '';
-        $request = $this->apiV1WebhooksPostRequest($api_v1_webhooks_post_request, $contentType);
+        $request = $this->updateWebhookRequest($id, $update_webhook_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2156,26 +2385,37 @@ class WebhooksApi
     }
 
     /**
-     * Create request for operation 'apiV1WebhooksPost'
+     * Create request for operation 'updateWebhook'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1WebhooksPostRequest $api_v1_webhooks_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1WebhooksPost'] to see the possible values for this operation
+     * @param  string $id (required)
+     * @param  \Intifact\Sdk\Model\UpdateWebhookRequest $update_webhook_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebhook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1WebhooksPostRequest($api_v1_webhooks_post_request, string $contentType = self::contentTypes['apiV1WebhooksPost'][0])
+    public function updateWebhookRequest($id, $update_webhook_request, string $contentType = self::contentTypes['updateWebhook'][0])
     {
 
-        // verify the required parameter 'api_v1_webhooks_post_request' is set
-        if ($api_v1_webhooks_post_request === null || (is_array($api_v1_webhooks_post_request) && count($api_v1_webhooks_post_request) === 0)) {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_webhooks_post_request when calling apiV1WebhooksPost'
+                'Missing the required parameter $id when calling updateWebhook'
+            );
+        }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling WebhooksApi.updateWebhook, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
+        // verify the required parameter 'update_webhook_request' is set
+        if ($update_webhook_request === null || (is_array($update_webhook_request) && count($update_webhook_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $update_webhook_request when calling updateWebhook'
             );
         }
 
 
-        $resourcePath = '/api/v1/webhooks';
+        $resourcePath = '/api/v1/webhooks/{id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2184,25 +2424,33 @@ class WebhooksApi
 
 
 
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($api_v1_webhooks_post_request)) {
+        if (isset($update_webhook_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_webhooks_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($update_webhook_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_webhooks_post_request;
+                $httpBody = $update_webhook_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -2232,6 +2480,10 @@ class WebhooksApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2247,7 +2499,7 @@ class WebhooksApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'POST',
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

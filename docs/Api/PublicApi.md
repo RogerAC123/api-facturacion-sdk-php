@@ -6,15 +6,15 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**apiV1PublicConsultarRucTipoDocSerieNumeroGet()**](PublicApi.md#apiV1PublicConsultarRucTipoDocSerieNumeroGet) | **GET** /api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero} | Consultar un comprobante (público, sin auth) |
-| [**apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet()**](PublicApi.md#apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet) | **GET** /api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero}/pdf | Descargar PDF del comprobante (público) |
-| [**apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet()**](PublicApi.md#apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet) | **GET** /api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero}/xml | Descargar XML firmado (público) |
+| [**consultarComprobante()**](PublicApi.md#consultarComprobante) | **GET** /api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero} | Consultar un comprobante (público, sin auth) |
+| [**consultarComprobantePdf()**](PublicApi.md#consultarComprobantePdf) | **GET** /api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero}/pdf | Descargar PDF del comprobante (público) |
+| [**consultarComprobanteXml()**](PublicApi.md#consultarComprobanteXml) | **GET** /api/v1/public/consultar/{ruc}/{tipoDoc}/{serie}/{numero}/xml | Descargar XML firmado (público) |
 
 
-## `apiV1PublicConsultarRucTipoDocSerieNumeroGet()`
+## `consultarComprobante()`
 
 ```php
-apiV1PublicConsultarRucTipoDocSerieNumeroGet($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor)
+consultarComprobante($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor)
 ```
 
 Consultar un comprobante (público, sin auth)
@@ -43,9 +43,9 @@ $fecha = 'fecha_example'; // string
 $receptor = 'receptor_example'; // string
 
 try {
-    $apiInstance->apiV1PublicConsultarRucTipoDocSerieNumeroGet($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor);
+    $apiInstance->consultarComprobante($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor);
 } catch (Exception $e) {
-    echo 'Exception when calling PublicApi->apiV1PublicConsultarRucTipoDocSerieNumeroGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling PublicApi->consultarComprobante: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -78,10 +78,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet()`
+## `consultarComprobantePdf()`
 
 ```php
-apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet($ruc, $tipo_doc, $serie, $numero)
+consultarComprobantePdf($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor)
 ```
 
 Descargar PDF del comprobante (público)
@@ -103,11 +103,14 @@ $ruc = 'ruc_example'; // string
 $tipo_doc = 'tipo_doc_example'; // string
 $serie = 'serie_example'; // string
 $numero = 'numero_example'; // string
+$total = 3.4; // float
+$fecha = 'fecha_example'; // string
+$receptor = 'receptor_example'; // string
 
 try {
-    $apiInstance->apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet($ruc, $tipo_doc, $serie, $numero);
+    $apiInstance->consultarComprobantePdf($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor);
 } catch (Exception $e) {
-    echo 'Exception when calling PublicApi->apiV1PublicConsultarRucTipoDocSerieNumeroPdfGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling PublicApi->consultarComprobantePdf: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -119,6 +122,9 @@ try {
 | **tipo_doc** | **string**|  | |
 | **serie** | **string**|  | |
 | **numero** | **string**|  | |
+| **total** | **float**|  | [optional] |
+| **fecha** | **string**|  | [optional] |
+| **receptor** | **string**|  | [optional] |
 
 ### Return type
 
@@ -137,10 +143,10 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet()`
+## `consultarComprobanteXml()`
 
 ```php
-apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet($ruc, $tipo_doc, $serie, $numero)
+consultarComprobanteXml($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor)
 ```
 
 Descargar XML firmado (público)
@@ -162,11 +168,14 @@ $ruc = 'ruc_example'; // string
 $tipo_doc = 'tipo_doc_example'; // string
 $serie = 'serie_example'; // string
 $numero = 'numero_example'; // string
+$total = 3.4; // float
+$fecha = 'fecha_example'; // string
+$receptor = 'receptor_example'; // string
 
 try {
-    $apiInstance->apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet($ruc, $tipo_doc, $serie, $numero);
+    $apiInstance->consultarComprobanteXml($ruc, $tipo_doc, $serie, $numero, $total, $fecha, $receptor);
 } catch (Exception $e) {
-    echo 'Exception when calling PublicApi->apiV1PublicConsultarRucTipoDocSerieNumeroXmlGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling PublicApi->consultarComprobanteXml: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -178,6 +187,9 @@ try {
 | **tipo_doc** | **string**|  | |
 | **serie** | **string**|  | |
 | **numero** | **string**|  | |
+| **total** | **float**|  | [optional] |
+| **fecha** | **string**|  | [optional] |
+| **receptor** | **string**|  | [optional] |
 
 ### Return type
 

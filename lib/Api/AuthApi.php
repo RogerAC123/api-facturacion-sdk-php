@@ -74,31 +74,31 @@ class AuthApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1AuthLoginPost' => [
+        'getCurrentUser' => [
             'application/json',
         ],
-        'apiV1AuthLogoutPost' => [
+        'listSessions' => [
             'application/json',
         ],
-        'apiV1AuthMeGet' => [
+        'login' => [
             'application/json',
         ],
-        'apiV1AuthRefreshPost' => [
+        'logout' => [
             'application/json',
         ],
-        'apiV1AuthSessionsGet' => [
+        'refreshToken' => [
             'application/json',
         ],
-        'apiV1AuthSessionsIdDelete' => [
+        'resendVerificationEmail' => [
             'application/json',
         ],
-        'apiV1AuthSignupPost' => [
+        'revokeSession' => [
             'application/json',
         ],
-        'apiV1AuthVerifyEmailGet' => [
+        'signup' => [
             'application/json',
         ],
-        'apiV1AuthVerifyEmailResendPost' => [
+        'verifyEmail' => [
             'application/json',
         ],
     ];
@@ -150,37 +150,497 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthLoginPost
+     * Operation getCurrentUser
      *
-     * Login email+password
+     * Datos del usuario actual
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest $api_v1_auth_login_post_request api_v1_auth_login_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLoginPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCurrentUser'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthLoginPost($api_v1_auth_login_post_request, string $contentType = self::contentTypes['apiV1AuthLoginPost'][0])
+    public function getCurrentUser(string $contentType = self::contentTypes['getCurrentUser'][0])
     {
-        $this->apiV1AuthLoginPostWithHttpInfo($api_v1_auth_login_post_request, $contentType);
+        $this->getCurrentUserWithHttpInfo($contentType);
     }
 
     /**
-     * Operation apiV1AuthLoginPostWithHttpInfo
+     * Operation getCurrentUserWithHttpInfo
      *
-     * Login email+password
+     * Datos del usuario actual
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest $api_v1_auth_login_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLoginPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCurrentUser'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthLoginPostWithHttpInfo($api_v1_auth_login_post_request, string $contentType = self::contentTypes['apiV1AuthLoginPost'][0])
+    public function getCurrentUserWithHttpInfo(string $contentType = self::contentTypes['getCurrentUser'][0])
     {
-        $request = $this->apiV1AuthLoginPostRequest($api_v1_auth_login_post_request, $contentType);
+        $request = $this->getCurrentUserRequest($contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getCurrentUserAsync
+     *
+     * Datos del usuario actual
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCurrentUser'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getCurrentUserAsync(string $contentType = self::contentTypes['getCurrentUser'][0])
+    {
+        return $this->getCurrentUserAsyncWithHttpInfo($contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getCurrentUserAsyncWithHttpInfo
+     *
+     * Datos del usuario actual
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCurrentUser'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getCurrentUserAsyncWithHttpInfo(string $contentType = self::contentTypes['getCurrentUser'][0])
+    {
+        $returnType = '';
+        $request = $this->getCurrentUserRequest($contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getCurrentUser'
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCurrentUser'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getCurrentUserRequest(string $contentType = self::contentTypes['getCurrentUser'][0])
+    {
+
+
+        $resourcePath = '/api/v1/auth/me';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listSessions
+     *
+     * Lista de sesiones activas del usuario
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSessions'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function listSessions(string $contentType = self::contentTypes['listSessions'][0])
+    {
+        $this->listSessionsWithHttpInfo($contentType);
+    }
+
+    /**
+     * Operation listSessionsWithHttpInfo
+     *
+     * Lista de sesiones activas del usuario
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSessions'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listSessionsWithHttpInfo(string $contentType = self::contentTypes['listSessions'][0])
+    {
+        $request = $this->listSessionsRequest($contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listSessionsAsync
+     *
+     * Lista de sesiones activas del usuario
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSessions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listSessionsAsync(string $contentType = self::contentTypes['listSessions'][0])
+    {
+        return $this->listSessionsAsyncWithHttpInfo($contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listSessionsAsyncWithHttpInfo
+     *
+     * Lista de sesiones activas del usuario
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSessions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listSessionsAsyncWithHttpInfo(string $contentType = self::contentTypes['listSessions'][0])
+    {
+        $returnType = '';
+        $request = $this->listSessionsRequest($contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listSessions'
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSessions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listSessionsRequest(string $contentType = self::contentTypes['listSessions'][0])
+    {
+
+
+        $resourcePath = '/api/v1/auth/sessions';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation login
+     *
+     * Login email+password
+     *
+     * @param  \Intifact\Sdk\Model\LoginRequest $login_request login_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['login'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function login($login_request, string $contentType = self::contentTypes['login'][0])
+    {
+        $this->loginWithHttpInfo($login_request, $contentType);
+    }
+
+    /**
+     * Operation loginWithHttpInfo
+     *
+     * Login email+password
+     *
+     * @param  \Intifact\Sdk\Model\LoginRequest $login_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['login'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function loginWithHttpInfo($login_request, string $contentType = self::contentTypes['login'][0])
+    {
+        $request = $this->loginRequest($login_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -216,19 +676,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthLoginPostAsync
+     * Operation loginAsync
      *
      * Login email+password
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest $api_v1_auth_login_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLoginPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\LoginRequest $login_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['login'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthLoginPostAsync($api_v1_auth_login_post_request, string $contentType = self::contentTypes['apiV1AuthLoginPost'][0])
+    public function loginAsync($login_request, string $contentType = self::contentTypes['login'][0])
     {
-        return $this->apiV1AuthLoginPostAsyncWithHttpInfo($api_v1_auth_login_post_request, $contentType)
+        return $this->loginAsyncWithHttpInfo($login_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -237,20 +697,20 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthLoginPostAsyncWithHttpInfo
+     * Operation loginAsyncWithHttpInfo
      *
      * Login email+password
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest $api_v1_auth_login_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLoginPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\LoginRequest $login_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['login'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthLoginPostAsyncWithHttpInfo($api_v1_auth_login_post_request, string $contentType = self::contentTypes['apiV1AuthLoginPost'][0])
+    public function loginAsyncWithHttpInfo($login_request, string $contentType = self::contentTypes['login'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthLoginPostRequest($api_v1_auth_login_post_request, $contentType);
+        $request = $this->loginRequest($login_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -276,21 +736,21 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthLoginPost'
+     * Create request for operation 'login'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthLoginPostRequest $api_v1_auth_login_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLoginPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\LoginRequest $login_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['login'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthLoginPostRequest($api_v1_auth_login_post_request, string $contentType = self::contentTypes['apiV1AuthLoginPost'][0])
+    public function loginRequest($login_request, string $contentType = self::contentTypes['login'][0])
     {
 
-        // verify the required parameter 'api_v1_auth_login_post_request' is set
-        if ($api_v1_auth_login_post_request === null || (is_array($api_v1_auth_login_post_request) && count($api_v1_auth_login_post_request) === 0)) {
+        // verify the required parameter 'login_request' is set
+        if ($login_request === null || (is_array($login_request) && count($login_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_auth_login_post_request when calling apiV1AuthLoginPost'
+                'Missing the required parameter $login_request when calling login'
             );
         }
 
@@ -313,16 +773,16 @@ class AuthApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_auth_login_post_request)) {
+        if (isset($login_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_auth_login_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($login_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_auth_login_post_request;
+                $httpBody = $login_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -375,35 +835,35 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthLogoutPost
+     * Operation logout
      *
      * Cerrar sesión actual (revoca refresh)
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLogoutPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['logout'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthLogoutPost(string $contentType = self::contentTypes['apiV1AuthLogoutPost'][0])
+    public function logout(string $contentType = self::contentTypes['logout'][0])
     {
-        $this->apiV1AuthLogoutPostWithHttpInfo($contentType);
+        $this->logoutWithHttpInfo($contentType);
     }
 
     /**
-     * Operation apiV1AuthLogoutPostWithHttpInfo
+     * Operation logoutWithHttpInfo
      *
      * Cerrar sesión actual (revoca refresh)
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLogoutPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['logout'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthLogoutPostWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthLogoutPost'][0])
+    public function logoutWithHttpInfo(string $contentType = self::contentTypes['logout'][0])
     {
-        $request = $this->apiV1AuthLogoutPostRequest($contentType);
+        $request = $this->logoutRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -439,18 +899,18 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthLogoutPostAsync
+     * Operation logoutAsync
      *
      * Cerrar sesión actual (revoca refresh)
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLogoutPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['logout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthLogoutPostAsync(string $contentType = self::contentTypes['apiV1AuthLogoutPost'][0])
+    public function logoutAsync(string $contentType = self::contentTypes['logout'][0])
     {
-        return $this->apiV1AuthLogoutPostAsyncWithHttpInfo($contentType)
+        return $this->logoutAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -459,19 +919,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthLogoutPostAsyncWithHttpInfo
+     * Operation logoutAsyncWithHttpInfo
      *
      * Cerrar sesión actual (revoca refresh)
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLogoutPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['logout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthLogoutPostAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthLogoutPost'][0])
+    public function logoutAsyncWithHttpInfo(string $contentType = self::contentTypes['logout'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthLogoutPostRequest($contentType);
+        $request = $this->logoutRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -497,14 +957,14 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthLogoutPost'
+     * Create request for operation 'logout'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthLogoutPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['logout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthLogoutPostRequest(string $contentType = self::contentTypes['apiV1AuthLogoutPost'][0])
+    public function logoutRequest(string $contentType = self::contentTypes['logout'][0])
     {
 
 
@@ -577,35 +1037,35 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthMeGet
+     * Operation refreshToken
      *
-     * Datos del usuario actual
+     * Renovar access token con refresh cookie
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthMeGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshToken'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthMeGet(string $contentType = self::contentTypes['apiV1AuthMeGet'][0])
+    public function refreshToken(string $contentType = self::contentTypes['refreshToken'][0])
     {
-        $this->apiV1AuthMeGetWithHttpInfo($contentType);
+        $this->refreshTokenWithHttpInfo($contentType);
     }
 
     /**
-     * Operation apiV1AuthMeGetWithHttpInfo
+     * Operation refreshTokenWithHttpInfo
      *
-     * Datos del usuario actual
+     * Renovar access token con refresh cookie
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthMeGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshToken'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthMeGetWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthMeGet'][0])
+    public function refreshTokenWithHttpInfo(string $contentType = self::contentTypes['refreshToken'][0])
     {
-        $request = $this->apiV1AuthMeGetRequest($contentType);
+        $request = $this->refreshTokenRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -641,18 +1101,18 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthMeGetAsync
+     * Operation refreshTokenAsync
      *
-     * Datos del usuario actual
+     * Renovar access token con refresh cookie
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthMeGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshToken'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthMeGetAsync(string $contentType = self::contentTypes['apiV1AuthMeGet'][0])
+    public function refreshTokenAsync(string $contentType = self::contentTypes['refreshToken'][0])
     {
-        return $this->apiV1AuthMeGetAsyncWithHttpInfo($contentType)
+        return $this->refreshTokenAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -661,19 +1121,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthMeGetAsyncWithHttpInfo
+     * Operation refreshTokenAsyncWithHttpInfo
      *
-     * Datos del usuario actual
+     * Renovar access token con refresh cookie
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthMeGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshToken'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthMeGetAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthMeGet'][0])
+    public function refreshTokenAsyncWithHttpInfo(string $contentType = self::contentTypes['refreshToken'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthMeGetRequest($contentType);
+        $request = $this->refreshTokenRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -699,216 +1159,14 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthMeGet'
+     * Create request for operation 'refreshToken'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthMeGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1AuthMeGetRequest(string $contentType = self::contentTypes['apiV1AuthMeGet'][0])
-    {
-
-
-        $resourcePath = '/api/v1/auth/me';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1AuthRefreshPost
-     *
-     * Renovar access token con refresh cookie
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthRefreshPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1AuthRefreshPost(string $contentType = self::contentTypes['apiV1AuthRefreshPost'][0])
-    {
-        $this->apiV1AuthRefreshPostWithHttpInfo($contentType);
-    }
-
-    /**
-     * Operation apiV1AuthRefreshPostWithHttpInfo
-     *
-     * Renovar access token con refresh cookie
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthRefreshPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1AuthRefreshPostWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthRefreshPost'][0])
-    {
-        $request = $this->apiV1AuthRefreshPostRequest($contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1AuthRefreshPostAsync
-     *
-     * Renovar access token con refresh cookie
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthRefreshPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1AuthRefreshPostAsync(string $contentType = self::contentTypes['apiV1AuthRefreshPost'][0])
-    {
-        return $this->apiV1AuthRefreshPostAsyncWithHttpInfo($contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1AuthRefreshPostAsyncWithHttpInfo
-     *
-     * Renovar access token con refresh cookie
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthRefreshPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1AuthRefreshPostAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthRefreshPost'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1AuthRefreshPostRequest($contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1AuthRefreshPost'
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthRefreshPost'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshToken'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthRefreshPostRequest(string $contentType = self::contentTypes['apiV1AuthRefreshPost'][0])
+    public function refreshTokenRequest(string $contentType = self::contentTypes['refreshToken'][0])
     {
 
 
@@ -981,35 +1239,35 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSessionsGet
+     * Operation resendVerificationEmail
      *
-     * Lista de sesiones activas del usuario
+     * Re-enviar email de verificación al usuario logueado
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendVerificationEmail'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthSessionsGet(string $contentType = self::contentTypes['apiV1AuthSessionsGet'][0])
+    public function resendVerificationEmail(string $contentType = self::contentTypes['resendVerificationEmail'][0])
     {
-        $this->apiV1AuthSessionsGetWithHttpInfo($contentType);
+        $this->resendVerificationEmailWithHttpInfo($contentType);
     }
 
     /**
-     * Operation apiV1AuthSessionsGetWithHttpInfo
+     * Operation resendVerificationEmailWithHttpInfo
      *
-     * Lista de sesiones activas del usuario
+     * Re-enviar email de verificación al usuario logueado
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendVerificationEmail'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthSessionsGetWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthSessionsGet'][0])
+    public function resendVerificationEmailWithHttpInfo(string $contentType = self::contentTypes['resendVerificationEmail'][0])
     {
-        $request = $this->apiV1AuthSessionsGetRequest($contentType);
+        $request = $this->resendVerificationEmailRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1037,6 +1295,30 @@ class AuthApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1045,18 +1327,18 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSessionsGetAsync
+     * Operation resendVerificationEmailAsync
      *
-     * Lista de sesiones activas del usuario
+     * Re-enviar email de verificación al usuario logueado
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendVerificationEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthSessionsGetAsync(string $contentType = self::contentTypes['apiV1AuthSessionsGet'][0])
+    public function resendVerificationEmailAsync(string $contentType = self::contentTypes['resendVerificationEmail'][0])
     {
-        return $this->apiV1AuthSessionsGetAsyncWithHttpInfo($contentType)
+        return $this->resendVerificationEmailAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1065,19 +1347,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSessionsGetAsyncWithHttpInfo
+     * Operation resendVerificationEmailAsyncWithHttpInfo
      *
-     * Lista de sesiones activas del usuario
+     * Re-enviar email de verificación al usuario logueado
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendVerificationEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthSessionsGetAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthSessionsGet'][0])
+    public function resendVerificationEmailAsyncWithHttpInfo(string $contentType = self::contentTypes['resendVerificationEmail'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthSessionsGetRequest($contentType);
+        $request = $this->resendVerificationEmailRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1103,18 +1385,18 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthSessionsGet'
+     * Create request for operation 'resendVerificationEmail'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendVerificationEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthSessionsGetRequest(string $contentType = self::contentTypes['apiV1AuthSessionsGet'][0])
+    public function resendVerificationEmailRequest(string $contentType = self::contentTypes['resendVerificationEmail'][0])
     {
 
 
-        $resourcePath = '/api/v1/auth/sessions';
+        $resourcePath = '/api/v1/auth/verify-email/resend';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1126,7 +1408,7 @@ class AuthApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1160,6 +1442,10 @@ class AuthApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1175,7 +1461,7 @@ class AuthApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'GET',
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -1183,37 +1469,37 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSessionsIdDelete
+     * Operation revokeSession
      *
      * Revocar una sesión activa por ID
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsIdDelete'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeSession'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthSessionsIdDelete($id, string $contentType = self::contentTypes['apiV1AuthSessionsIdDelete'][0])
+    public function revokeSession($id, string $contentType = self::contentTypes['revokeSession'][0])
     {
-        $this->apiV1AuthSessionsIdDeleteWithHttpInfo($id, $contentType);
+        $this->revokeSessionWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1AuthSessionsIdDeleteWithHttpInfo
+     * Operation revokeSessionWithHttpInfo
      *
      * Revocar una sesión activa por ID
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsIdDelete'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeSession'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthSessionsIdDeleteWithHttpInfo($id, string $contentType = self::contentTypes['apiV1AuthSessionsIdDelete'][0])
+    public function revokeSessionWithHttpInfo($id, string $contentType = self::contentTypes['revokeSession'][0])
     {
-        $request = $this->apiV1AuthSessionsIdDeleteRequest($id, $contentType);
+        $request = $this->revokeSessionRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1241,6 +1527,30 @@ class AuthApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1249,19 +1559,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSessionsIdDeleteAsync
+     * Operation revokeSessionAsync
      *
      * Revocar una sesión activa por ID
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsIdDelete'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeSession'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthSessionsIdDeleteAsync($id, string $contentType = self::contentTypes['apiV1AuthSessionsIdDelete'][0])
+    public function revokeSessionAsync($id, string $contentType = self::contentTypes['revokeSession'][0])
     {
-        return $this->apiV1AuthSessionsIdDeleteAsyncWithHttpInfo($id, $contentType)
+        return $this->revokeSessionAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1270,20 +1580,20 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSessionsIdDeleteAsyncWithHttpInfo
+     * Operation revokeSessionAsyncWithHttpInfo
      *
      * Revocar una sesión activa por ID
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsIdDelete'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeSession'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthSessionsIdDeleteAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1AuthSessionsIdDelete'][0])
+    public function revokeSessionAsyncWithHttpInfo($id, string $contentType = self::contentTypes['revokeSession'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthSessionsIdDeleteRequest($id, $contentType);
+        $request = $this->revokeSessionRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1309,25 +1619,25 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthSessionsIdDelete'
+     * Create request for operation 'revokeSession'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSessionsIdDelete'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeSession'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthSessionsIdDeleteRequest($id, string $contentType = self::contentTypes['apiV1AuthSessionsIdDelete'][0])
+    public function revokeSessionRequest($id, string $contentType = self::contentTypes['revokeSession'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1AuthSessionsIdDelete'
+                'Missing the required parameter $id when calling revokeSession'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling AuthApi.apiV1AuthSessionsIdDelete, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AuthApi.revokeSession, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1351,7 +1661,7 @@ class AuthApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1385,6 +1695,10 @@ class AuthApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1408,37 +1722,37 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSignupPost
+     * Operation signup
      *
      * Registro público: crea Tenant + User + sesión
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest $api_v1_auth_signup_post_request api_v1_auth_signup_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSignupPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SignupRequest $signup_request signup_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['signup'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthSignupPost($api_v1_auth_signup_post_request, string $contentType = self::contentTypes['apiV1AuthSignupPost'][0])
+    public function signup($signup_request, string $contentType = self::contentTypes['signup'][0])
     {
-        $this->apiV1AuthSignupPostWithHttpInfo($api_v1_auth_signup_post_request, $contentType);
+        $this->signupWithHttpInfo($signup_request, $contentType);
     }
 
     /**
-     * Operation apiV1AuthSignupPostWithHttpInfo
+     * Operation signupWithHttpInfo
      *
      * Registro público: crea Tenant + User + sesión
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest $api_v1_auth_signup_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSignupPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SignupRequest $signup_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['signup'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthSignupPostWithHttpInfo($api_v1_auth_signup_post_request, string $contentType = self::contentTypes['apiV1AuthSignupPost'][0])
+    public function signupWithHttpInfo($signup_request, string $contentType = self::contentTypes['signup'][0])
     {
-        $request = $this->apiV1AuthSignupPostRequest($api_v1_auth_signup_post_request, $contentType);
+        $request = $this->signupRequest($signup_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1474,19 +1788,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSignupPostAsync
+     * Operation signupAsync
      *
      * Registro público: crea Tenant + User + sesión
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest $api_v1_auth_signup_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSignupPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SignupRequest $signup_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['signup'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthSignupPostAsync($api_v1_auth_signup_post_request, string $contentType = self::contentTypes['apiV1AuthSignupPost'][0])
+    public function signupAsync($signup_request, string $contentType = self::contentTypes['signup'][0])
     {
-        return $this->apiV1AuthSignupPostAsyncWithHttpInfo($api_v1_auth_signup_post_request, $contentType)
+        return $this->signupAsyncWithHttpInfo($signup_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1495,20 +1809,20 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthSignupPostAsyncWithHttpInfo
+     * Operation signupAsyncWithHttpInfo
      *
      * Registro público: crea Tenant + User + sesión
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest $api_v1_auth_signup_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSignupPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SignupRequest $signup_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['signup'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthSignupPostAsyncWithHttpInfo($api_v1_auth_signup_post_request, string $contentType = self::contentTypes['apiV1AuthSignupPost'][0])
+    public function signupAsyncWithHttpInfo($signup_request, string $contentType = self::contentTypes['signup'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthSignupPostRequest($api_v1_auth_signup_post_request, $contentType);
+        $request = $this->signupRequest($signup_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1534,21 +1848,21 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthSignupPost'
+     * Create request for operation 'signup'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1AuthSignupPostRequest $api_v1_auth_signup_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthSignupPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SignupRequest $signup_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['signup'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthSignupPostRequest($api_v1_auth_signup_post_request, string $contentType = self::contentTypes['apiV1AuthSignupPost'][0])
+    public function signupRequest($signup_request, string $contentType = self::contentTypes['signup'][0])
     {
 
-        // verify the required parameter 'api_v1_auth_signup_post_request' is set
-        if ($api_v1_auth_signup_post_request === null || (is_array($api_v1_auth_signup_post_request) && count($api_v1_auth_signup_post_request) === 0)) {
+        // verify the required parameter 'signup_request' is set
+        if ($signup_request === null || (is_array($signup_request) && count($signup_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_auth_signup_post_request when calling apiV1AuthSignupPost'
+                'Missing the required parameter $signup_request when calling signup'
             );
         }
 
@@ -1571,16 +1885,16 @@ class AuthApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_auth_signup_post_request)) {
+        if (isset($signup_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_auth_signup_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($signup_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_auth_signup_post_request;
+                $httpBody = $signup_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1633,37 +1947,37 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthVerifyEmailGet
+     * Operation verifyEmail
      *
      * Confirmar email con token (one-time, 24h)
      *
      * @param  string $token token (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyEmail'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1AuthVerifyEmailGet($token, string $contentType = self::contentTypes['apiV1AuthVerifyEmailGet'][0])
+    public function verifyEmail($token, string $contentType = self::contentTypes['verifyEmail'][0])
     {
-        $this->apiV1AuthVerifyEmailGetWithHttpInfo($token, $contentType);
+        $this->verifyEmailWithHttpInfo($token, $contentType);
     }
 
     /**
-     * Operation apiV1AuthVerifyEmailGetWithHttpInfo
+     * Operation verifyEmailWithHttpInfo
      *
      * Confirmar email con token (one-time, 24h)
      *
      * @param  string $token (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyEmail'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1AuthVerifyEmailGetWithHttpInfo($token, string $contentType = self::contentTypes['apiV1AuthVerifyEmailGet'][0])
+    public function verifyEmailWithHttpInfo($token, string $contentType = self::contentTypes['verifyEmail'][0])
     {
-        $request = $this->apiV1AuthVerifyEmailGetRequest($token, $contentType);
+        $request = $this->verifyEmailRequest($token, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1699,19 +2013,19 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthVerifyEmailGetAsync
+     * Operation verifyEmailAsync
      *
      * Confirmar email con token (one-time, 24h)
      *
      * @param  string $token (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthVerifyEmailGetAsync($token, string $contentType = self::contentTypes['apiV1AuthVerifyEmailGet'][0])
+    public function verifyEmailAsync($token, string $contentType = self::contentTypes['verifyEmail'][0])
     {
-        return $this->apiV1AuthVerifyEmailGetAsyncWithHttpInfo($token, $contentType)
+        return $this->verifyEmailAsyncWithHttpInfo($token, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1720,20 +2034,20 @@ class AuthApi
     }
 
     /**
-     * Operation apiV1AuthVerifyEmailGetAsyncWithHttpInfo
+     * Operation verifyEmailAsyncWithHttpInfo
      *
      * Confirmar email con token (one-time, 24h)
      *
      * @param  string $token (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1AuthVerifyEmailGetAsyncWithHttpInfo($token, string $contentType = self::contentTypes['apiV1AuthVerifyEmailGet'][0])
+    public function verifyEmailAsyncWithHttpInfo($token, string $contentType = self::contentTypes['verifyEmail'][0])
     {
         $returnType = '';
-        $request = $this->apiV1AuthVerifyEmailGetRequest($token, $contentType);
+        $request = $this->verifyEmailRequest($token, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1759,28 +2073,28 @@ class AuthApi
     }
 
     /**
-     * Create request for operation 'apiV1AuthVerifyEmailGet'
+     * Create request for operation 'verifyEmail'
      *
      * @param  string $token (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1AuthVerifyEmailGetRequest($token, string $contentType = self::contentTypes['apiV1AuthVerifyEmailGet'][0])
+    public function verifyEmailRequest($token, string $contentType = self::contentTypes['verifyEmail'][0])
     {
 
         // verify the required parameter 'token' is set
         if ($token === null || (is_array($token) && count($token) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $token when calling apiV1AuthVerifyEmailGet'
+                'Missing the required parameter $token when calling verifyEmail'
             );
         }
         if (strlen($token) > 64) {
-            throw new \InvalidArgumentException('invalid length for "$token" when calling AuthApi.apiV1AuthVerifyEmailGet, must be smaller than or equal to 64.');
+            throw new \InvalidArgumentException('invalid length for "$token" when calling AuthApi.verifyEmail, must be smaller than or equal to 64.');
         }
         if (strlen($token) < 64) {
-            throw new \InvalidArgumentException('invalid length for "$token" when calling AuthApi.apiV1AuthVerifyEmailGet, must be bigger than or equal to 64.');
+            throw new \InvalidArgumentException('invalid length for "$token" when calling AuthApi.verifyEmail, must be bigger than or equal to 64.');
         }
         
 
@@ -1855,208 +2169,6 @@ class AuthApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1AuthVerifyEmailResendPost
-     *
-     * Re-enviar email de verificación al usuario logueado
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailResendPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1AuthVerifyEmailResendPost(string $contentType = self::contentTypes['apiV1AuthVerifyEmailResendPost'][0])
-    {
-        $this->apiV1AuthVerifyEmailResendPostWithHttpInfo($contentType);
-    }
-
-    /**
-     * Operation apiV1AuthVerifyEmailResendPostWithHttpInfo
-     *
-     * Re-enviar email de verificación al usuario logueado
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailResendPost'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1AuthVerifyEmailResendPostWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthVerifyEmailResendPost'][0])
-    {
-        $request = $this->apiV1AuthVerifyEmailResendPostRequest($contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1AuthVerifyEmailResendPostAsync
-     *
-     * Re-enviar email de verificación al usuario logueado
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailResendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1AuthVerifyEmailResendPostAsync(string $contentType = self::contentTypes['apiV1AuthVerifyEmailResendPost'][0])
-    {
-        return $this->apiV1AuthVerifyEmailResendPostAsyncWithHttpInfo($contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1AuthVerifyEmailResendPostAsyncWithHttpInfo
-     *
-     * Re-enviar email de verificación al usuario logueado
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailResendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1AuthVerifyEmailResendPostAsyncWithHttpInfo(string $contentType = self::contentTypes['apiV1AuthVerifyEmailResendPost'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1AuthVerifyEmailResendPostRequest($contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1AuthVerifyEmailResendPost'
-     *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1AuthVerifyEmailResendPost'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1AuthVerifyEmailResendPostRequest(string $contentType = self::contentTypes['apiV1AuthVerifyEmailResendPost'][0])
-    {
-
-
-        $resourcePath = '/api/v1/auth/verify-email/resend';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

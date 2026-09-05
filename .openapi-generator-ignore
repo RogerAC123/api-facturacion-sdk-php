@@ -21,3 +21,8 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+
+# Personalizado a mano (branding, publish config) — el regen SIEMPRE lo
+# pisaba con el template generico hasta que se agrego esto (2026-09-05).
+composer.json
+README.md

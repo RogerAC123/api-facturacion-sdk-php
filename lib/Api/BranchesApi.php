@@ -74,16 +74,16 @@ class BranchesApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1CompaniesIdBranchesBranchIdDelete' => [
+        'createBranch' => [
             'application/json',
         ],
-        'apiV1CompaniesIdBranchesBranchIdPut' => [
+        'deactivateBranch' => [
             'application/json',
         ],
-        'apiV1CompaniesIdBranchesGet' => [
+        'listBranches' => [
             'application/json',
         ],
-        'apiV1CompaniesIdBranchesPost' => [
+        'updateBranch' => [
             'application/json',
         ],
     ];
@@ -135,39 +135,39 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdDelete
+     * Operation createBranch
      *
-     * Desactivar establecimiento (soft-delete)
+     * Crear establecimiento (sucursal)
      *
      * @param  string $id id (required)
-     * @param  string $branch_id branch_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateBranchRequest $create_branch_request create_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBranch'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesIdBranchesBranchIdDelete($id, $branch_id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'][0])
+    public function createBranch($id, $create_branch_request, string $contentType = self::contentTypes['createBranch'][0])
     {
-        $this->apiV1CompaniesIdBranchesBranchIdDeleteWithHttpInfo($id, $branch_id, $contentType);
+        $this->createBranchWithHttpInfo($id, $create_branch_request, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdDeleteWithHttpInfo
+     * Operation createBranchWithHttpInfo
      *
-     * Desactivar establecimiento (soft-delete)
+     * Crear establecimiento (sucursal)
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateBranchRequest $create_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBranch'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesIdBranchesBranchIdDeleteWithHttpInfo($id, $branch_id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'][0])
+    public function createBranchWithHttpInfo($id, $create_branch_request, string $contentType = self::contentTypes['createBranch'][0])
     {
-        $request = $this->apiV1CompaniesIdBranchesBranchIdDeleteRequest($id, $branch_id, $contentType);
+        $request = $this->createBranchRequest($id, $create_branch_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -195,6 +195,30 @@ class BranchesApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -203,20 +227,20 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdDeleteAsync
+     * Operation createBranchAsync
      *
-     * Desactivar establecimiento (soft-delete)
+     * Crear establecimiento (sucursal)
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateBranchRequest $create_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBranch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdBranchesBranchIdDeleteAsync($id, $branch_id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'][0])
+    public function createBranchAsync($id, $create_branch_request, string $contentType = self::contentTypes['createBranch'][0])
     {
-        return $this->apiV1CompaniesIdBranchesBranchIdDeleteAsyncWithHttpInfo($id, $branch_id, $contentType)
+        return $this->createBranchAsyncWithHttpInfo($id, $create_branch_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -225,21 +249,21 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdDeleteAsyncWithHttpInfo
+     * Operation createBranchAsyncWithHttpInfo
      *
-     * Desactivar establecimiento (soft-delete)
+     * Crear establecimiento (sucursal)
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateBranchRequest $create_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBranch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdBranchesBranchIdDeleteAsyncWithHttpInfo($id, $branch_id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'][0])
+    public function createBranchAsyncWithHttpInfo($id, $create_branch_request, string $contentType = self::contentTypes['createBranch'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesIdBranchesBranchIdDeleteRequest($id, $branch_id, $contentType);
+        $request = $this->createBranchRequest($id, $create_branch_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -265,36 +289,312 @@ class BranchesApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesIdBranchesBranchIdDelete'
+     * Create request for operation 'createBranch'
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\CreateBranchRequest $create_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBranch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesIdBranchesBranchIdDeleteRequest($id, $branch_id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdDelete'][0])
+    public function createBranchRequest($id, $create_branch_request, string $contentType = self::contentTypes['createBranch'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdBranchesBranchIdDelete'
+                'Missing the required parameter $id when calling createBranch'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.apiV1CompaniesIdBranchesBranchIdDelete, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.createBranch, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
+        // verify the required parameter 'create_branch_request' is set
+        if ($create_branch_request === null || (is_array($create_branch_request) && count($create_branch_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $create_branch_request when calling createBranch'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/companies/{id}/branches';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($create_branch_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                try {
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($create_branch_request), JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                $httpBody = $create_branch_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deactivateBranch
+     *
+     * Desactivar establecimiento (soft-delete)
+     *
+     * @param  string $id id (required)
+     * @param  string $branch_id branch_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deactivateBranch'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deactivateBranch($id, $branch_id, string $contentType = self::contentTypes['deactivateBranch'][0])
+    {
+        $this->deactivateBranchWithHttpInfo($id, $branch_id, $contentType);
+    }
+
+    /**
+     * Operation deactivateBranchWithHttpInfo
+     *
+     * Desactivar establecimiento (soft-delete)
+     *
+     * @param  string $id (required)
+     * @param  string $branch_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deactivateBranch'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deactivateBranchWithHttpInfo($id, $branch_id, string $contentType = self::contentTypes['deactivateBranch'][0])
+    {
+        $request = $this->deactivateBranchRequest($id, $branch_id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deactivateBranchAsync
+     *
+     * Desactivar establecimiento (soft-delete)
+     *
+     * @param  string $id (required)
+     * @param  string $branch_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deactivateBranch'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deactivateBranchAsync($id, $branch_id, string $contentType = self::contentTypes['deactivateBranch'][0])
+    {
+        return $this->deactivateBranchAsyncWithHttpInfo($id, $branch_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deactivateBranchAsyncWithHttpInfo
+     *
+     * Desactivar establecimiento (soft-delete)
+     *
+     * @param  string $id (required)
+     * @param  string $branch_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deactivateBranch'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deactivateBranchAsyncWithHttpInfo($id, $branch_id, string $contentType = self::contentTypes['deactivateBranch'][0])
+    {
+        $returnType = '';
+        $request = $this->deactivateBranchRequest($id, $branch_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deactivateBranch'
+     *
+     * @param  string $id (required)
+     * @param  string $branch_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deactivateBranch'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function deactivateBranchRequest($id, $branch_id, string $contentType = self::contentTypes['deactivateBranch'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling deactivateBranch'
+            );
+        }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.deactivateBranch, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
         // verify the required parameter 'branch_id' is set
         if ($branch_id === null || (is_array($branch_id) && count($branch_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $branch_id when calling apiV1CompaniesIdBranchesBranchIdDelete'
+                'Missing the required parameter $branch_id when calling deactivateBranch'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $branch_id)) {
-            throw new \InvalidArgumentException("invalid value for \"branch_id\" when calling BranchesApi.apiV1CompaniesIdBranchesBranchIdDelete, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"branch_id\" when calling BranchesApi.deactivateBranch, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -326,7 +626,7 @@ class BranchesApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -360,6 +660,10 @@ class BranchesApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -383,41 +687,37 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdPut
+     * Operation listBranches
      *
-     * Actualizar establecimiento
+     * Listar establecimientos (sucursales) de una empresa
      *
      * @param  string $id id (required)
-     * @param  string $branch_id branch_id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesBranchIdPutRequest $api_v1_companies_id_branches_branch_id_put_request api_v1_companies_id_branches_branch_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBranches'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesIdBranchesBranchIdPut($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'][0])
+    public function listBranches($id, string $contentType = self::contentTypes['listBranches'][0])
     {
-        $this->apiV1CompaniesIdBranchesBranchIdPutWithHttpInfo($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, $contentType);
+        $this->listBranchesWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdPutWithHttpInfo
+     * Operation listBranchesWithHttpInfo
      *
-     * Actualizar establecimiento
+     * Listar establecimientos (sucursales) de una empresa
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesBranchIdPutRequest $api_v1_companies_id_branches_branch_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBranches'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesIdBranchesBranchIdPutWithHttpInfo($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'][0])
+    public function listBranchesWithHttpInfo($id, string $contentType = self::contentTypes['listBranches'][0])
     {
-        $request = $this->apiV1CompaniesIdBranchesBranchIdPutRequest($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, $contentType);
+        $request = $this->listBranchesRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -445,6 +745,30 @@ class BranchesApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -453,21 +777,19 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdPutAsync
+     * Operation listBranchesAsync
      *
-     * Actualizar establecimiento
+     * Listar establecimientos (sucursales) de una empresa
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesBranchIdPutRequest $api_v1_companies_id_branches_branch_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBranches'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdBranchesBranchIdPutAsync($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'][0])
+    public function listBranchesAsync($id, string $contentType = self::contentTypes['listBranches'][0])
     {
-        return $this->apiV1CompaniesIdBranchesBranchIdPutAsyncWithHttpInfo($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, $contentType)
+        return $this->listBranchesAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -476,22 +798,20 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesBranchIdPutAsyncWithHttpInfo
+     * Operation listBranchesAsyncWithHttpInfo
      *
-     * Actualizar establecimiento
+     * Listar establecimientos (sucursales) de una empresa
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesBranchIdPutRequest $api_v1_companies_id_branches_branch_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBranches'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdBranchesBranchIdPutAsyncWithHttpInfo($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'][0])
+    public function listBranchesAsyncWithHttpInfo($id, string $contentType = self::contentTypes['listBranches'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesIdBranchesBranchIdPutRequest($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, $contentType);
+        $request = $this->listBranchesRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -517,288 +837,25 @@ class BranchesApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesIdBranchesBranchIdPut'
+     * Create request for operation 'listBranches'
      *
      * @param  string $id (required)
-     * @param  string $branch_id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesBranchIdPutRequest $api_v1_companies_id_branches_branch_id_put_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listBranches'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesIdBranchesBranchIdPutRequest($id, $branch_id, $api_v1_companies_id_branches_branch_id_put_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesBranchIdPut'][0])
+    public function listBranchesRequest($id, string $contentType = self::contentTypes['listBranches'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdBranchesBranchIdPut'
+                'Missing the required parameter $id when calling listBranches'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.apiV1CompaniesIdBranchesBranchIdPut, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
-        }
-        
-        // verify the required parameter 'branch_id' is set
-        if ($branch_id === null || (is_array($branch_id) && count($branch_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $branch_id when calling apiV1CompaniesIdBranchesBranchIdPut'
-            );
-        }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $branch_id)) {
-            throw new \InvalidArgumentException("invalid value for \"branch_id\" when calling BranchesApi.apiV1CompaniesIdBranchesBranchIdPut, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
-        }
-        
-        // verify the required parameter 'api_v1_companies_id_branches_branch_id_put_request' is set
-        if ($api_v1_companies_id_branches_branch_id_put_request === null || (is_array($api_v1_companies_id_branches_branch_id_put_request) && count($api_v1_companies_id_branches_branch_id_put_request) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_companies_id_branches_branch_id_put_request when calling apiV1CompaniesIdBranchesBranchIdPut'
-            );
-        }
-
-
-        $resourcePath = '/api/v1/companies/{id}/branches/{branchId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{id}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($branch_id !== null) {
-            $resourcePath = str_replace(
-                '{branchId}',
-                ObjectSerializer::toPathValue($branch_id),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            [],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (isset($api_v1_companies_id_branches_branch_id_put_request)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_companies_id_branches_branch_id_put_request), JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                $httpBody = $api_v1_companies_id_branches_branch_id_put_request;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                try {
-                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $e) {
-                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
-                }
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'PUT',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation apiV1CompaniesIdBranchesGet
-     *
-     * Listar establecimientos (sucursales) de una empresa
-     *
-     * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function apiV1CompaniesIdBranchesGet($id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesGet'][0])
-    {
-        $this->apiV1CompaniesIdBranchesGetWithHttpInfo($id, $contentType);
-    }
-
-    /**
-     * Operation apiV1CompaniesIdBranchesGetWithHttpInfo
-     *
-     * Listar establecimientos (sucursales) de una empresa
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesGet'] to see the possible values for this operation
-     *
-     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function apiV1CompaniesIdBranchesGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesGet'][0])
-    {
-        $request = $this->apiV1CompaniesIdBranchesGetRequest($id, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation apiV1CompaniesIdBranchesGetAsync
-     *
-     * Listar establecimientos (sucursales) de una empresa
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1CompaniesIdBranchesGetAsync($id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesGet'][0])
-    {
-        return $this->apiV1CompaniesIdBranchesGetAsyncWithHttpInfo($id, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation apiV1CompaniesIdBranchesGetAsyncWithHttpInfo
-     *
-     * Listar establecimientos (sucursales) de una empresa
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function apiV1CompaniesIdBranchesGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesGet'][0])
-    {
-        $returnType = '';
-        $request = $this->apiV1CompaniesIdBranchesGetRequest($id, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'apiV1CompaniesIdBranchesGet'
-     *
-     * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesGet'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function apiV1CompaniesIdBranchesGetRequest($id, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesGet'][0])
-    {
-
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdBranchesGet'
-            );
-        }
-        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.apiV1CompaniesIdBranchesGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.listBranches, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -822,7 +879,7 @@ class BranchesApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -856,6 +913,10 @@ class BranchesApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -879,39 +940,41 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesPost
+     * Operation updateBranch
      *
-     * Crear establecimiento (sucursal)
+     * Actualizar establecimiento
      *
      * @param  string $id id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesPostRequest $api_v1_companies_id_branches_post_request api_v1_companies_id_branches_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesPost'] to see the possible values for this operation
+     * @param  string $branch_id branch_id (required)
+     * @param  \Intifact\Sdk\Model\UpdateBranchRequest $update_branch_request update_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBranch'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1CompaniesIdBranchesPost($id, $api_v1_companies_id_branches_post_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesPost'][0])
+    public function updateBranch($id, $branch_id, $update_branch_request, string $contentType = self::contentTypes['updateBranch'][0])
     {
-        $this->apiV1CompaniesIdBranchesPostWithHttpInfo($id, $api_v1_companies_id_branches_post_request, $contentType);
+        $this->updateBranchWithHttpInfo($id, $branch_id, $update_branch_request, $contentType);
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesPostWithHttpInfo
+     * Operation updateBranchWithHttpInfo
      *
-     * Crear establecimiento (sucursal)
+     * Actualizar establecimiento
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesPostRequest $api_v1_companies_id_branches_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesPost'] to see the possible values for this operation
+     * @param  string $branch_id (required)
+     * @param  \Intifact\Sdk\Model\UpdateBranchRequest $update_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBranch'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1CompaniesIdBranchesPostWithHttpInfo($id, $api_v1_companies_id_branches_post_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesPost'][0])
+    public function updateBranchWithHttpInfo($id, $branch_id, $update_branch_request, string $contentType = self::contentTypes['updateBranch'][0])
     {
-        $request = $this->apiV1CompaniesIdBranchesPostRequest($id, $api_v1_companies_id_branches_post_request, $contentType);
+        $request = $this->updateBranchRequest($id, $branch_id, $update_branch_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -939,6 +1002,30 @@ class BranchesApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -947,20 +1034,21 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesPostAsync
+     * Operation updateBranchAsync
      *
-     * Crear establecimiento (sucursal)
+     * Actualizar establecimiento
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesPostRequest $api_v1_companies_id_branches_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesPost'] to see the possible values for this operation
+     * @param  string $branch_id (required)
+     * @param  \Intifact\Sdk\Model\UpdateBranchRequest $update_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBranch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdBranchesPostAsync($id, $api_v1_companies_id_branches_post_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesPost'][0])
+    public function updateBranchAsync($id, $branch_id, $update_branch_request, string $contentType = self::contentTypes['updateBranch'][0])
     {
-        return $this->apiV1CompaniesIdBranchesPostAsyncWithHttpInfo($id, $api_v1_companies_id_branches_post_request, $contentType)
+        return $this->updateBranchAsyncWithHttpInfo($id, $branch_id, $update_branch_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -969,21 +1057,22 @@ class BranchesApi
     }
 
     /**
-     * Operation apiV1CompaniesIdBranchesPostAsyncWithHttpInfo
+     * Operation updateBranchAsyncWithHttpInfo
      *
-     * Crear establecimiento (sucursal)
+     * Actualizar establecimiento
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesPostRequest $api_v1_companies_id_branches_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesPost'] to see the possible values for this operation
+     * @param  string $branch_id (required)
+     * @param  \Intifact\Sdk\Model\UpdateBranchRequest $update_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBranch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1CompaniesIdBranchesPostAsyncWithHttpInfo($id, $api_v1_companies_id_branches_post_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesPost'][0])
+    public function updateBranchAsyncWithHttpInfo($id, $branch_id, $update_branch_request, string $contentType = self::contentTypes['updateBranch'][0])
     {
         $returnType = '';
-        $request = $this->apiV1CompaniesIdBranchesPostRequest($id, $api_v1_companies_id_branches_post_request, $contentType);
+        $request = $this->updateBranchRequest($id, $branch_id, $update_branch_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1009,37 +1098,48 @@ class BranchesApi
     }
 
     /**
-     * Create request for operation 'apiV1CompaniesIdBranchesPost'
+     * Create request for operation 'updateBranch'
      *
      * @param  string $id (required)
-     * @param  \Intifact\Sdk\Model\ApiV1CompaniesIdBranchesPostRequest $api_v1_companies_id_branches_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1CompaniesIdBranchesPost'] to see the possible values for this operation
+     * @param  string $branch_id (required)
+     * @param  \Intifact\Sdk\Model\UpdateBranchRequest $update_branch_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateBranch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1CompaniesIdBranchesPostRequest($id, $api_v1_companies_id_branches_post_request, string $contentType = self::contentTypes['apiV1CompaniesIdBranchesPost'][0])
+    public function updateBranchRequest($id, $branch_id, $update_branch_request, string $contentType = self::contentTypes['updateBranch'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1CompaniesIdBranchesPost'
+                'Missing the required parameter $id when calling updateBranch'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.apiV1CompaniesIdBranchesPost, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling BranchesApi.updateBranch, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
-        // verify the required parameter 'api_v1_companies_id_branches_post_request' is set
-        if ($api_v1_companies_id_branches_post_request === null || (is_array($api_v1_companies_id_branches_post_request) && count($api_v1_companies_id_branches_post_request) === 0)) {
+        // verify the required parameter 'branch_id' is set
+        if ($branch_id === null || (is_array($branch_id) && count($branch_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_companies_id_branches_post_request when calling apiV1CompaniesIdBranchesPost'
+                'Missing the required parameter $branch_id when calling updateBranch'
+            );
+        }
+        if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $branch_id)) {
+            throw new \InvalidArgumentException("invalid value for \"branch_id\" when calling BranchesApi.updateBranch, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
+        // verify the required parameter 'update_branch_request' is set
+        if ($update_branch_request === null || (is_array($update_branch_request) && count($update_branch_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $update_branch_request when calling updateBranch'
             );
         }
 
 
-        $resourcePath = '/api/v1/companies/{id}/branches';
+        $resourcePath = '/api/v1/companies/{id}/branches/{branchId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1056,25 +1156,33 @@ class BranchesApi
                 $resourcePath
             );
         }
+        // path params
+        if ($branch_id !== null) {
+            $resourcePath = str_replace(
+                '{branchId}',
+                ObjectSerializer::toPathValue($branch_id),
+                $resourcePath
+            );
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($api_v1_companies_id_branches_post_request)) {
+        if (isset($update_branch_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_companies_id_branches_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($update_branch_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_companies_id_branches_post_request;
+                $httpBody = $update_branch_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1104,6 +1212,10 @@ class BranchesApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1119,7 +1231,7 @@ class BranchesApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'POST',
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

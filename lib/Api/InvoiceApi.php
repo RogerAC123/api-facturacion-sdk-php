@@ -74,19 +74,19 @@ class InvoiceApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'apiV1InvoiceComputePost' => [
+        'computeInvoice' => [
             'application/json',
         ],
-        'apiV1InvoiceIdCdrGet' => [
+        'getInvoiceCdr' => [
             'application/json',
         ],
-        'apiV1InvoiceIdPdfGet' => [
+        'getInvoicePdf' => [
             'application/json',
         ],
-        'apiV1InvoiceIdXmlGet' => [
+        'getInvoiceXml' => [
             'application/json',
         ],
-        'apiV1InvoiceSendPost' => [
+        'sendInvoice' => [
             'application/json',
         ],
     ];
@@ -138,38 +138,38 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceComputePost
+     * Operation computeInvoice
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest $api_v1_invoice_compute_post_request api_v1_invoice_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeInvoice'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response
+     * @return \Intifact\Sdk\Model\ComputeInvoice200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1InvoiceComputePost($api_v1_invoice_compute_post_request, string $contentType = self::contentTypes['apiV1InvoiceComputePost'][0])
+    public function computeInvoice($compute_invoice_request, string $contentType = self::contentTypes['computeInvoice'][0])
     {
-        list($response) = $this->apiV1InvoiceComputePostWithHttpInfo($api_v1_invoice_compute_post_request, $contentType);
+        list($response) = $this->computeInvoiceWithHttpInfo($compute_invoice_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1InvoiceComputePostWithHttpInfo
+     * Operation computeInvoiceWithHttpInfo
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest $api_v1_invoice_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeInvoice'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\ComputeInvoice200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1InvoiceComputePostWithHttpInfo($api_v1_invoice_compute_post_request, string $contentType = self::contentTypes['apiV1InvoiceComputePost'][0])
+    public function computeInvoiceWithHttpInfo($compute_invoice_request, string $contentType = self::contentTypes['computeInvoice'][0])
     {
-        $request = $this->apiV1InvoiceComputePostRequest($api_v1_invoice_compute_post_request, $contentType);
+        $request = $this->computeInvoiceRequest($compute_invoice_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -197,7 +197,25 @@ class InvoiceApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response',
+                        '\Intifact\Sdk\Model\ComputeInvoice200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -219,7 +237,7 @@ class InvoiceApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response',
+                '\Intifact\Sdk\Model\ComputeInvoice200Response',
                 $request,
                 $response,
             );
@@ -228,7 +246,31 @@ class InvoiceApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response',
+                        '\Intifact\Sdk\Model\ComputeInvoice200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -241,19 +283,19 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceComputePostAsync
+     * Operation computeInvoiceAsync
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest $api_v1_invoice_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceComputePostAsync($api_v1_invoice_compute_post_request, string $contentType = self::contentTypes['apiV1InvoiceComputePost'][0])
+    public function computeInvoiceAsync($compute_invoice_request, string $contentType = self::contentTypes['computeInvoice'][0])
     {
-        return $this->apiV1InvoiceComputePostAsyncWithHttpInfo($api_v1_invoice_compute_post_request, $contentType)
+        return $this->computeInvoiceAsyncWithHttpInfo($compute_invoice_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -262,20 +304,20 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceComputePostAsyncWithHttpInfo
+     * Operation computeInvoiceAsyncWithHttpInfo
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest $api_v1_invoice_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceComputePostAsyncWithHttpInfo($api_v1_invoice_compute_post_request, string $contentType = self::contentTypes['apiV1InvoiceComputePost'][0])
+    public function computeInvoiceAsyncWithHttpInfo($compute_invoice_request, string $contentType = self::contentTypes['computeInvoice'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1InvoiceComputePost200Response';
-        $request = $this->apiV1InvoiceComputePostRequest($api_v1_invoice_compute_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\ComputeInvoice200Response';
+        $request = $this->computeInvoiceRequest($compute_invoice_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -314,21 +356,21 @@ class InvoiceApi
     }
 
     /**
-     * Create request for operation 'apiV1InvoiceComputePost'
+     * Create request for operation 'computeInvoice'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceComputePostRequest $api_v1_invoice_compute_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceComputePost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\ComputeInvoiceRequest $compute_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['computeInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1InvoiceComputePostRequest($api_v1_invoice_compute_post_request, string $contentType = self::contentTypes['apiV1InvoiceComputePost'][0])
+    public function computeInvoiceRequest($compute_invoice_request, string $contentType = self::contentTypes['computeInvoice'][0])
     {
 
-        // verify the required parameter 'api_v1_invoice_compute_post_request' is set
-        if ($api_v1_invoice_compute_post_request === null || (is_array($api_v1_invoice_compute_post_request) && count($api_v1_invoice_compute_post_request) === 0)) {
+        // verify the required parameter 'compute_invoice_request' is set
+        if ($compute_invoice_request === null || (is_array($compute_invoice_request) && count($compute_invoice_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_invoice_compute_post_request when calling apiV1InvoiceComputePost'
+                'Missing the required parameter $compute_invoice_request when calling computeInvoice'
             );
         }
 
@@ -351,16 +393,16 @@ class InvoiceApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_invoice_compute_post_request)) {
+        if (isset($compute_invoice_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_invoice_compute_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($compute_invoice_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_invoice_compute_post_request;
+                $httpBody = $compute_invoice_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -390,6 +432,10 @@ class InvoiceApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -413,37 +459,37 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdCdrGet
+     * Operation getInvoiceCdr
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1InvoiceIdCdrGet($id, string $contentType = self::contentTypes['apiV1InvoiceIdCdrGet'][0])
+    public function getInvoiceCdr($id, string $contentType = self::contentTypes['getInvoiceCdr'][0])
     {
-        $this->apiV1InvoiceIdCdrGetWithHttpInfo($id, $contentType);
+        $this->getInvoiceCdrWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1InvoiceIdCdrGetWithHttpInfo
+     * Operation getInvoiceCdrWithHttpInfo
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceCdr'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1InvoiceIdCdrGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1InvoiceIdCdrGet'][0])
+    public function getInvoiceCdrWithHttpInfo($id, string $contentType = self::contentTypes['getInvoiceCdr'][0])
     {
-        $request = $this->apiV1InvoiceIdCdrGetRequest($id, $contentType);
+        $request = $this->getInvoiceCdrRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -471,6 +517,30 @@ class InvoiceApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -479,19 +549,19 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdCdrGetAsync
+     * Operation getInvoiceCdrAsync
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceIdCdrGetAsync($id, string $contentType = self::contentTypes['apiV1InvoiceIdCdrGet'][0])
+    public function getInvoiceCdrAsync($id, string $contentType = self::contentTypes['getInvoiceCdr'][0])
     {
-        return $this->apiV1InvoiceIdCdrGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getInvoiceCdrAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -500,20 +570,20 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdCdrGetAsyncWithHttpInfo
+     * Operation getInvoiceCdrAsyncWithHttpInfo
      *
      * Descargar CDR (constancia de SUNAT)
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceIdCdrGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1InvoiceIdCdrGet'][0])
+    public function getInvoiceCdrAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getInvoiceCdr'][0])
     {
         $returnType = '';
-        $request = $this->apiV1InvoiceIdCdrGetRequest($id, $contentType);
+        $request = $this->getInvoiceCdrRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -539,25 +609,25 @@ class InvoiceApi
     }
 
     /**
-     * Create request for operation 'apiV1InvoiceIdCdrGet'
+     * Create request for operation 'getInvoiceCdr'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdCdrGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceCdr'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1InvoiceIdCdrGetRequest($id, string $contentType = self::contentTypes['apiV1InvoiceIdCdrGet'][0])
+    public function getInvoiceCdrRequest($id, string $contentType = self::contentTypes['getInvoiceCdr'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1InvoiceIdCdrGet'
+                'Missing the required parameter $id when calling getInvoiceCdr'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling InvoiceApi.apiV1InvoiceIdCdrGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling InvoiceApi.getInvoiceCdr, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -581,7 +651,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -615,6 +685,10 @@ class InvoiceApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -638,39 +712,39 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdPdfGet
+     * Operation getInvoicePdf
      *
      * Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS)
      *
      * @param  string $id id (required)
      * @param  string|null $format format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoicePdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1InvoiceIdPdfGet($id, $format = 'a4', string $contentType = self::contentTypes['apiV1InvoiceIdPdfGet'][0])
+    public function getInvoicePdf($id, $format = 'a4', string $contentType = self::contentTypes['getInvoicePdf'][0])
     {
-        $this->apiV1InvoiceIdPdfGetWithHttpInfo($id, $format, $contentType);
+        $this->getInvoicePdfWithHttpInfo($id, $format, $contentType);
     }
 
     /**
-     * Operation apiV1InvoiceIdPdfGetWithHttpInfo
+     * Operation getInvoicePdfWithHttpInfo
      *
      * Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS)
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoicePdf'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1InvoiceIdPdfGetWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['apiV1InvoiceIdPdfGet'][0])
+    public function getInvoicePdfWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['getInvoicePdf'][0])
     {
-        $request = $this->apiV1InvoiceIdPdfGetRequest($id, $format, $contentType);
+        $request = $this->getInvoicePdfRequest($id, $format, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -698,6 +772,30 @@ class InvoiceApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -706,20 +804,20 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdPdfGetAsync
+     * Operation getInvoicePdfAsync
      *
      * Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS)
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoicePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceIdPdfGetAsync($id, $format = 'a4', string $contentType = self::contentTypes['apiV1InvoiceIdPdfGet'][0])
+    public function getInvoicePdfAsync($id, $format = 'a4', string $contentType = self::contentTypes['getInvoicePdf'][0])
     {
-        return $this->apiV1InvoiceIdPdfGetAsyncWithHttpInfo($id, $format, $contentType)
+        return $this->getInvoicePdfAsyncWithHttpInfo($id, $format, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -728,21 +826,21 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdPdfGetAsyncWithHttpInfo
+     * Operation getInvoicePdfAsyncWithHttpInfo
      *
      * Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS)
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoicePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceIdPdfGetAsyncWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['apiV1InvoiceIdPdfGet'][0])
+    public function getInvoicePdfAsyncWithHttpInfo($id, $format = 'a4', string $contentType = self::contentTypes['getInvoicePdf'][0])
     {
         $returnType = '';
-        $request = $this->apiV1InvoiceIdPdfGetRequest($id, $format, $contentType);
+        $request = $this->getInvoicePdfRequest($id, $format, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -768,26 +866,26 @@ class InvoiceApi
     }
 
     /**
-     * Create request for operation 'apiV1InvoiceIdPdfGet'
+     * Create request for operation 'getInvoicePdf'
      *
      * @param  string $id (required)
      * @param  string|null $format (optional, default to 'a4')
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdPdfGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoicePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1InvoiceIdPdfGetRequest($id, $format = 'a4', string $contentType = self::contentTypes['apiV1InvoiceIdPdfGet'][0])
+    public function getInvoicePdfRequest($id, $format = 'a4', string $contentType = self::contentTypes['getInvoicePdf'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1InvoiceIdPdfGet'
+                'Missing the required parameter $id when calling getInvoicePdf'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling InvoiceApi.apiV1InvoiceIdPdfGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling InvoiceApi.getInvoicePdf, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -821,7 +919,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -855,6 +953,10 @@ class InvoiceApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -878,37 +980,37 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdXmlGet
+     * Operation getInvoiceXml
      *
      * Descargar XML firmado
      *
      * @param  string $id id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function apiV1InvoiceIdXmlGet($id, string $contentType = self::contentTypes['apiV1InvoiceIdXmlGet'][0])
+    public function getInvoiceXml($id, string $contentType = self::contentTypes['getInvoiceXml'][0])
     {
-        $this->apiV1InvoiceIdXmlGetWithHttpInfo($id, $contentType);
+        $this->getInvoiceXmlWithHttpInfo($id, $contentType);
     }
 
     /**
-     * Operation apiV1InvoiceIdXmlGetWithHttpInfo
+     * Operation getInvoiceXmlWithHttpInfo
      *
      * Descargar XML firmado
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceXml'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1InvoiceIdXmlGetWithHttpInfo($id, string $contentType = self::contentTypes['apiV1InvoiceIdXmlGet'][0])
+    public function getInvoiceXmlWithHttpInfo($id, string $contentType = self::contentTypes['getInvoiceXml'][0])
     {
-        $request = $this->apiV1InvoiceIdXmlGetRequest($id, $contentType);
+        $request = $this->getInvoiceXmlRequest($id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -936,6 +1038,30 @@ class InvoiceApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -944,19 +1070,19 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdXmlGetAsync
+     * Operation getInvoiceXmlAsync
      *
      * Descargar XML firmado
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceIdXmlGetAsync($id, string $contentType = self::contentTypes['apiV1InvoiceIdXmlGet'][0])
+    public function getInvoiceXmlAsync($id, string $contentType = self::contentTypes['getInvoiceXml'][0])
     {
-        return $this->apiV1InvoiceIdXmlGetAsyncWithHttpInfo($id, $contentType)
+        return $this->getInvoiceXmlAsyncWithHttpInfo($id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -965,20 +1091,20 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceIdXmlGetAsyncWithHttpInfo
+     * Operation getInvoiceXmlAsyncWithHttpInfo
      *
      * Descargar XML firmado
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceIdXmlGetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['apiV1InvoiceIdXmlGet'][0])
+    public function getInvoiceXmlAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getInvoiceXml'][0])
     {
         $returnType = '';
-        $request = $this->apiV1InvoiceIdXmlGetRequest($id, $contentType);
+        $request = $this->getInvoiceXmlRequest($id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1004,25 +1130,25 @@ class InvoiceApi
     }
 
     /**
-     * Create request for operation 'apiV1InvoiceIdXmlGet'
+     * Create request for operation 'getInvoiceXml'
      *
      * @param  string $id (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceIdXmlGet'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1InvoiceIdXmlGetRequest($id, string $contentType = self::contentTypes['apiV1InvoiceIdXmlGet'][0])
+    public function getInvoiceXmlRequest($id, string $contentType = self::contentTypes['getInvoiceXml'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling apiV1InvoiceIdXmlGet'
+                'Missing the required parameter $id when calling getInvoiceXml'
             );
         }
         if (!preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling InvoiceApi.apiV1InvoiceIdXmlGet, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling InvoiceApi.getInvoiceXml, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
         }
         
 
@@ -1046,7 +1172,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1080,6 +1206,10 @@ class InvoiceApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1103,38 +1233,38 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceSendPost
+     * Operation sendInvoice
      *
      * Enviar factura (01) o boleta (03) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest $api_v1_invoice_send_post_request api_v1_invoice_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendInvoiceRequest $send_invoice_request send_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendInvoice'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response
+     * @return \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function apiV1InvoiceSendPost($api_v1_invoice_send_post_request, string $contentType = self::contentTypes['apiV1InvoiceSendPost'][0])
+    public function sendInvoice($send_invoice_request, string $contentType = self::contentTypes['sendInvoice'][0])
     {
-        list($response) = $this->apiV1InvoiceSendPostWithHttpInfo($api_v1_invoice_send_post_request, $contentType);
+        list($response) = $this->sendInvoiceWithHttpInfo($send_invoice_request, $contentType);
         return $response;
     }
 
     /**
-     * Operation apiV1InvoiceSendPostWithHttpInfo
+     * Operation sendInvoiceWithHttpInfo
      *
      * Enviar factura (01) o boleta (03) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest $api_v1_invoice_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendInvoiceRequest $send_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendInvoice'] to see the possible values for this operation
      *
      * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response|\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Intifact\Sdk\Model\SendInvoice202Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function apiV1InvoiceSendPostWithHttpInfo($api_v1_invoice_send_post_request, string $contentType = self::contentTypes['apiV1InvoiceSendPost'][0])
+    public function sendInvoiceWithHttpInfo($send_invoice_request, string $contentType = self::contentTypes['sendInvoice'][0])
     {
-        $request = $this->apiV1InvoiceSendPostRequest($api_v1_invoice_send_post_request, $contentType);
+        $request = $this->sendInvoiceRequest($send_invoice_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1162,19 +1292,37 @@ class InvoiceApi
             switch($statusCode) {
                 case 202:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response',
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $request,
                         $response,
                     );
                 case 409:
                     return $this->handleResponseWithDataType(
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $request,
                         $response,
                     );
@@ -1196,7 +1344,7 @@ class InvoiceApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response',
+                '\Intifact\Sdk\Model\SendInvoice202Response',
                 $request,
                 $response,
             );
@@ -1205,7 +1353,7 @@ class InvoiceApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response',
+                        '\Intifact\Sdk\Model\SendInvoice202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1213,7 +1361,23 @@ class InvoiceApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1221,7 +1385,15 @@ class InvoiceApi
                 case 409:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Intifact\Sdk\Model\ApiV1InvoiceSendPost400Response',
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1234,19 +1406,19 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceSendPostAsync
+     * Operation sendInvoiceAsync
      *
      * Enviar factura (01) o boleta (03) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest $api_v1_invoice_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendInvoiceRequest $send_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceSendPostAsync($api_v1_invoice_send_post_request, string $contentType = self::contentTypes['apiV1InvoiceSendPost'][0])
+    public function sendInvoiceAsync($send_invoice_request, string $contentType = self::contentTypes['sendInvoice'][0])
     {
-        return $this->apiV1InvoiceSendPostAsyncWithHttpInfo($api_v1_invoice_send_post_request, $contentType)
+        return $this->sendInvoiceAsyncWithHttpInfo($send_invoice_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1255,20 +1427,20 @@ class InvoiceApi
     }
 
     /**
-     * Operation apiV1InvoiceSendPostAsyncWithHttpInfo
+     * Operation sendInvoiceAsyncWithHttpInfo
      *
      * Enviar factura (01) o boleta (03) a SUNAT
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest $api_v1_invoice_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendInvoiceRequest $send_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function apiV1InvoiceSendPostAsyncWithHttpInfo($api_v1_invoice_send_post_request, string $contentType = self::contentTypes['apiV1InvoiceSendPost'][0])
+    public function sendInvoiceAsyncWithHttpInfo($send_invoice_request, string $contentType = self::contentTypes['sendInvoice'][0])
     {
-        $returnType = '\Intifact\Sdk\Model\ApiV1InvoiceSendPost202Response';
-        $request = $this->apiV1InvoiceSendPostRequest($api_v1_invoice_send_post_request, $contentType);
+        $returnType = '\Intifact\Sdk\Model\SendInvoice202Response';
+        $request = $this->sendInvoiceRequest($send_invoice_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1307,21 +1479,21 @@ class InvoiceApi
     }
 
     /**
-     * Create request for operation 'apiV1InvoiceSendPost'
+     * Create request for operation 'sendInvoice'
      *
-     * @param  \Intifact\Sdk\Model\ApiV1InvoiceSendPostRequest $api_v1_invoice_send_post_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['apiV1InvoiceSendPost'] to see the possible values for this operation
+     * @param  \Intifact\Sdk\Model\SendInvoiceRequest $send_invoice_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function apiV1InvoiceSendPostRequest($api_v1_invoice_send_post_request, string $contentType = self::contentTypes['apiV1InvoiceSendPost'][0])
+    public function sendInvoiceRequest($send_invoice_request, string $contentType = self::contentTypes['sendInvoice'][0])
     {
 
-        // verify the required parameter 'api_v1_invoice_send_post_request' is set
-        if ($api_v1_invoice_send_post_request === null || (is_array($api_v1_invoice_send_post_request) && count($api_v1_invoice_send_post_request) === 0)) {
+        // verify the required parameter 'send_invoice_request' is set
+        if ($send_invoice_request === null || (is_array($send_invoice_request) && count($send_invoice_request) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_v1_invoice_send_post_request when calling apiV1InvoiceSendPost'
+                'Missing the required parameter $send_invoice_request when calling sendInvoice'
             );
         }
 
@@ -1344,16 +1516,16 @@ class InvoiceApi
         );
 
         // for model (json/xml)
-        if (isset($api_v1_invoice_send_post_request)) {
+        if (isset($send_invoice_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the body
                 try {
-                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($api_v1_invoice_send_post_request), JSON_THROW_ON_ERROR);
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($send_invoice_request), JSON_THROW_ON_ERROR);
                 } catch (\JsonException $e) {
                     throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
                 }
             } else {
-                $httpBody = $api_v1_invoice_send_post_request;
+                $httpBody = $send_invoice_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -1383,6 +1555,10 @@ class InvoiceApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
