@@ -1,6 +1,6 @@
 <?php
 /**
- * SendDespatchRequestVehiculosSecundariosInner
+ * ExportProductoSunat200ResponseDataItemsInner
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \Intifact\Sdk\ObjectSerializer;
 
 /**
- * SendDespatchRequestVehiculosSecundariosInner Class Doc Comment
+ * ExportProductoSunat200ResponseDataItemsInner Class Doc Comment
  *
  * @category Class
  * @package  Intifact\Sdk
@@ -40,7 +40,7 @@ use \Intifact\Sdk\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, ArrayAccess, \JsonSerializable
+class ExportProductoSunat200ResponseDataItemsInner implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      *
      * @var string
      */
-    protected static $openAPIModelName = 'sendDespatch_request_vehiculosSecundarios_inner';
+    protected static $openAPIModelName = 'exportProductoSunat_200_response_data_items_inner';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,10 +57,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $openAPITypes = [
-        'placa' => 'string',
-        'tuc' => 'string',
-        'autorizacion' => 'string',
-        'autorizacion_entidad' => 'string'
+        'codigo' => 'string',
+        'descripcion' => 'string',
+        'nivel' => 'string',
+        'clase_codigo' => 'string',
+        'familia' => 'string',
+        'segmento' => 'string'
     ];
 
     /**
@@ -71,10 +73,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'placa' => null,
-        'tuc' => null,
-        'autorizacion' => null,
-        'autorizacion_entidad' => null
+        'codigo' => null,
+        'descripcion' => null,
+        'nivel' => null,
+        'clase_codigo' => null,
+        'familia' => null,
+        'segmento' => null
     ];
 
     /**
@@ -83,10 +87,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'placa' => false,
-        'tuc' => false,
-        'autorizacion' => false,
-        'autorizacion_entidad' => false
+        'codigo' => true,
+        'descripcion' => true,
+        'nivel' => false,
+        'clase_codigo' => true,
+        'familia' => true,
+        'segmento' => true
     ];
 
     /**
@@ -175,10 +181,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $attributeMap = [
-        'placa' => 'placa',
-        'tuc' => 'tuc',
-        'autorizacion' => 'autorizacion',
-        'autorizacion_entidad' => 'autorizacionEntidad'
+        'codigo' => 'codigo',
+        'descripcion' => 'descripcion',
+        'nivel' => 'nivel',
+        'clase_codigo' => 'claseCodigo',
+        'familia' => 'familia',
+        'segmento' => 'segmento'
     ];
 
     /**
@@ -187,10 +195,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $setters = [
-        'placa' => 'setPlaca',
-        'tuc' => 'setTuc',
-        'autorizacion' => 'setAutorizacion',
-        'autorizacion_entidad' => 'setAutorizacionEntidad'
+        'codigo' => 'setCodigo',
+        'descripcion' => 'setDescripcion',
+        'nivel' => 'setNivel',
+        'clase_codigo' => 'setClaseCodigo',
+        'familia' => 'setFamilia',
+        'segmento' => 'setSegmento'
     ];
 
     /**
@@ -199,10 +209,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $getters = [
-        'placa' => 'getPlaca',
-        'tuc' => 'getTuc',
-        'autorizacion' => 'getAutorizacion',
-        'autorizacion_entidad' => 'getAutorizacionEntidad'
+        'codigo' => 'getCodigo',
+        'descripcion' => 'getDescripcion',
+        'nivel' => 'getNivel',
+        'clase_codigo' => 'getClaseCodigo',
+        'familia' => 'getFamilia',
+        'segmento' => 'getSegmento'
     ];
 
     /**
@@ -246,6 +258,21 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
         return self::$openAPIModelName;
     }
 
+    public const NIVEL_CLASE = 'CLASE';
+    public const NIVEL_PRODUCTO = 'PRODUCTO';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getNivelAllowableValues()
+    {
+        return [
+            self::NIVEL_CLASE,
+            self::NIVEL_PRODUCTO,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -262,10 +289,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('placa', $data ?? [], null);
-        $this->setIfExists('tuc', $data ?? [], null);
-        $this->setIfExists('autorizacion', $data ?? [], null);
-        $this->setIfExists('autorizacion_entidad', $data ?? [], null);
+        $this->setIfExists('codigo', $data ?? [], null);
+        $this->setIfExists('descripcion', $data ?? [], null);
+        $this->setIfExists('nivel', $data ?? [], null);
+        $this->setIfExists('clase_codigo', $data ?? [], null);
+        $this->setIfExists('familia', $data ?? [], null);
+        $this->setIfExists('segmento', $data ?? [], null);
     }
 
     /**
@@ -295,33 +324,33 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
     {
         $invalidProperties = [];
 
-        if ($this->container['placa'] === null) {
-            $invalidProperties[] = "'placa' can't be null";
+        if ($this->container['codigo'] === null && !$this->isNullableSetToNull('codigo')) {
+            $invalidProperties[] = "'codigo' is required";
         }
-        if ((mb_strlen($this->container['placa']) > 10)) {
-            $invalidProperties[] = "invalid value for 'placa', the character length must be smaller than or equal to 10.";
+        if ($this->container['descripcion'] === null && !$this->isNullableSetToNull('descripcion')) {
+            $invalidProperties[] = "'descripcion' is required";
         }
-
-        if ((mb_strlen($this->container['placa']) < 1)) {
-            $invalidProperties[] = "invalid value for 'placa', the character length must be bigger than or equal to 1.";
+        if ($this->container['nivel'] === null) {
+            $invalidProperties[] = "'nivel' can't be null";
         }
-
-        if (!preg_match("/^[A-Z0-9]+$/", $this->container['placa'])) {
-            $invalidProperties[] = "invalid value for 'placa', must be conform to the pattern /^[A-Z0-9]+$/.";
-        }
-
-        if (!is_null($this->container['tuc']) && (mb_strlen($this->container['tuc']) > 15)) {
-            $invalidProperties[] = "invalid value for 'tuc', the character length must be smaller than or equal to 15.";
-        }
-
-        if (!is_null($this->container['autorizacion']) && (mb_strlen($this->container['autorizacion']) > 50)) {
-            $invalidProperties[] = "invalid value for 'autorizacion', the character length must be smaller than or equal to 50.";
+        $allowedValues = $this->getNivelAllowableValues();
+        if (!is_null($this->container['nivel']) && !in_array($this->container['nivel'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'nivel', must be one of '%s'",
+                $this->container['nivel'],
+                implode("', '", $allowedValues)
+            );
         }
 
-        if (!is_null($this->container['autorizacion_entidad']) && (mb_strlen($this->container['autorizacion_entidad']) > 2)) {
-            $invalidProperties[] = "invalid value for 'autorizacion_entidad', the character length must be smaller than or equal to 2.";
+        if ($this->container['clase_codigo'] === null && !$this->isNullableSetToNull('clase_codigo')) {
+            $invalidProperties[] = "'clase_codigo' is required";
         }
-
+        if ($this->container['familia'] === null && !$this->isNullableSetToNull('familia')) {
+            $invalidProperties[] = "'familia' is required";
+        }
+        if ($this->container['segmento'] === null && !$this->isNullableSetToNull('segmento')) {
+            $invalidProperties[] = "'segmento' is required";
+        }
         return $invalidProperties;
     }
 
@@ -338,131 +367,208 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
 
 
     /**
-     * Gets placa
+     * Gets codigo
+     *
+     * @return string|null
+     */
+    public function getCodigo()
+    {
+        return $this->container['codigo'];
+    }
+
+    /**
+     * Sets codigo
+     *
+     * @param string|null $codigo codigo
+     *
+     * @return self
+     */
+    public function setCodigo($codigo)
+    {
+        if (is_null($codigo)) {
+            array_push($this->openAPINullablesSetToNull, 'codigo');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('codigo', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['codigo'] = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Gets descripcion
+     *
+     * @return string|null
+     */
+    public function getDescripcion()
+    {
+        return $this->container['descripcion'];
+    }
+
+    /**
+     * Sets descripcion
+     *
+     * @param string|null $descripcion descripcion
+     *
+     * @return self
+     */
+    public function setDescripcion($descripcion)
+    {
+        if (is_null($descripcion)) {
+            array_push($this->openAPINullablesSetToNull, 'descripcion');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('descripcion', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['descripcion'] = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Gets nivel
      *
      * @return string
      */
-    public function getPlaca()
+    public function getNivel()
     {
-        return $this->container['placa'];
+        return $this->container['nivel'];
     }
 
     /**
-     * Sets placa
+     * Sets nivel
      *
-     * @param string $placa placa
+     * @param string $nivel nivel
      *
      * @return self
      */
-    public function setPlaca($placa)
+    public function setNivel($nivel)
     {
-        if (is_null($placa)) {
-            throw new \InvalidArgumentException('non-nullable placa cannot be null');
+        if (is_null($nivel)) {
+            throw new \InvalidArgumentException('non-nullable nivel cannot be null');
         }
-        if ((mb_strlen($placa) > 10)) {
-            throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 10.');
+        $allowedValues = $this->getNivelAllowableValues();
+        if (!in_array($nivel, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'nivel', must be one of '%s'",
+                    $nivel,
+                    implode("', '", $allowedValues)
+                )
+            );
         }
-        if ((mb_strlen($placa) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchRequestVehiculosSecundariosInner., must be bigger than or equal to 1.');
-        }
-        if ((!preg_match("/^[A-Z0-9]+$/", ObjectSerializer::toString($placa)))) {
-            throw new \InvalidArgumentException("invalid value for \$placa when calling SendDespatchRequestVehiculosSecundariosInner., must conform to the pattern /^[A-Z0-9]+$/.");
-        }
-
-        $this->container['placa'] = $placa;
+        $this->container['nivel'] = $nivel;
 
         return $this;
     }
 
     /**
-     * Gets tuc
+     * Gets clase_codigo
      *
      * @return string|null
      */
-    public function getTuc()
+    public function getClaseCodigo()
     {
-        return $this->container['tuc'];
+        return $this->container['clase_codigo'];
     }
 
     /**
-     * Sets tuc
+     * Sets clase_codigo
      *
-     * @param string|null $tuc tuc
+     * @param string|null $clase_codigo clase_codigo
      *
      * @return self
      */
-    public function setTuc($tuc)
+    public function setClaseCodigo($clase_codigo)
     {
-        if (is_null($tuc)) {
-            throw new \InvalidArgumentException('non-nullable tuc cannot be null');
+        if (is_null($clase_codigo)) {
+            array_push($this->openAPINullablesSetToNull, 'clase_codigo');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('clase_codigo', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
-        if ((mb_strlen($tuc) > 15)) {
-            throw new \InvalidArgumentException('invalid length for $tuc when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 15.');
-        }
-
-        $this->container['tuc'] = $tuc;
+        $this->container['clase_codigo'] = $clase_codigo;
 
         return $this;
     }
 
     /**
-     * Gets autorizacion
+     * Gets familia
      *
      * @return string|null
      */
-    public function getAutorizacion()
+    public function getFamilia()
     {
-        return $this->container['autorizacion'];
+        return $this->container['familia'];
     }
 
     /**
-     * Sets autorizacion
+     * Sets familia
      *
-     * @param string|null $autorizacion autorizacion
+     * @param string|null $familia familia
      *
      * @return self
      */
-    public function setAutorizacion($autorizacion)
+    public function setFamilia($familia)
     {
-        if (is_null($autorizacion)) {
-            throw new \InvalidArgumentException('non-nullable autorizacion cannot be null');
+        if (is_null($familia)) {
+            array_push($this->openAPINullablesSetToNull, 'familia');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('familia', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
-        if ((mb_strlen($autorizacion) > 50)) {
-            throw new \InvalidArgumentException('invalid length for $autorizacion when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 50.');
-        }
-
-        $this->container['autorizacion'] = $autorizacion;
+        $this->container['familia'] = $familia;
 
         return $this;
     }
 
     /**
-     * Gets autorizacion_entidad
+     * Gets segmento
      *
      * @return string|null
      */
-    public function getAutorizacionEntidad()
+    public function getSegmento()
     {
-        return $this->container['autorizacion_entidad'];
+        return $this->container['segmento'];
     }
 
     /**
-     * Sets autorizacion_entidad
+     * Sets segmento
      *
-     * @param string|null $autorizacion_entidad autorizacion_entidad
+     * @param string|null $segmento segmento
      *
      * @return self
      */
-    public function setAutorizacionEntidad($autorizacion_entidad)
+    public function setSegmento($segmento)
     {
-        if (is_null($autorizacion_entidad)) {
-            throw new \InvalidArgumentException('non-nullable autorizacion_entidad cannot be null');
+        if (is_null($segmento)) {
+            array_push($this->openAPINullablesSetToNull, 'segmento');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('segmento', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
-        if ((mb_strlen($autorizacion_entidad) > 2)) {
-            throw new \InvalidArgumentException('invalid length for $autorizacion_entidad when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 2.');
-        }
-
-        $this->container['autorizacion_entidad'] = $autorizacion_entidad;
+        $this->container['segmento'] = $segmento;
 
         return $this;
     }

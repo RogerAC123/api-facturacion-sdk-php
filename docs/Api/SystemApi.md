@@ -6,12 +6,72 @@ All URIs are relative to http://localhost:3000, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**exportProductoSunat()**](SystemApi.md#exportProductoSunat) | **GET** /api/v1/catalogs/producto/export | Descargar el Catálogo 25 completo (52.840 códigos) |
 | [**getCatalog()**](SystemApi.md#getCatalog) | **GET** /api/v1/catalogs/{key} | Obtener un catálogo por clave |
+| [**getProductoSunat()**](SystemApi.md#getProductoSunat) | **GET** /api/v1/catalogs/producto/{codigo} | Obtener un Código de Producto SUNAT por código |
 | [**healthGet()**](SystemApi.md#healthGet) | **GET** /health | Health check del servicio (DB + Redis + SUNAT env) |
 | [**internalCertificatesExpiringGet()**](SystemApi.md#internalCertificatesExpiringGet) | **GET** /internal/certificates/expiring | List certificates expiring within N days (internal) |
 | [**internalWebhooksStatsGet()**](SystemApi.md#internalWebhooksStatsGet) | **GET** /internal/webhooks/stats | Webhook delivery statistics (internal) |
 | [**listCatalogs()**](SystemApi.md#listCatalogs) | **GET** /api/v1/catalogs | Listar catálogos SUNAT (código → descripción) |
+| [**searchProductoSunat()**](SystemApi.md#searchProductoSunat) | **GET** /api/v1/catalogs/producto/search | Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC) |
 
+
+## `exportProductoSunat()`
+
+```php
+exportProductoSunat(): \Intifact\Sdk\Model\ExportProductoSunat200Response
+```
+
+Descargar el Catálogo 25 completo (52.840 códigos)
+
+Devuelve `{ success, data: { version, total, items[] } }` con TODO el catálogo, en el mismo shape que devuelve la búsqueda. Pensado para cachearlo del lado del integrador: manda `If-None-Match` con el ETag recibido y la API responde 304 si nada cambió. Se sirve con `Content-Encoding: gzip` si el cliente lo acepta (~600 KB vs ~8 MB).
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\SystemApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $result = $apiInstance->exportProductoSunat();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling SystemApi->exportProductoSunat: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\Intifact\Sdk\Model\ExportProductoSunat200Response**](../Model/ExportProductoSunat200Response.md)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
 ## `getCatalog()`
 
@@ -56,6 +116,64 @@ try {
 ### Return type
 
 void (empty response body)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getProductoSunat()`
+
+```php
+getProductoSunat($codigo): \Intifact\Sdk\Model\GetProductoSunat200Response
+```
+
+Obtener un Código de Producto SUNAT por código
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\SystemApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$codigo = 'codigo_example'; // string
+
+try {
+    $result = $apiInstance->getProductoSunat($codigo);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling SystemApi->getProductoSunat: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **codigo** | **string**|  | |
+
+### Return type
+
+[**\Intifact\Sdk\Model\GetProductoSunat200Response**](../Model/GetProductoSunat200Response.md)
 
 ### Authorization
 
@@ -277,6 +395,70 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**\Intifact\Sdk\Model\ListCatalogs200Response**](../Model/ListCatalogs200Response.md)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `searchProductoSunat()`
+
+```php
+searchProductoSunat($q, $nivel, $limit): \Intifact\Sdk\Model\SearchProductoSunat200Response
+```
+
+Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC)
+
+Busca por texto libre (sin distinguir tildes ni mayúsculas, todos los términos deben aparecer) o por prefijo de código si `q` son dígitos. Devuelve primero las CLASE: SUNAT exige llegar como mínimo a ese nivel y es la respuesta correcta en la mayoría de casos.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\SystemApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$q = 'q_example'; // string
+$nivel = 'nivel_example'; // string
+$limit = 20; // int
+
+try {
+    $result = $apiInstance->searchProductoSunat($q, $nivel, $limit);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling SystemApi->searchProductoSunat: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **q** | **string**|  | |
+| **nivel** | **string**|  | [optional] |
+| **limit** | **int**|  | [optional] [default to 20] |
+
+### Return type
+
+[**\Intifact\Sdk\Model\SearchProductoSunat200Response**](../Model/SearchProductoSunat200Response.md)
 
 ### Authorization
 

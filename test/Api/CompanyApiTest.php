@@ -72,72 +72,72 @@ class CompanyApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1CompaniesClaimPost
+     * Test case for claimCompany
      *
      * Reclamar un RUC registrado por otra cuenta, con su certificado.
      *
      */
-    public function testApiV1CompaniesClaimPost()
+    public function testClaimCompany()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1CompaniesGet
-     *
-     * Listar empresas emisoras.
-     *
-     */
-    public function testApiV1CompaniesGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesIdGet
-     *
-     * Detalle de empresa.
-     *
-     */
-    public function testApiV1CompaniesIdGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesIdLogoGet
-     *
-     * Obtener logo de la empresa (PNG/JPG).
-     *
-     */
-    public function testApiV1CompaniesIdLogoGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesIdPut
-     *
-     * Actualizar empresa.
-     *
-     */
-    public function testApiV1CompaniesIdPut()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesPost
+     * Test case for createCompany
      *
      * Crear empresa emisora.
      *
      */
-    public function testApiV1CompaniesPost()
+    public function testCreateCompany()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getCompany
+     *
+     * Detalle de empresa.
+     *
+     */
+    public function testGetCompany()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getCompanyLogo
+     *
+     * Obtener logo de la empresa (PNG/JPG).
+     *
+     */
+    public function testGetCompanyLogo()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listCompanies
+     *
+     * Listar empresas emisoras.
+     *
+     */
+    public function testListCompanies()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for updateCompany
+     *
+     * Actualizar empresa.
+     *
+     */
+    public function testUpdateCompany()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

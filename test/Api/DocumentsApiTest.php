@@ -72,72 +72,72 @@ class DocumentsApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1CdrConsultarPost
+     * Test case for consultarCdr
      *
      * Consultar el CDR de un comprobante en SUNAT por referencia.
      *
      */
-    public function testApiV1CdrConsultarPost()
+    public function testConsultarCdr()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1DocumentsGet
-     *
-     * Listar documentos con filtros y paginación.
-     *
-     */
-    public function testApiV1DocumentsGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1DocumentsIdGet
+     * Test case for getDocument
      *
      * Detalle completo de un documento.
      *
      */
-    public function testApiV1DocumentsIdGet()
+    public function testGetDocument()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1DocumentsIdRecoverPost
-     *
-     * Reconciliar un documento con SUNAT (consulta de CDR, solo master).
-     *
-     */
-    public function testApiV1DocumentsIdRecoverPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1DocumentsIdRetryPost
-     *
-     * Re-encolar un documento fallido.
-     *
-     */
-    public function testApiV1DocumentsIdRetryPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1DocumentsNextCorrelativoGet
+     * Test case for getNextCorrelativo
      *
      * Obtener el siguiente correlativo disponible para una serie.
      *
      */
-    public function testApiV1DocumentsNextCorrelativoGet()
+    public function testGetNextCorrelativo()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listDocuments
+     *
+     * Listar documentos con filtros y paginación.
+     *
+     */
+    public function testListDocuments()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for reconcileDocument
+     *
+     * Reconciliar un documento con SUNAT (consulta de CDR, solo master).
+     *
+     */
+    public function testReconcileDocument()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for retryDocument
+     *
+     * Re-encolar un documento fallido.
+     *
+     */
+    public function testRetryDocument()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

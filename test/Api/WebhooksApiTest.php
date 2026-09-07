@@ -72,108 +72,108 @@ class WebhooksApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1WebhooksGet
-     *
-     * Listar webhooks (filtra por RUC opcional).
-     *
-     */
-    public function testApiV1WebhooksGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdDelete
-     *
-     * Eliminar webhook (también elimina su historial de deliveries).
-     *
-     */
-    public function testApiV1WebhooksIdDelete()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost
-     *
-     * Reintentar manualmente una entrega.
-     *
-     */
-    public function testApiV1WebhooksIdDeliveriesDeliveryIdRedeliverPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdDeliveriesGet
-     *
-     * Log de entregas del webhook.
-     *
-     */
-    public function testApiV1WebhooksIdDeliveriesGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdGet
-     *
-     * Detalle de webhook (sin secret).
-     *
-     */
-    public function testApiV1WebhooksIdGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdPut
-     *
-     * Actualizar webhook (url, eventos, activación).
-     *
-     */
-    public function testApiV1WebhooksIdPut()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdRotateSecretPost
-     *
-     * Rotar el secret de firma (devuelto UNA sola vez).
-     *
-     */
-    public function testApiV1WebhooksIdRotateSecretPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksIdTestPost
-     *
-     * Enviar un evento de prueba (webhook.test).
-     *
-     */
-    public function testApiV1WebhooksIdTestPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1WebhooksPost
+     * Test case for createWebhook
      *
      * Crear endpoint webhook.
      *
      */
-    public function testApiV1WebhooksPost()
+    public function testCreateWebhook()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for deleteWebhook
+     *
+     * Eliminar webhook (también elimina su historial de deliveries).
+     *
+     */
+    public function testDeleteWebhook()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getWebhook
+     *
+     * Detalle de webhook (sin secret).
+     *
+     */
+    public function testGetWebhook()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listWebhookDeliveries
+     *
+     * Log de entregas del webhook.
+     *
+     */
+    public function testListWebhookDeliveries()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listWebhooks
+     *
+     * Listar webhooks (filtra por RUC opcional).
+     *
+     */
+    public function testListWebhooks()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for redeliverWebhookDelivery
+     *
+     * Reintentar manualmente una entrega.
+     *
+     */
+    public function testRedeliverWebhookDelivery()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for rotateWebhookSecret
+     *
+     * Rotar el secret de firma (devuelto UNA sola vez).
+     *
+     */
+    public function testRotateWebhookSecret()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for testWebhook
+     *
+     * Enviar un evento de prueba (webhook.test).
+     *
+     */
+    public function testTestWebhook()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for updateWebhook
+     *
+     * Actualizar webhook (url, eventos, activación).
+     *
+     */
+    public function testUpdateWebhook()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

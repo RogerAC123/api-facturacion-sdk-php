@@ -72,72 +72,72 @@ class DespatchApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1DespatchIdCdrGet
+     * Test case for getDespatchCdr
      *
      * Descargar CDR (constancia de SUNAT).
      *
      */
-    public function testApiV1DespatchIdCdrGet()
+    public function testGetDespatchCdr()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1DespatchIdPdfGet
+     * Test case for getDespatchPdf
      *
      * Obtener PDF de la guía (A4 oficina, ticket 80mm o 58mm POS).
      *
      */
-    public function testApiV1DespatchIdPdfGet()
+    public function testGetDespatchPdf()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1DespatchIdXmlGet
+     * Test case for getDespatchXml
      *
      * Descargar XML firmado de la guía.
      *
      */
-    public function testApiV1DespatchIdXmlGet()
+    public function testGetDespatchXml()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1DespatchSendMultiPost
-     *
-     * Enviar múltiples guías de remisión por destino.
-     *
-     */
-    public function testApiV1DespatchSendMultiPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1DespatchSendPost
+     * Test case for sendDespatch
      *
      * Enviar guía de remisión (09) via API GRE REST.
      *
      */
-    public function testApiV1DespatchSendPost()
+    public function testSendDespatch()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1DespatchTransportistaSendPost
+     * Test case for sendDespatchMulti
+     *
+     * Enviar múltiples guías de remisión por destino.
+     *
+     */
+    public function testSendDespatchMulti()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for sendDespatchTransportista
      *
      * Enviar guía de remisión TRANSPORTISTA (31) via API GRE REST.
      *
      */
-    public function testApiV1DespatchTransportistaSendPost()
+    public function testSendDespatchTransportista()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

@@ -72,60 +72,60 @@ class InvoiceApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1InvoiceComputePost
+     * Test case for computeInvoice
      *
      * Calcular importes (IGV, descuentos, totales) sin emitir.
      *
      */
-    public function testApiV1InvoiceComputePost()
+    public function testComputeInvoice()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1InvoiceIdCdrGet
+     * Test case for getInvoiceCdr
      *
      * Descargar CDR (constancia de SUNAT).
      *
      */
-    public function testApiV1InvoiceIdCdrGet()
+    public function testGetInvoiceCdr()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1InvoiceIdPdfGet
+     * Test case for getInvoicePdf
      *
      * Obtener PDF (A4 oficina, ticket 80mm o ticket 58mm POS).
      *
      */
-    public function testApiV1InvoiceIdPdfGet()
+    public function testGetInvoicePdf()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1InvoiceIdXmlGet
+     * Test case for getInvoiceXml
      *
      * Descargar XML firmado.
      *
      */
-    public function testApiV1InvoiceIdXmlGet()
+    public function testGetInvoiceXml()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1InvoiceSendPost
+     * Test case for sendInvoice
      *
      * Enviar factura (01) o boleta (03) a SUNAT.
      *
      */
-    public function testApiV1InvoiceSendPost()
+    public function testSendInvoice()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

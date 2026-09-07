@@ -496,8 +496,8 @@ class SendInvoiceRequestDetalleInner implements ModelInterface, ArrayAccess, \Js
             $invalidProperties[] = "invalid value for 'factor_icbper', must be bigger than or equal to 0.";
         }
 
-        if (!is_null($this->container['cod_prod_sunat']) && (mb_strlen($this->container['cod_prod_sunat']) > 20)) {
-            $invalidProperties[] = "invalid value for 'cod_prod_sunat', the character length must be smaller than or equal to 20.";
+        if (!is_null($this->container['cod_prod_sunat']) && !preg_match("/^\\d{8}$/", $this->container['cod_prod_sunat'])) {
+            $invalidProperties[] = "invalid value for 'cod_prod_sunat', must be conform to the pattern /^\\d{8}$/.";
         }
 
         return $invalidProperties;
@@ -1045,8 +1045,9 @@ class SendInvoiceRequestDetalleInner implements ModelInterface, ArrayAccess, \Js
         if (is_null($cod_prod_sunat)) {
             throw new \InvalidArgumentException('non-nullable cod_prod_sunat cannot be null');
         }
-        if ((mb_strlen($cod_prod_sunat) > 20)) {
-            throw new \InvalidArgumentException('invalid length for $cod_prod_sunat when calling SendInvoiceRequestDetalleInner., must be smaller than or equal to 20.');
+
+        if ((!preg_match("/^\\d{8}$/", ObjectSerializer::toString($cod_prod_sunat)))) {
+            throw new \InvalidArgumentException("invalid value for \$cod_prod_sunat when calling SendInvoiceRequestDetalleInner., must conform to the pattern /^\\d{8}$/.");
         }
 
         $this->container['cod_prod_sunat'] = $cod_prod_sunat;

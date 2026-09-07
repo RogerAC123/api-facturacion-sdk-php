@@ -72,60 +72,60 @@ class SummaryApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1BoletaCancelPost
+     * Test case for cancelBoleta
      *
      * Anular boleta via resumen diario (estado=3).
      *
      */
-    public function testApiV1BoletaCancelPost()
+    public function testCancelBoleta()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1InvoiceCancelPost
+     * Test case for cancelInvoice
      *
      * Anular factura via comunicación de baja.
      *
      */
-    public function testApiV1InvoiceCancelPost()
+    public function testCancelInvoice()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1SummarySendPost
-     *
-     * Enviar resumen diario de boletas (RC).
-     *
-     */
-    public function testApiV1SummarySendPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1TicketTicketStatusGet
+     * Test case for getTicketStatus
      *
      * Consultar estado de ticket asíncrono (SOAP o GRE).
      *
      */
-    public function testApiV1TicketTicketStatusGet()
+    public function testGetTicketStatus()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1VoidedSendPost
+     * Test case for sendSummary
+     *
+     * Enviar resumen diario de boletas (RC).
+     *
+     */
+    public function testSendSummary()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for sendVoided
      *
      * Enviar comunicación de baja (RA).
      *
      */
-    public function testApiV1VoidedSendPost()
+    public function testSendVoided()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

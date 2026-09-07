@@ -284,12 +284,16 @@ class SendDespatchTransportistaRequestVehiculosSecundariosInner implements Model
         if ($this->container['placa'] === null) {
             $invalidProperties[] = "'placa' can't be null";
         }
-        if ((mb_strlen($this->container['placa']) > 8)) {
-            $invalidProperties[] = "invalid value for 'placa', the character length must be smaller than or equal to 8.";
+        if ((mb_strlen($this->container['placa']) > 10)) {
+            $invalidProperties[] = "invalid value for 'placa', the character length must be smaller than or equal to 10.";
         }
 
         if ((mb_strlen($this->container['placa']) < 1)) {
             $invalidProperties[] = "invalid value for 'placa', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!preg_match("/^[A-Z0-9]+$/", $this->container['placa'])) {
+            $invalidProperties[] = "invalid value for 'placa', must be conform to the pattern /^[A-Z0-9]+$/.";
         }
 
         if (!is_null($this->container['tuc']) && (mb_strlen($this->container['tuc']) > 15)) {
@@ -333,11 +337,14 @@ class SendDespatchTransportistaRequestVehiculosSecundariosInner implements Model
         if (is_null($placa)) {
             throw new \InvalidArgumentException('non-nullable placa cannot be null');
         }
-        if ((mb_strlen($placa) > 8)) {
-            throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchTransportistaRequestVehiculosSecundariosInner., must be smaller than or equal to 8.');
+        if ((mb_strlen($placa) > 10)) {
+            throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchTransportistaRequestVehiculosSecundariosInner., must be smaller than or equal to 10.');
         }
         if ((mb_strlen($placa) < 1)) {
             throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchTransportistaRequestVehiculosSecundariosInner., must be bigger than or equal to 1.');
+        }
+        if ((!preg_match("/^[A-Z0-9]+$/", ObjectSerializer::toString($placa)))) {
+            throw new \InvalidArgumentException("invalid value for \$placa when calling SendDespatchTransportistaRequestVehiculosSecundariosInner., must conform to the pattern /^[A-Z0-9]+$/.");
         }
 
         $this->container['placa'] = $placa;

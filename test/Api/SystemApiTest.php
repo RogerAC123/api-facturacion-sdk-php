@@ -72,24 +72,36 @@ class SystemApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1CatalogsGet
+     * Test case for exportProductoSunat
      *
-     * Listar catálogos SUNAT (código → descripción).
+     * Descargar el Catálogo 25 completo (52.840 códigos).
      *
      */
-    public function testApiV1CatalogsGet()
+    public function testExportProductoSunat()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1CatalogsKeyGet
+     * Test case for getCatalog
      *
      * Obtener un catálogo por clave.
      *
      */
-    public function testApiV1CatalogsKeyGet()
+    public function testGetCatalog()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getProductoSunat
+     *
+     * Obtener un Código de Producto SUNAT por código.
+     *
+     */
+    public function testGetProductoSunat()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
@@ -126,6 +138,30 @@ class SystemApiTest extends TestCase
      *
      */
     public function testInternalWebhooksStatsGet()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listCatalogs
+     *
+     * Listar catálogos SUNAT (código → descripción).
+     *
+     */
+    public function testListCatalogs()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for searchProductoSunat
+     *
+     * Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC).
+     *
+     */
+    public function testSearchProductoSunat()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

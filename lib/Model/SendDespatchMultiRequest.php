@@ -709,6 +709,14 @@ class SendDespatchMultiRequest implements ModelInterface, ArrayAccess, \JsonSeri
             $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', the character length must be smaller than or equal to 10.";
         }
 
+        if (!is_null($this->container['guia_vehiculo_placa']) && (mb_strlen($this->container['guia_vehiculo_placa']) < 1)) {
+            $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['guia_vehiculo_placa']) && !preg_match("/^[A-Z0-9]+$/", $this->container['guia_vehiculo_placa'])) {
+            $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', must be conform to the pattern /^[A-Z0-9]+$/.";
+        }
+
         if (!is_null($this->container['transportista_nro_mtc']) && !preg_match("/^[A-Z0-9]{1,20}$/", $this->container['transportista_nro_mtc'])) {
             $invalidProperties[] = "invalid value for 'transportista_nro_mtc', must be conform to the pattern /^[A-Z0-9]{1,20}$/.";
         }
@@ -1214,6 +1222,12 @@ class SendDespatchMultiRequest implements ModelInterface, ArrayAccess, \JsonSeri
         }
         if ((mb_strlen($guia_vehiculo_placa) > 10)) {
             throw new \InvalidArgumentException('invalid length for $guia_vehiculo_placa when calling SendDespatchMultiRequest., must be smaller than or equal to 10.');
+        }
+        if ((mb_strlen($guia_vehiculo_placa) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $guia_vehiculo_placa when calling SendDespatchMultiRequest., must be bigger than or equal to 1.');
+        }
+        if ((!preg_match("/^[A-Z0-9]+$/", ObjectSerializer::toString($guia_vehiculo_placa)))) {
+            throw new \InvalidArgumentException("invalid value for \$guia_vehiculo_placa when calling SendDespatchMultiRequest., must conform to the pattern /^[A-Z0-9]+$/.");
         }
 
         $this->container['guia_vehiculo_placa'] = $guia_vehiculo_placa;

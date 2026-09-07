@@ -72,108 +72,108 @@ class AuthApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1AuthLoginPost
-     *
-     * Login email+password.
-     *
-     */
-    public function testApiV1AuthLoginPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1AuthLogoutPost
-     *
-     * Cerrar sesión actual (revoca refresh).
-     *
-     */
-    public function testApiV1AuthLogoutPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1AuthMeGet
+     * Test case for getCurrentUser
      *
      * Datos del usuario actual.
      *
      */
-    public function testApiV1AuthMeGet()
+    public function testGetCurrentUser()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1AuthRefreshPost
-     *
-     * Renovar access token con refresh cookie.
-     *
-     */
-    public function testApiV1AuthRefreshPost()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1AuthSessionsGet
+     * Test case for listSessions
      *
      * Lista de sesiones activas del usuario.
      *
      */
-    public function testApiV1AuthSessionsGet()
+    public function testListSessions()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1AuthSessionsIdDelete
+     * Test case for login
      *
-     * Revocar una sesión activa por ID.
+     * Login email+password.
      *
      */
-    public function testApiV1AuthSessionsIdDelete()
+    public function testLogin()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1AuthSignupPost
+     * Test case for logout
      *
-     * Registro público: crea Tenant + User + sesión.
+     * Cerrar sesión actual (revoca refresh).
      *
      */
-    public function testApiV1AuthSignupPost()
+    public function testLogout()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1AuthVerifyEmailGet
+     * Test case for refreshToken
      *
-     * Confirmar email con token (one-time, 24h).
+     * Renovar access token con refresh cookie.
      *
      */
-    public function testApiV1AuthVerifyEmailGet()
+    public function testRefreshToken()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test case for apiV1AuthVerifyEmailResendPost
+     * Test case for resendVerificationEmail
      *
      * Re-enviar email de verificación al usuario logueado.
      *
      */
-    public function testApiV1AuthVerifyEmailResendPost()
+    public function testResendVerificationEmail()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for revokeSession
+     *
+     * Revocar una sesión activa por ID.
+     *
+     */
+    public function testRevokeSession()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for signup
+     *
+     * Registro público: crea Tenant + User + sesión.
+     *
+     */
+    public function testSignup()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for verifyEmail
+     *
+     * Confirmar email con token (one-time, 24h).
+     *
+     */
+    public function testVerifyEmail()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

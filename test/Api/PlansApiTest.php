@@ -72,48 +72,48 @@ class PlansApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1PlansGet
-     *
-     * Listar planes (solo master).
-     *
-     */
-    public function testApiV1PlansGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1PlansIdDelete
-     *
-     * Desactivar plan (soft-delete).
-     *
-     */
-    public function testApiV1PlansIdDelete()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1PlansIdPut
-     *
-     * Actualizar plan (precio, docs, nombre, estado).
-     *
-     */
-    public function testApiV1PlansIdPut()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1PlansPost
+     * Test case for createPlan
      *
      * Crear plan.
      *
      */
-    public function testApiV1PlansPost()
+    public function testCreatePlan()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for deactivatePlan
+     *
+     * Desactivar plan (soft-delete).
+     *
+     */
+    public function testDeactivatePlan()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listPlans
+     *
+     * Listar planes (solo master).
+     *
+     */
+    public function testListPlans()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for updatePlan
+     *
+     * Actualizar plan (precio, docs, nombre, estado).
+     *
+     */
+    public function testUpdatePlan()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

@@ -72,48 +72,48 @@ class BranchesApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1CompaniesIdBranchesBranchIdDelete
-     *
-     * Desactivar establecimiento (soft-delete).
-     *
-     */
-    public function testApiV1CompaniesIdBranchesBranchIdDelete()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesIdBranchesBranchIdPut
-     *
-     * Actualizar establecimiento.
-     *
-     */
-    public function testApiV1CompaniesIdBranchesBranchIdPut()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesIdBranchesGet
-     *
-     * Listar establecimientos (sucursales) de una empresa.
-     *
-     */
-    public function testApiV1CompaniesIdBranchesGet()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for apiV1CompaniesIdBranchesPost
+     * Test case for createBranch
      *
      * Crear establecimiento (sucursal).
      *
      */
-    public function testApiV1CompaniesIdBranchesPost()
+    public function testCreateBranch()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for deactivateBranch
+     *
+     * Desactivar establecimiento (soft-delete).
+     *
+     */
+    public function testDeactivateBranch()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for listBranches
+     *
+     * Listar establecimientos (sucursales) de una empresa.
+     *
+     */
+    public function testListBranches()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for updateBranch
+     *
+     * Actualizar establecimiento.
+     *
+     */
+    public function testUpdateBranch()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

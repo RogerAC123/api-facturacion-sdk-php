@@ -1,6 +1,6 @@
 <?php
 /**
- * SendDespatchRequestVehiculosSecundariosInner
+ * GetProductoSunat200Response
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \Intifact\Sdk\ObjectSerializer;
 
 /**
- * SendDespatchRequestVehiculosSecundariosInner Class Doc Comment
+ * GetProductoSunat200Response Class Doc Comment
  *
  * @category Class
  * @package  Intifact\Sdk
@@ -40,7 +40,7 @@ use \Intifact\Sdk\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetProductoSunat200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      *
      * @var string
      */
-    protected static $openAPIModelName = 'sendDespatch_request_vehiculosSecundarios_inner';
+    protected static $openAPIModelName = 'getProductoSunat_200_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,10 +57,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $openAPITypes = [
-        'placa' => 'string',
-        'tuc' => 'string',
-        'autorizacion' => 'string',
-        'autorizacion_entidad' => 'string'
+        'success' => 'bool',
+        'data' => '\Intifact\Sdk\Model\ExportProductoSunat200ResponseDataItemsInner'
     ];
 
     /**
@@ -71,10 +69,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'placa' => null,
-        'tuc' => null,
-        'autorizacion' => null,
-        'autorizacion_entidad' => null
+        'success' => null,
+        'data' => null
     ];
 
     /**
@@ -83,10 +79,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'placa' => false,
-        'tuc' => false,
-        'autorizacion' => false,
-        'autorizacion_entidad' => false
+        'success' => false,
+        'data' => false
     ];
 
     /**
@@ -175,10 +169,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $attributeMap = [
-        'placa' => 'placa',
-        'tuc' => 'tuc',
-        'autorizacion' => 'autorizacion',
-        'autorizacion_entidad' => 'autorizacionEntidad'
+        'success' => 'success',
+        'data' => 'data'
     ];
 
     /**
@@ -187,10 +179,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $setters = [
-        'placa' => 'setPlaca',
-        'tuc' => 'setTuc',
-        'autorizacion' => 'setAutorizacion',
-        'autorizacion_entidad' => 'setAutorizacionEntidad'
+        'success' => 'setSuccess',
+        'data' => 'setData'
     ];
 
     /**
@@ -199,10 +189,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      * @var string[]
      */
     protected static $getters = [
-        'placa' => 'getPlaca',
-        'tuc' => 'getTuc',
-        'autorizacion' => 'getAutorizacion',
-        'autorizacion_entidad' => 'getAutorizacionEntidad'
+        'success' => 'getSuccess',
+        'data' => 'getData'
     ];
 
     /**
@@ -262,10 +250,8 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('placa', $data ?? [], null);
-        $this->setIfExists('tuc', $data ?? [], null);
-        $this->setIfExists('autorizacion', $data ?? [], null);
-        $this->setIfExists('autorizacion_entidad', $data ?? [], null);
+        $this->setIfExists('success', $data ?? [], null);
+        $this->setIfExists('data', $data ?? [], null);
     }
 
     /**
@@ -295,33 +281,12 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
     {
         $invalidProperties = [];
 
-        if ($this->container['placa'] === null) {
-            $invalidProperties[] = "'placa' can't be null";
+        if ($this->container['success'] === null) {
+            $invalidProperties[] = "'success' can't be null";
         }
-        if ((mb_strlen($this->container['placa']) > 10)) {
-            $invalidProperties[] = "invalid value for 'placa', the character length must be smaller than or equal to 10.";
+        if ($this->container['data'] === null) {
+            $invalidProperties[] = "'data' can't be null";
         }
-
-        if ((mb_strlen($this->container['placa']) < 1)) {
-            $invalidProperties[] = "invalid value for 'placa', the character length must be bigger than or equal to 1.";
-        }
-
-        if (!preg_match("/^[A-Z0-9]+$/", $this->container['placa'])) {
-            $invalidProperties[] = "invalid value for 'placa', must be conform to the pattern /^[A-Z0-9]+$/.";
-        }
-
-        if (!is_null($this->container['tuc']) && (mb_strlen($this->container['tuc']) > 15)) {
-            $invalidProperties[] = "invalid value for 'tuc', the character length must be smaller than or equal to 15.";
-        }
-
-        if (!is_null($this->container['autorizacion']) && (mb_strlen($this->container['autorizacion']) > 50)) {
-            $invalidProperties[] = "invalid value for 'autorizacion', the character length must be smaller than or equal to 50.";
-        }
-
-        if (!is_null($this->container['autorizacion_entidad']) && (mb_strlen($this->container['autorizacion_entidad']) > 2)) {
-            $invalidProperties[] = "invalid value for 'autorizacion_entidad', the character length must be smaller than or equal to 2.";
-        }
-
         return $invalidProperties;
     }
 
@@ -338,131 +303,55 @@ class SendDespatchRequestVehiculosSecundariosInner implements ModelInterface, Ar
 
 
     /**
-     * Gets placa
+     * Gets success
      *
-     * @return string
+     * @return bool
      */
-    public function getPlaca()
+    public function getSuccess()
     {
-        return $this->container['placa'];
+        return $this->container['success'];
     }
 
     /**
-     * Sets placa
+     * Sets success
      *
-     * @param string $placa placa
+     * @param bool $success success
      *
      * @return self
      */
-    public function setPlaca($placa)
+    public function setSuccess($success)
     {
-        if (is_null($placa)) {
-            throw new \InvalidArgumentException('non-nullable placa cannot be null');
+        if (is_null($success)) {
+            throw new \InvalidArgumentException('non-nullable success cannot be null');
         }
-        if ((mb_strlen($placa) > 10)) {
-            throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 10.');
-        }
-        if ((mb_strlen($placa) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $placa when calling SendDespatchRequestVehiculosSecundariosInner., must be bigger than or equal to 1.');
-        }
-        if ((!preg_match("/^[A-Z0-9]+$/", ObjectSerializer::toString($placa)))) {
-            throw new \InvalidArgumentException("invalid value for \$placa when calling SendDespatchRequestVehiculosSecundariosInner., must conform to the pattern /^[A-Z0-9]+$/.");
-        }
-
-        $this->container['placa'] = $placa;
+        $this->container['success'] = $success;
 
         return $this;
     }
 
     /**
-     * Gets tuc
+     * Gets data
      *
-     * @return string|null
+     * @return \Intifact\Sdk\Model\ExportProductoSunat200ResponseDataItemsInner
      */
-    public function getTuc()
+    public function getData()
     {
-        return $this->container['tuc'];
+        return $this->container['data'];
     }
 
     /**
-     * Sets tuc
+     * Sets data
      *
-     * @param string|null $tuc tuc
+     * @param \Intifact\Sdk\Model\ExportProductoSunat200ResponseDataItemsInner $data data
      *
      * @return self
      */
-    public function setTuc($tuc)
+    public function setData($data)
     {
-        if (is_null($tuc)) {
-            throw new \InvalidArgumentException('non-nullable tuc cannot be null');
+        if (is_null($data)) {
+            throw new \InvalidArgumentException('non-nullable data cannot be null');
         }
-        if ((mb_strlen($tuc) > 15)) {
-            throw new \InvalidArgumentException('invalid length for $tuc when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 15.');
-        }
-
-        $this->container['tuc'] = $tuc;
-
-        return $this;
-    }
-
-    /**
-     * Gets autorizacion
-     *
-     * @return string|null
-     */
-    public function getAutorizacion()
-    {
-        return $this->container['autorizacion'];
-    }
-
-    /**
-     * Sets autorizacion
-     *
-     * @param string|null $autorizacion autorizacion
-     *
-     * @return self
-     */
-    public function setAutorizacion($autorizacion)
-    {
-        if (is_null($autorizacion)) {
-            throw new \InvalidArgumentException('non-nullable autorizacion cannot be null');
-        }
-        if ((mb_strlen($autorizacion) > 50)) {
-            throw new \InvalidArgumentException('invalid length for $autorizacion when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 50.');
-        }
-
-        $this->container['autorizacion'] = $autorizacion;
-
-        return $this;
-    }
-
-    /**
-     * Gets autorizacion_entidad
-     *
-     * @return string|null
-     */
-    public function getAutorizacionEntidad()
-    {
-        return $this->container['autorizacion_entidad'];
-    }
-
-    /**
-     * Sets autorizacion_entidad
-     *
-     * @param string|null $autorizacion_entidad autorizacion_entidad
-     *
-     * @return self
-     */
-    public function setAutorizacionEntidad($autorizacion_entidad)
-    {
-        if (is_null($autorizacion_entidad)) {
-            throw new \InvalidArgumentException('non-nullable autorizacion_entidad cannot be null');
-        }
-        if ((mb_strlen($autorizacion_entidad) > 2)) {
-            throw new \InvalidArgumentException('invalid length for $autorizacion_entidad when calling SendDespatchRequestVehiculosSecundariosInner., must be smaller than or equal to 2.');
-        }
-
-        $this->container['autorizacion_entidad'] = $autorizacion_entidad;
+        $this->container['data'] = $data;
 
         return $this;
     }

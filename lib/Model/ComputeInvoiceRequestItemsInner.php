@@ -405,8 +405,8 @@ class ComputeInvoiceRequestItemsInner implements ModelInterface, ArrayAccess, \J
             $invalidProperties[] = "invalid value for 'marca', the character length must be smaller than or equal to 100.";
         }
 
-        if (!is_null($this->container['cod_prod_sunat']) && (mb_strlen($this->container['cod_prod_sunat']) > 20)) {
-            $invalidProperties[] = "invalid value for 'cod_prod_sunat', the character length must be smaller than or equal to 20.";
+        if (!is_null($this->container['cod_prod_sunat']) && !preg_match("/^\\d{8}$/", $this->container['cod_prod_sunat'])) {
+            $invalidProperties[] = "invalid value for 'cod_prod_sunat', must be conform to the pattern /^\\d{8}$/.";
         }
 
         return $invalidProperties;
@@ -764,8 +764,9 @@ class ComputeInvoiceRequestItemsInner implements ModelInterface, ArrayAccess, \J
         if (is_null($cod_prod_sunat)) {
             throw new \InvalidArgumentException('non-nullable cod_prod_sunat cannot be null');
         }
-        if ((mb_strlen($cod_prod_sunat) > 20)) {
-            throw new \InvalidArgumentException('invalid length for $cod_prod_sunat when calling ComputeInvoiceRequestItemsInner., must be smaller than or equal to 20.');
+
+        if ((!preg_match("/^\\d{8}$/", ObjectSerializer::toString($cod_prod_sunat)))) {
+            throw new \InvalidArgumentException("invalid value for \$cod_prod_sunat when calling ComputeInvoiceRequestItemsInner., must conform to the pattern /^\\d{8}$/.");
         }
 
         $this->container['cod_prod_sunat'] = $cod_prod_sunat;

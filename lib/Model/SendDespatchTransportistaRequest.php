@@ -796,12 +796,16 @@ class SendDespatchTransportistaRequest implements ModelInterface, ArrayAccess, \
         if ($this->container['guia_vehiculo_placa'] === null) {
             $invalidProperties[] = "'guia_vehiculo_placa' can't be null";
         }
-        if ((mb_strlen($this->container['guia_vehiculo_placa']) > 8)) {
-            $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', the character length must be smaller than or equal to 8.";
+        if ((mb_strlen($this->container['guia_vehiculo_placa']) > 10)) {
+            $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', the character length must be smaller than or equal to 10.";
         }
 
         if ((mb_strlen($this->container['guia_vehiculo_placa']) < 1)) {
             $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!preg_match("/^[A-Z0-9]+$/", $this->container['guia_vehiculo_placa'])) {
+            $invalidProperties[] = "invalid value for 'guia_vehiculo_placa', must be conform to the pattern /^[A-Z0-9]+$/.";
         }
 
         if (!is_null($this->container['guia_vehiculo_tuc']) && (mb_strlen($this->container['guia_vehiculo_tuc']) > 15)) {
@@ -1954,11 +1958,14 @@ class SendDespatchTransportistaRequest implements ModelInterface, ArrayAccess, \
         if (is_null($guia_vehiculo_placa)) {
             throw new \InvalidArgumentException('non-nullable guia_vehiculo_placa cannot be null');
         }
-        if ((mb_strlen($guia_vehiculo_placa) > 8)) {
-            throw new \InvalidArgumentException('invalid length for $guia_vehiculo_placa when calling SendDespatchTransportistaRequest., must be smaller than or equal to 8.');
+        if ((mb_strlen($guia_vehiculo_placa) > 10)) {
+            throw new \InvalidArgumentException('invalid length for $guia_vehiculo_placa when calling SendDespatchTransportistaRequest., must be smaller than or equal to 10.');
         }
         if ((mb_strlen($guia_vehiculo_placa) < 1)) {
             throw new \InvalidArgumentException('invalid length for $guia_vehiculo_placa when calling SendDespatchTransportistaRequest., must be bigger than or equal to 1.');
+        }
+        if ((!preg_match("/^[A-Z0-9]+$/", ObjectSerializer::toString($guia_vehiculo_placa)))) {
+            throw new \InvalidArgumentException("invalid value for \$guia_vehiculo_placa when calling SendDespatchTransportistaRequest., must conform to the pattern /^[A-Z0-9]+$/.");
         }
 
         $this->container['guia_vehiculo_placa'] = $guia_vehiculo_placa;

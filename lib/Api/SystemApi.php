@@ -74,7 +74,13 @@ class SystemApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'exportProductoSunat' => [
+            'application/json',
+        ],
         'getCatalog' => [
+            'application/json',
+        ],
+        'getProductoSunat' => [
             'application/json',
         ],
         'healthGet' => [
@@ -87,6 +93,9 @@ class SystemApi
             'application/json',
         ],
         'listCatalogs' => [
+            'application/json',
+        ],
+        'searchProductoSunat' => [
             'application/json',
         ],
     ];
@@ -135,6 +144,304 @@ class SystemApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation exportProductoSunat
+     *
+     * Descargar el Catálogo 25 completo (52.840 códigos)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\ExportProductoSunat200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function exportProductoSunat(string $contentType = self::contentTypes['exportProductoSunat'][0])
+    {
+        list($response) = $this->exportProductoSunatWithHttpInfo($contentType);
+        return $response;
+    }
+
+    /**
+     * Operation exportProductoSunatWithHttpInfo
+     *
+     * Descargar el Catálogo 25 completo (52.840 códigos)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\ExportProductoSunat200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function exportProductoSunatWithHttpInfo(string $contentType = self::contentTypes['exportProductoSunat'][0])
+    {
+        $request = $this->exportProductoSunatRequest($contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\ExportProductoSunat200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\ExportProductoSunat200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\ExportProductoSunat200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation exportProductoSunatAsync
+     *
+     * Descargar el Catálogo 25 completo (52.840 códigos)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function exportProductoSunatAsync(string $contentType = self::contentTypes['exportProductoSunat'][0])
+    {
+        return $this->exportProductoSunatAsyncWithHttpInfo($contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation exportProductoSunatAsyncWithHttpInfo
+     *
+     * Descargar el Catálogo 25 completo (52.840 códigos)
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function exportProductoSunatAsyncWithHttpInfo(string $contentType = self::contentTypes['exportProductoSunat'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\ExportProductoSunat200Response';
+        $request = $this->exportProductoSunatRequest($contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'exportProductoSunat'
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function exportProductoSunatRequest(string $contentType = self::contentTypes['exportProductoSunat'][0])
+    {
+
+
+        $resourcePath = '/api/v1/catalogs/producto/export';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -321,6 +628,338 @@ class SystemApi
             $resourcePath = str_replace(
                 '{key}',
                 ObjectSerializer::toPathValue($key),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getProductoSunat
+     *
+     * Obtener un Código de Producto SUNAT por código
+     *
+     * @param  string|null $codigo codigo (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\GetProductoSunat200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function getProductoSunat($codigo, string $contentType = self::contentTypes['getProductoSunat'][0])
+    {
+        list($response) = $this->getProductoSunatWithHttpInfo($codigo, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getProductoSunatWithHttpInfo
+     *
+     * Obtener un Código de Producto SUNAT por código
+     *
+     * @param  string|null $codigo (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\GetProductoSunat200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getProductoSunatWithHttpInfo($codigo, string $contentType = self::contentTypes['getProductoSunat'][0])
+    {
+        $request = $this->getProductoSunatRequest($codigo, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\GetProductoSunat200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\GetProductoSunat200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\GetProductoSunat200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getProductoSunatAsync
+     *
+     * Obtener un Código de Producto SUNAT por código
+     *
+     * @param  string|null $codigo (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductoSunatAsync($codigo, string $contentType = self::contentTypes['getProductoSunat'][0])
+    {
+        return $this->getProductoSunatAsyncWithHttpInfo($codigo, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getProductoSunatAsyncWithHttpInfo
+     *
+     * Obtener un Código de Producto SUNAT por código
+     *
+     * @param  string|null $codigo (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductoSunatAsyncWithHttpInfo($codigo, string $contentType = self::contentTypes['getProductoSunat'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\GetProductoSunat200Response';
+        $request = $this->getProductoSunatRequest($codigo, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getProductoSunat'
+     *
+     * @param  string|null $codigo (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getProductoSunatRequest($codigo, string $contentType = self::contentTypes['getProductoSunat'][0])
+    {
+
+        // verify the required parameter 'codigo' is set
+        if ($codigo === null || (is_array($codigo) && count($codigo) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $codigo when calling getProductoSunat'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/catalogs/producto/{codigo}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($codigo !== null) {
+            $resourcePath = str_replace(
+                '{codigo}',
+                ObjectSerializer::toPathValue($codigo),
                 $resourcePath
             );
         }
@@ -1324,6 +1963,367 @@ class SystemApi
         $httpBody = '';
         $multipart = false;
 
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation searchProductoSunat
+     *
+     * Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC)
+     *
+     * @param  string $q q (required)
+     * @param  string|null $nivel nivel (optional)
+     * @param  int|null $limit limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Intifact\Sdk\Model\SearchProductoSunat200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
+     */
+    public function searchProductoSunat($q, $nivel = null, $limit = 20, string $contentType = self::contentTypes['searchProductoSunat'][0])
+    {
+        list($response) = $this->searchProductoSunatWithHttpInfo($q, $nivel, $limit, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation searchProductoSunatWithHttpInfo
+     *
+     * Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC)
+     *
+     * @param  string $q (required)
+     * @param  string|null $nivel (optional)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \Intifact\Sdk\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Intifact\Sdk\Model\SearchProductoSunat200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function searchProductoSunatWithHttpInfo($q, $nivel = null, $limit = 20, string $contentType = self::contentTypes['searchProductoSunat'][0])
+    {
+        $request = $this->searchProductoSunatRequest($q, $nivel, $limit, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\SearchProductoSunat200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Intifact\Sdk\Model\SearchProductoSunat200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\SearchProductoSunat200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation searchProductoSunatAsync
+     *
+     * Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC)
+     *
+     * @param  string $q (required)
+     * @param  string|null $nivel (optional)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function searchProductoSunatAsync($q, $nivel = null, $limit = 20, string $contentType = self::contentTypes['searchProductoSunat'][0])
+    {
+        return $this->searchProductoSunatAsyncWithHttpInfo($q, $nivel, $limit, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation searchProductoSunatAsyncWithHttpInfo
+     *
+     * Buscar Código de Producto SUNAT (Catálogo 25 / UNSPSC)
+     *
+     * @param  string $q (required)
+     * @param  string|null $nivel (optional)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function searchProductoSunatAsyncWithHttpInfo($q, $nivel = null, $limit = 20, string $contentType = self::contentTypes['searchProductoSunat'][0])
+    {
+        $returnType = '\Intifact\Sdk\Model\SearchProductoSunat200Response';
+        $request = $this->searchProductoSunatRequest($q, $nivel, $limit, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'searchProductoSunat'
+     *
+     * @param  string $q (required)
+     * @param  string|null $nivel (optional)
+     * @param  int|null $limit (optional, default to 20)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchProductoSunat'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function searchProductoSunatRequest($q, $nivel = null, $limit = 20, string $contentType = self::contentTypes['searchProductoSunat'][0])
+    {
+
+        // verify the required parameter 'q' is set
+        if ($q === null || (is_array($q) && count($q) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $q when calling searchProductoSunat'
+            );
+        }
+        if (strlen($q) > 80) {
+            throw new \InvalidArgumentException('invalid length for "$q" when calling SystemApi.searchProductoSunat, must be smaller than or equal to 80.');
+        }
+        if (strlen($q) < 2) {
+            throw new \InvalidArgumentException('invalid length for "$q" when calling SystemApi.searchProductoSunat, must be bigger than or equal to 2.');
+        }
+        
+
+        if ($limit !== null && $limit > 100) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling SystemApi.searchProductoSunat, must be smaller than or equal to 100.');
+        }
+        if ($limit !== null && $limit < 1) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling SystemApi.searchProductoSunat, must be bigger than or equal to 1.');
+        }
+        
+
+        $resourcePath = '/api/v1/catalogs/producto/search';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $q,
+            'q', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $nivel,
+            'nivel', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
 

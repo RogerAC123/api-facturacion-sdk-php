@@ -72,12 +72,12 @@ class QueuesApiTest extends TestCase
     }
 
     /**
-     * Test case for apiV1QueuesStatsGet
+     * Test case for getQueueStats
      *
      * Estado de las colas BullMQ.
      *
      */
-    public function testApiV1QueuesStatsGet()
+    public function testGetQueueStats()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

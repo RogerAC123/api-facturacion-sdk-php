@@ -131,7 +131,7 @@ class ComputeInvoice200ResponseDataItemsInner implements ModelInterface, ArrayAc
         'total_impuestos' => false,
         'monto_precio_unitario' => false,
         'factor_icbper' => false,
-        'cod_prod_sunat' => true
+        'cod_prod_sunat' => false
     ];
 
     /**
@@ -451,6 +451,10 @@ class ComputeInvoice200ResponseDataItemsInner implements ModelInterface, ArrayAc
         if ($this->container['factor_icbper'] === null) {
             $invalidProperties[] = "'factor_icbper' can't be null";
         }
+        if (!is_null($this->container['cod_prod_sunat']) && !preg_match("/^\\d{8}$/", $this->container['cod_prod_sunat'])) {
+            $invalidProperties[] = "invalid value for 'cod_prod_sunat', must be conform to the pattern /^\\d{8}$/.";
+        }
+
         return $invalidProperties;
     }
 
@@ -1007,15 +1011,13 @@ class ComputeInvoice200ResponseDataItemsInner implements ModelInterface, ArrayAc
     public function setCodProdSunat($cod_prod_sunat)
     {
         if (is_null($cod_prod_sunat)) {
-            array_push($this->openAPINullablesSetToNull, 'cod_prod_sunat');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('cod_prod_sunat', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+            throw new \InvalidArgumentException('non-nullable cod_prod_sunat cannot be null');
         }
+
+        if ((!preg_match("/^\\d{8}$/", ObjectSerializer::toString($cod_prod_sunat)))) {
+            throw new \InvalidArgumentException("invalid value for \$cod_prod_sunat when calling ComputeInvoice200ResponseDataItemsInner., must conform to the pattern /^\\d{8}$/.");
+        }
+
         $this->container['cod_prod_sunat'] = $cod_prod_sunat;
 
         return $this;
