@@ -58,7 +58,8 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
      */
     protected static $openAPITypes = [
         'ruc' => 'string',
-        'razon_social' => 'string'
+        'razon_social' => 'string',
+        'tenant_id' => 'string'
     ];
 
     /**
@@ -70,7 +71,8 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
      */
     protected static $openAPIFormats = [
         'ruc' => null,
-        'razon_social' => null
+        'razon_social' => null,
+        'tenant_id' => null
     ];
 
     /**
@@ -80,7 +82,8 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
      */
     protected static array $openAPINullables = [
         'ruc' => true,
-        'razon_social' => true
+        'razon_social' => true,
+        'tenant_id' => true
     ];
 
     /**
@@ -170,7 +173,8 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
      */
     protected static $attributeMap = [
         'ruc' => 'ruc',
-        'razon_social' => 'razonSocial'
+        'razon_social' => 'razonSocial',
+        'tenant_id' => 'tenantId'
     ];
 
     /**
@@ -180,7 +184,8 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
      */
     protected static $setters = [
         'ruc' => 'setRuc',
-        'razon_social' => 'setRazonSocial'
+        'razon_social' => 'setRazonSocial',
+        'tenant_id' => 'setTenantId'
     ];
 
     /**
@@ -190,7 +195,8 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
      */
     protected static $getters = [
         'ruc' => 'getRuc',
-        'razon_social' => 'getRazonSocial'
+        'razon_social' => 'getRazonSocial',
+        'tenant_id' => 'getTenantId'
     ];
 
     /**
@@ -252,6 +258,7 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
     {
         $this->setIfExists('ruc', $data ?? [], null);
         $this->setIfExists('razon_social', $data ?? [], null);
+        $this->setIfExists('tenant_id', $data ?? [], null);
     }
 
     /**
@@ -366,6 +373,40 @@ class ListDocuments200ResponseDataInnerCompany implements ModelInterface, ArrayA
             }
         }
         $this->container['razon_social'] = $razon_social;
+
+        return $this;
+    }
+
+    /**
+     * Gets tenant_id
+     *
+     * @return string|null
+     */
+    public function getTenantId()
+    {
+        return $this->container['tenant_id'];
+    }
+
+    /**
+     * Sets tenant_id
+     *
+     * @param string|null $tenant_id tenant_id
+     *
+     * @return self
+     */
+    public function setTenantId($tenant_id)
+    {
+        if (is_null($tenant_id)) {
+            array_push($this->openAPINullablesSetToNull, 'tenant_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('tenant_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['tenant_id'] = $tenant_id;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 Facturas y Boletas (01, 03)
 
-All URIs are relative to http://localhost:3000, except if the operation defines another base path.
+All URIs are relative to http://localhost:3099, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |

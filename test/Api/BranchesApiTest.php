@@ -72,48 +72,12 @@ class BranchesApiTest extends TestCase
     }
 
     /**
-     * Test case for createBranch
-     *
-     * Crear establecimiento (sucursal).
-     *
-     */
-    public function testCreateBranch()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for deactivateBranch
-     *
-     * Desactivar establecimiento (soft-delete).
-     *
-     */
-    public function testDeactivateBranch()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for listBranches
      *
      * Listar establecimientos (sucursales) de una empresa.
      *
      */
     public function testListBranches()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for updateBranch
-     *
-     * Actualizar establecimiento.
-     *
-     */
-    public function testUpdateBranch()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

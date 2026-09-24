@@ -96,4 +96,13 @@ class ListDocuments200ResponseDataInnerCompanyTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "tenant_id"
+     */
+    public function testPropertyTenantId()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

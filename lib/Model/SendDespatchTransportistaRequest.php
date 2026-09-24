@@ -174,7 +174,7 @@ class SendDespatchTransportistaRequest implements ModelInterface, ArrayAccess, \
         'destinatario_departamento' => false,
         'destinatario_contacto' => false,
         'destinatario_telefono' => false,
-        'destinatario_email' => true,
+        'destinatario_email' => false,
         'entrega_referencia' => false,
         'modalidad_entrega' => false,
         'agencia_nombre' => false,
@@ -1462,16 +1462,9 @@ class SendDespatchTransportistaRequest implements ModelInterface, ArrayAccess, \
     public function setDestinatarioEmail($destinatario_email)
     {
         if (is_null($destinatario_email)) {
-            array_push($this->openAPINullablesSetToNull, 'destinatario_email');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('destinatario_email', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+            throw new \InvalidArgumentException('non-nullable destinatario_email cannot be null');
         }
-        if (!is_null($destinatario_email) && (mb_strlen($destinatario_email) > 120)) {
+        if ((mb_strlen($destinatario_email) > 120)) {
             throw new \InvalidArgumentException('invalid length for $destinatario_email when calling SendDespatchTransportistaRequest., must be smaller than or equal to 120.');
         }
 

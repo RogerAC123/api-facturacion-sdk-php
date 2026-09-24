@@ -2,7 +2,7 @@
 
 Consulta y gestión de documentos
 
-All URIs are relative to http://localhost:3000, except if the operation defines another base path.
+All URIs are relative to http://localhost:3099, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
@@ -198,7 +198,7 @@ try {
 ## `listDocuments()`
 
 ```php
-listDocuments($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit): \Intifact\Sdk\Model\ListDocuments200Response
+listDocuments($ruc, $tenant_id, $tipo_doc, $serie, $correlativo, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit): \Intifact\Sdk\Model\ListDocuments200Response
 ```
 
 Listar documentos con filtros y paginación
@@ -221,8 +221,10 @@ $apiInstance = new Intifact\Sdk\Api\DocumentsApi(
     $config
 );
 $ruc = 'ruc_example'; // string
+$tenant_id = 'tenant_id_example'; // string
 $tipo_doc = 'tipo_doc_example'; // string
 $serie = 'serie_example'; // string
+$correlativo = 'correlativo_example'; // string
 $estado = 'estado_example'; // string
 $env = 'env_example'; // string
 $fecha_desde = 'fecha_desde_example'; // string
@@ -232,7 +234,7 @@ $page = 1; // int
 $limit = 20; // int
 
 try {
-    $result = $apiInstance->listDocuments($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit);
+    $result = $apiInstance->listDocuments($ruc, $tenant_id, $tipo_doc, $serie, $correlativo, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DocumentsApi->listDocuments: ', $e->getMessage(), PHP_EOL;
@@ -244,8 +246,10 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **ruc** | **string**|  | [optional] |
+| **tenant_id** | **string**|  | [optional] |
 | **tipo_doc** | **string**|  | [optional] |
 | **serie** | **string**|  | [optional] |
+| **correlativo** | **string**|  | [optional] |
 | **estado** | **string**|  | [optional] |
 | **env** | **string**|  | [optional] |
 | **fecha_desde** | **string**|  | [optional] |

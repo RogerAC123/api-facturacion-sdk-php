@@ -133,11 +133,17 @@ try {
 | `DocumentsApi` | Listar/consultar documentos, reintentar fallidos |
 | `QueuesApi` | Estado de las colas BullMQ |
 | `CompanyApi` / `BranchesApi` | Empresas y establecimientos (solo lectura) |
-| `WebhooksApi` | Suscripciones y entregas de webhooks |
 | `PlansApi` | Planes y consumo (quota) |
 | `PublicApi` | Consulta pública de comprobantes (sin auth) |
 | `AuthApi` | Autenticación |
 | `SystemApi` | `/health`, catálogos SUNAT |
+
+> **Desde la 3.0** la administración de la cuenta —crear o editar empresas,
+> credenciales SOL/GRE, certificado, logo, registrar establecimientos y
+> **webhooks**— se hace desde el panel de Intifact, no con la API key (la API
+> responde `403`). Por eso `WebhooksApi` y los métodos de escritura de
+> `CompanyApi`/`BranchesApi` ya no están en el SDK: una key filtrada solo
+> puede emitir y consultar.
 
 ## Regenerar desde la API
 

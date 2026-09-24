@@ -72,30 +72,6 @@ class CompanyApiTest extends TestCase
     }
 
     /**
-     * Test case for claimCompany
-     *
-     * Reclamar un RUC registrado por otra cuenta, con su certificado.
-     *
-     */
-    public function testClaimCompany()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for createCompany
-     *
-     * Crear empresa emisora.
-     *
-     */
-    public function testCreateCompany()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for getCompany
      *
      * Detalle de empresa.
@@ -126,18 +102,6 @@ class CompanyApiTest extends TestCase
      *
      */
     public function testListCompanies()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for updateCompany
-     *
-     * Actualizar empresa.
-     *
-     */
-    public function testUpdateCompany()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

@@ -1141,8 +1141,10 @@ class DocumentsApi
      * Listar documentos con filtros y paginación
      *
      * @param  string|null $ruc ruc (optional)
+     * @param  string|null $tenant_id tenant_id (optional)
      * @param  string|null $tipo_doc tipo_doc (optional)
      * @param  string|null $serie serie (optional)
+     * @param  string|null $correlativo correlativo (optional)
      * @param  string|null $estado estado (optional)
      * @param  string|null $env env (optional)
      * @param  string|null $fecha_desde fecha_desde (optional)
@@ -1156,9 +1158,9 @@ class DocumentsApi
      * @throws \InvalidArgumentException
      * @return \Intifact\Sdk\Model\ListDocuments200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response
      */
-    public function listDocuments($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    public function listDocuments($ruc = null, $tenant_id = null, $tipo_doc = null, $serie = null, $correlativo = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
     {
-        list($response) = $this->listDocumentsWithHttpInfo($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        list($response) = $this->listDocumentsWithHttpInfo($ruc, $tenant_id, $tipo_doc, $serie, $correlativo, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
         return $response;
     }
 
@@ -1168,8 +1170,10 @@ class DocumentsApi
      * Listar documentos con filtros y paginación
      *
      * @param  string|null $ruc (optional)
+     * @param  string|null $tenant_id (optional)
      * @param  string|null $tipo_doc (optional)
      * @param  string|null $serie (optional)
+     * @param  string|null $correlativo (optional)
      * @param  string|null $estado (optional)
      * @param  string|null $env (optional)
      * @param  string|null $fecha_desde (optional)
@@ -1183,9 +1187,9 @@ class DocumentsApi
      * @throws \InvalidArgumentException
      * @return array of \Intifact\Sdk\Model\ListDocuments200Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet403Response|\Intifact\Sdk\Model\InternalCertificatesExpiringGet429Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listDocumentsWithHttpInfo($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    public function listDocumentsWithHttpInfo($ruc = null, $tenant_id = null, $tipo_doc = null, $serie = null, $correlativo = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
     {
-        $request = $this->listDocumentsRequest($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        $request = $this->listDocumentsRequest($ruc, $tenant_id, $tipo_doc, $serie, $correlativo, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1304,8 +1308,10 @@ class DocumentsApi
      * Listar documentos con filtros y paginación
      *
      * @param  string|null $ruc (optional)
+     * @param  string|null $tenant_id (optional)
      * @param  string|null $tipo_doc (optional)
      * @param  string|null $serie (optional)
+     * @param  string|null $correlativo (optional)
      * @param  string|null $estado (optional)
      * @param  string|null $env (optional)
      * @param  string|null $fecha_desde (optional)
@@ -1318,9 +1324,9 @@ class DocumentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDocumentsAsync($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    public function listDocumentsAsync($ruc = null, $tenant_id = null, $tipo_doc = null, $serie = null, $correlativo = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
     {
-        return $this->listDocumentsAsyncWithHttpInfo($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType)
+        return $this->listDocumentsAsyncWithHttpInfo($ruc, $tenant_id, $tipo_doc, $serie, $correlativo, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1334,8 +1340,10 @@ class DocumentsApi
      * Listar documentos con filtros y paginación
      *
      * @param  string|null $ruc (optional)
+     * @param  string|null $tenant_id (optional)
      * @param  string|null $tipo_doc (optional)
      * @param  string|null $serie (optional)
+     * @param  string|null $correlativo (optional)
      * @param  string|null $estado (optional)
      * @param  string|null $env (optional)
      * @param  string|null $fecha_desde (optional)
@@ -1348,10 +1356,10 @@ class DocumentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDocumentsAsyncWithHttpInfo($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    public function listDocumentsAsyncWithHttpInfo($ruc = null, $tenant_id = null, $tipo_doc = null, $serie = null, $correlativo = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
     {
         $returnType = '\Intifact\Sdk\Model\ListDocuments200Response';
-        $request = $this->listDocumentsRequest($ruc, $tipo_doc, $serie, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
+        $request = $this->listDocumentsRequest($ruc, $tenant_id, $tipo_doc, $serie, $correlativo, $estado, $env, $fecha_desde, $fecha_hasta, $cliente_num_doc, $page, $limit, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1393,8 +1401,10 @@ class DocumentsApi
      * Create request for operation 'listDocuments'
      *
      * @param  string|null $ruc (optional)
+     * @param  string|null $tenant_id (optional)
      * @param  string|null $tipo_doc (optional)
      * @param  string|null $serie (optional)
+     * @param  string|null $correlativo (optional)
      * @param  string|null $estado (optional)
      * @param  string|null $env (optional)
      * @param  string|null $fecha_desde (optional)
@@ -1407,7 +1417,7 @@ class DocumentsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listDocumentsRequest($ruc = null, $tipo_doc = null, $serie = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
+    public function listDocumentsRequest($ruc = null, $tenant_id = null, $tipo_doc = null, $serie = null, $correlativo = null, $estado = null, $env = null, $fecha_desde = null, $fecha_hasta = null, $cliente_num_doc = null, $page = 1, $limit = 20, string $contentType = self::contentTypes['listDocuments'][0])
     {
 
         if ($ruc !== null && strlen($ruc) > 11) {
@@ -1417,8 +1427,16 @@ class DocumentsApi
             throw new \InvalidArgumentException('invalid length for "$ruc" when calling DocumentsApi.listDocuments, must be bigger than or equal to 11.');
         }
         
+        if ($tenant_id !== null && !preg_match("/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/", $tenant_id)) {
+            throw new \InvalidArgumentException("invalid value for \"tenant_id\" when calling DocumentsApi.listDocuments, must conform to the pattern /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/.");
+        }
+        
 
 
+        if ($correlativo !== null && !preg_match("/^\\d{1,8}$/", $correlativo)) {
+            throw new \InvalidArgumentException("invalid value for \"correlativo\" when calling DocumentsApi.listDocuments, must conform to the pattern /^\\d{1,8}$/.");
+        }
+        
 
 
 
@@ -1457,6 +1475,15 @@ class DocumentsApi
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $tenant_id,
+            'tenantId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $tipo_doc,
             'tipoDoc', // param base name
             'string', // openApiType
@@ -1468,6 +1495,15 @@ class DocumentsApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $serie,
             'serie', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $correlativo,
+            'correlativo', // param base name
             'string', // openApiType
             'form', // style
             true, // explode

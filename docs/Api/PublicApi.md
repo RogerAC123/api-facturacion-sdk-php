@@ -2,7 +2,7 @@
 
 Endpoints públicos sin auth (consulta de comprobantes por clientes finales)
 
-All URIs are relative to http://localhost:3000, except if the operation defines another base path.
+All URIs are relative to http://localhost:3099, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
