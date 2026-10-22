@@ -2,7 +2,7 @@
 
 CRUD de empresas emisoras
 
-All URIs are relative to http://localhost:3099, except if the operation defines another base path.
+All URIs are relative to https://api-facturacion.intifact.com, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |

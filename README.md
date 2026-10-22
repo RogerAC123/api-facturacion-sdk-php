@@ -129,7 +129,7 @@ try {
 | `InvoiceApi` | Facturas/boletas: enviar, PDF, XML, CDR |
 | `NoteApi` | Notas de crédito/débito |
 | `DespatchApi` | Guías de remisión (remitente y transportista) |
-| `SummaryApi` | Resumen diario y comunicación de baja |
+| `SummaryApi` | Resumen diario y comunicación de baja; `getSummary($id)` da el estado del envío |
 | `DocumentsApi` | Listar/consultar documentos, reintentar fallidos |
 | `QueuesApi` | Estado de las colas BullMQ |
 | `CompanyApi` / `BranchesApi` | Empresas y establecimientos (solo lectura) |

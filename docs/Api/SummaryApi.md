@@ -2,12 +2,13 @@
 
 Resumen Diario / Comunicación de Baja
 
-All URIs are relative to http://localhost:3099, except if the operation defines another base path.
+All URIs are relative to https://api-facturacion.intifact.com, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**cancelBoleta()**](SummaryApi.md#cancelBoleta) | **POST** /api/v1/boleta/cancel | Anular boleta via resumen diario (estado&#x3D;3) |
 | [**cancelInvoice()**](SummaryApi.md#cancelInvoice) | **POST** /api/v1/invoice/cancel | Anular factura via comunicación de baja |
+| [**getSummary()**](SummaryApi.md#getSummary) | **GET** /api/v1/summaries/{id} | Estado de un Resumen Diario (RC) o Comunicación de Baja (RA) |
 | [**getTicketStatus()**](SummaryApi.md#getTicketStatus) | **GET** /api/v1/ticket/{ticket}/status | Consultar estado de ticket asíncrono (SOAP o GRE) |
 | [**sendSummary()**](SummaryApi.md#sendSummary) | **POST** /api/v1/summary/send | Enviar resumen diario de boletas (RC) |
 | [**sendVoided()**](SummaryApi.md#sendVoided) | **POST** /api/v1/voided/send | Enviar comunicación de baja (RA) |
@@ -123,6 +124,64 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getSummary()`
+
+```php
+getSummary($id): \Intifact\Sdk\Model\GetSummary200Response
+```
+
+Estado de un Resumen Diario (RC) o Comunicación de Baja (RA)
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: apiKey
+$config = Intifact\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new Intifact\Sdk\Api\SummaryApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string
+
+try {
+    $result = $apiInstance->getSummary($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling SummaryApi->getSummary: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**|  | |
+
+### Return type
+
+[**\Intifact\Sdk\Model\GetSummary200Response**](../Model/GetSummary200Response.md)
+
+### Authorization
+
+[apiKey](../../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

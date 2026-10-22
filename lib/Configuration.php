@@ -93,7 +93,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'http://localhost:3099';
+    protected $host = 'https://api-facturacion.intifact.com';
 
     /**
      * User agent of the HTTP request, set to "OpenAPI-Generator/{version}/PHP" by default
@@ -530,8 +530,8 @@ class Configuration
     {
         return [
             [
-                "url" => "http://localhost:3099",
-                "description" => "Local",
+                "url" => "https://api-facturacion.intifact.com",
+                "description" => "Producción",
             ]
         ];
     }

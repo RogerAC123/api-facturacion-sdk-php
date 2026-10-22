@@ -35,6 +35,9 @@ docs/Model/GetNextCorrelativo200ResponseData.md
 docs/Model/GetProductoSunat200Response.md
 docs/Model/GetQueueStats200Response.md
 docs/Model/GetQueueStats200ResponseData.md
+docs/Model/GetSummary200Response.md
+docs/Model/GetSummary200ResponseData.md
+docs/Model/GetSummary200ResponseDataItemsInner.md
 docs/Model/GetTicketStatus200Response.md
 docs/Model/GetTicketStatus200ResponseCdrResponse.md
 docs/Model/GetTicketStatus202Response.md
@@ -126,6 +129,9 @@ lib/Model/GetNextCorrelativo200ResponseData.php
 lib/Model/GetProductoSunat200Response.php
 lib/Model/GetQueueStats200Response.php
 lib/Model/GetQueueStats200ResponseData.php
+lib/Model/GetSummary200Response.php
+lib/Model/GetSummary200ResponseData.php
+lib/Model/GetSummary200ResponseDataItemsInner.php
 lib/Model/GetTicketStatus200Response.php
 lib/Model/GetTicketStatus200ResponseCdrResponse.php
 lib/Model/GetTicketStatus202Response.php
@@ -215,6 +221,9 @@ test/Model/GetNextCorrelativo200ResponseTest.php
 test/Model/GetProductoSunat200ResponseTest.php
 test/Model/GetQueueStats200ResponseDataTest.php
 test/Model/GetQueueStats200ResponseTest.php
+test/Model/GetSummary200ResponseDataItemsInnerTest.php
+test/Model/GetSummary200ResponseDataTest.php
+test/Model/GetSummary200ResponseTest.php
 test/Model/GetTicketStatus200ResponseCdrResponseTest.php
 test/Model/GetTicketStatus200ResponseTest.php
 test/Model/GetTicketStatus202ResponseCdrResponseTest.php
