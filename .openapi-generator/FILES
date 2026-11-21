@@ -205,4 +205,3 @@ lib/Model/UpdatePlanRequest.php
 lib/Model/UploadCompanyCertificateRequest.php
 lib/ObjectSerializer.php
 phpunit.xml.dist
-test/Api/UsageApiTest.php

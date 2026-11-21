@@ -71,6 +71,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'web' => 'string',
         'sol_user' => 'string',
         'sol_password' => 'string',
+        'gre_client_id' => 'string',
+        'gre_client_secret' => 'string',
         'certificado' => '\Intifact\Sdk\Model\RegisterCompanyRequestCertificado'
     ];
 
@@ -96,6 +98,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'web' => null,
         'sol_user' => null,
         'sol_password' => null,
+        'gre_client_id' => null,
+        'gre_client_secret' => null,
         'certificado' => null
     ];
 
@@ -119,6 +123,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'web' => true,
         'sol_user' => false,
         'sol_password' => false,
+        'gre_client_id' => false,
+        'gre_client_secret' => false,
         'certificado' => false
     ];
 
@@ -222,6 +228,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'web' => 'web',
         'sol_user' => 'solUser',
         'sol_password' => 'solPassword',
+        'gre_client_id' => 'greClientId',
+        'gre_client_secret' => 'greClientSecret',
         'certificado' => 'certificado'
     ];
 
@@ -245,6 +253,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'web' => 'setWeb',
         'sol_user' => 'setSolUser',
         'sol_password' => 'setSolPassword',
+        'gre_client_id' => 'setGreClientId',
+        'gre_client_secret' => 'setGreClientSecret',
         'certificado' => 'setCertificado'
     ];
 
@@ -268,6 +278,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'web' => 'getWeb',
         'sol_user' => 'getSolUser',
         'sol_password' => 'getSolPassword',
+        'gre_client_id' => 'getGreClientId',
+        'gre_client_secret' => 'getGreClientSecret',
         'certificado' => 'getCertificado'
     ];
 
@@ -342,6 +354,8 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('web', $data ?? [], null);
         $this->setIfExists('sol_user', $data ?? [], null);
         $this->setIfExists('sol_password', $data ?? [], null);
+        $this->setIfExists('gre_client_id', $data ?? [], null);
+        $this->setIfExists('gre_client_secret', $data ?? [], null);
         $this->setIfExists('certificado', $data ?? [], null);
     }
 
@@ -448,6 +462,22 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
 
         if (!is_null($this->container['sol_password']) && (mb_strlen($this->container['sol_password']) < 1)) {
             $invalidProperties[] = "invalid value for 'sol_password', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['gre_client_id']) && (mb_strlen($this->container['gre_client_id']) > 100)) {
+            $invalidProperties[] = "invalid value for 'gre_client_id', the character length must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['gre_client_id']) && (mb_strlen($this->container['gre_client_id']) < 1)) {
+            $invalidProperties[] = "invalid value for 'gre_client_id', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['gre_client_secret']) && (mb_strlen($this->container['gre_client_secret']) > 255)) {
+            $invalidProperties[] = "invalid value for 'gre_client_secret', the character length must be smaller than or equal to 255.";
+        }
+
+        if (!is_null($this->container['gre_client_secret']) && (mb_strlen($this->container['gre_client_secret']) < 1)) {
+            $invalidProperties[] = "invalid value for 'gre_client_secret', the character length must be bigger than or equal to 1.";
         }
 
         if ($this->container['certificado'] === null) {
@@ -919,6 +949,74 @@ class RegisterCompanyRequest implements ModelInterface, ArrayAccess, \JsonSerial
         }
 
         $this->container['sol_password'] = $sol_password;
+
+        return $this;
+    }
+
+    /**
+     * Gets gre_client_id
+     *
+     * @return string|null
+     */
+    public function getGreClientId()
+    {
+        return $this->container['gre_client_id'];
+    }
+
+    /**
+     * Sets gre_client_id
+     *
+     * @param string|null $gre_client_id gre_client_id
+     *
+     * @return self
+     */
+    public function setGreClientId($gre_client_id)
+    {
+        if (is_null($gre_client_id)) {
+            throw new \InvalidArgumentException('non-nullable gre_client_id cannot be null');
+        }
+        if ((mb_strlen($gre_client_id) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $gre_client_id when calling RegisterCompanyRequest., must be smaller than or equal to 100.');
+        }
+        if ((mb_strlen($gre_client_id) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $gre_client_id when calling RegisterCompanyRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['gre_client_id'] = $gre_client_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets gre_client_secret
+     *
+     * @return string|null
+     */
+    public function getGreClientSecret()
+    {
+        return $this->container['gre_client_secret'];
+    }
+
+    /**
+     * Sets gre_client_secret
+     *
+     * @param string|null $gre_client_secret gre_client_secret
+     *
+     * @return self
+     */
+    public function setGreClientSecret($gre_client_secret)
+    {
+        if (is_null($gre_client_secret)) {
+            throw new \InvalidArgumentException('non-nullable gre_client_secret cannot be null');
+        }
+        if ((mb_strlen($gre_client_secret) > 255)) {
+            throw new \InvalidArgumentException('invalid length for $gre_client_secret when calling RegisterCompanyRequest., must be smaller than or equal to 255.');
+        }
+        if ((mb_strlen($gre_client_secret) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $gre_client_secret when calling RegisterCompanyRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['gre_client_secret'] = $gre_client_secret;
 
         return $this;
     }
