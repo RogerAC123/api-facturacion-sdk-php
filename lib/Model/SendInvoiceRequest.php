@@ -62,6 +62,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'serie' => 'string',
         'correlativo' => 'string',
         'tipo_moneda' => 'string',
+        'tipo_cambio' => 'float',
         'fecha_emision' => 'string',
         'empresa_ruc' => 'string',
         'establecimiento_codigo' => 'string',
@@ -90,7 +91,8 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'vendedor' => 'string',
         'pagos' => '\Intifact\Sdk\Model\SendInvoiceRequestPagosInner[]',
         'detraccion' => '\Intifact\Sdk\Model\SendInvoiceRequestDetraccion',
-        'guia_remision' => '\Intifact\Sdk\Model\SendInvoiceRequestGuiaRemisionInner[]'
+        'guia_remision' => '\Intifact\Sdk\Model\SendInvoiceRequestGuiaRemisionInner[]',
+        'anticipos' => '\Intifact\Sdk\Model\SendInvoiceRequestAnticiposInner[]'
     ];
 
     /**
@@ -106,6 +108,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'serie' => null,
         'correlativo' => null,
         'tipo_moneda' => null,
+        'tipo_cambio' => null,
         'fecha_emision' => null,
         'empresa_ruc' => null,
         'establecimiento_codigo' => null,
@@ -134,7 +137,8 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'vendedor' => null,
         'pagos' => null,
         'detraccion' => null,
-        'guia_remision' => null
+        'guia_remision' => null,
+        'anticipos' => null
     ];
 
     /**
@@ -148,6 +152,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'serie' => false,
         'correlativo' => false,
         'tipo_moneda' => false,
+        'tipo_cambio' => false,
         'fecha_emision' => true,
         'empresa_ruc' => false,
         'establecimiento_codigo' => false,
@@ -176,7 +181,8 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'vendedor' => false,
         'pagos' => false,
         'detraccion' => false,
-        'guia_remision' => false
+        'guia_remision' => false,
+        'anticipos' => false
     ];
 
     /**
@@ -270,6 +276,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'serie' => 'serie',
         'correlativo' => 'correlativo',
         'tipo_moneda' => 'tipoMoneda',
+        'tipo_cambio' => 'tipoCambio',
         'fecha_emision' => 'fechaEmision',
         'empresa_ruc' => 'empresaRuc',
         'establecimiento_codigo' => 'establecimientoCodigo',
@@ -298,7 +305,8 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'vendedor' => 'vendedor',
         'pagos' => 'pagos',
         'detraccion' => 'detraccion',
-        'guia_remision' => 'guiaRemision'
+        'guia_remision' => 'guiaRemision',
+        'anticipos' => 'anticipos'
     ];
 
     /**
@@ -312,6 +320,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'serie' => 'setSerie',
         'correlativo' => 'setCorrelativo',
         'tipo_moneda' => 'setTipoMoneda',
+        'tipo_cambio' => 'setTipoCambio',
         'fecha_emision' => 'setFechaEmision',
         'empresa_ruc' => 'setEmpresaRuc',
         'establecimiento_codigo' => 'setEstablecimientoCodigo',
@@ -340,7 +349,8 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'vendedor' => 'setVendedor',
         'pagos' => 'setPagos',
         'detraccion' => 'setDetraccion',
-        'guia_remision' => 'setGuiaRemision'
+        'guia_remision' => 'setGuiaRemision',
+        'anticipos' => 'setAnticipos'
     ];
 
     /**
@@ -354,6 +364,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'serie' => 'getSerie',
         'correlativo' => 'getCorrelativo',
         'tipo_moneda' => 'getTipoMoneda',
+        'tipo_cambio' => 'getTipoCambio',
         'fecha_emision' => 'getFechaEmision',
         'empresa_ruc' => 'getEmpresaRuc',
         'establecimiento_codigo' => 'getEstablecimientoCodigo',
@@ -382,7 +393,8 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'vendedor' => 'getVendedor',
         'pagos' => 'getPagos',
         'detraccion' => 'getDetraccion',
-        'guia_remision' => 'getGuiaRemision'
+        'guia_remision' => 'getGuiaRemision',
+        'anticipos' => 'getAnticipos'
     ];
 
     /**
@@ -462,6 +474,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         $this->setIfExists('serie', $data ?? [], null);
         $this->setIfExists('correlativo', $data ?? [], null);
         $this->setIfExists('tipo_moneda', $data ?? [], 'PEN');
+        $this->setIfExists('tipo_cambio', $data ?? [], null);
         $this->setIfExists('fecha_emision', $data ?? [], null);
         $this->setIfExists('empresa_ruc', $data ?? [], null);
         $this->setIfExists('establecimiento_codigo', $data ?? [], '0000');
@@ -491,6 +504,7 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         $this->setIfExists('pagos', $data ?? [], null);
         $this->setIfExists('detraccion', $data ?? [], null);
         $this->setIfExists('guia_remision', $data ?? [], null);
+        $this->setIfExists('anticipos', $data ?? [], null);
     }
 
     /**
@@ -560,6 +574,14 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
 
         if (!is_null($this->container['tipo_moneda']) && (mb_strlen($this->container['tipo_moneda']) < 3)) {
             $invalidProperties[] = "invalid value for 'tipo_moneda', the character length must be bigger than or equal to 3.";
+        }
+
+        if (!is_null($this->container['tipo_cambio']) && ($this->container['tipo_cambio'] > 100)) {
+            $invalidProperties[] = "invalid value for 'tipo_cambio', must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['tipo_cambio']) && ($this->container['tipo_cambio'] <= 0)) {
+            $invalidProperties[] = "invalid value for 'tipo_cambio', must be bigger than 0.";
         }
 
         if ($this->container['fecha_emision'] === null && !$this->isNullableSetToNull('fecha_emision')) {
@@ -735,6 +757,10 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
 
         if (!is_null($this->container['guia_remision']) && (count($this->container['guia_remision']) > 20)) {
             $invalidProperties[] = "invalid value for 'guia_remision', number of items must be less than or equal to 20.";
+        }
+
+        if (!is_null($this->container['anticipos']) && (count($this->container['anticipos']) > 20)) {
+            $invalidProperties[] = "invalid value for 'anticipos', number of items must be less than or equal to 20.";
         }
 
         return $invalidProperties;
@@ -917,6 +943,40 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         }
 
         $this->container['tipo_moneda'] = $tipo_moneda;
+
+        return $this;
+    }
+
+    /**
+     * Gets tipo_cambio
+     *
+     * @return float|null
+     */
+    public function getTipoCambio()
+    {
+        return $this->container['tipo_cambio'];
+    }
+
+    /**
+     * Sets tipo_cambio
+     *
+     * @param float|null $tipo_cambio tipo_cambio
+     *
+     * @return self
+     */
+    public function setTipoCambio($tipo_cambio)
+    {
+        if (is_null($tipo_cambio)) {
+            throw new \InvalidArgumentException('non-nullable tipo_cambio cannot be null');
+        }
+        if (($tipo_cambio > 100)) {
+            throw new \InvalidArgumentException('invalid value for $tipo_cambio when calling SendInvoiceRequest., must be smaller than or equal to 100.');
+        }
+        if (($tipo_cambio <= 0)) {
+            throw new \InvalidArgumentException('invalid value for $tipo_cambio when calling SendInvoiceRequest., must be bigger than 0.');
+        }
+
+        $this->container['tipo_cambio'] = $tipo_cambio;
 
         return $this;
     }
@@ -1832,6 +1892,36 @@ class SendInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializab
             throw new \InvalidArgumentException('invalid value for $guia_remision when calling SendInvoiceRequest., number of items must be less than or equal to 20.');
         }
         $this->container['guia_remision'] = $guia_remision;
+
+        return $this;
+    }
+
+    /**
+     * Gets anticipos
+     *
+     * @return \Intifact\Sdk\Model\SendInvoiceRequestAnticiposInner[]|null
+     */
+    public function getAnticipos()
+    {
+        return $this->container['anticipos'];
+    }
+
+    /**
+     * Sets anticipos
+     *
+     * @param \Intifact\Sdk\Model\SendInvoiceRequestAnticiposInner[]|null $anticipos anticipos
+     *
+     * @return self
+     */
+    public function setAnticipos($anticipos)
+    {
+        if (is_null($anticipos)) {
+            throw new \InvalidArgumentException('non-nullable anticipos cannot be null');
+        }
+        if ((count($anticipos) > 20)) {
+            throw new \InvalidArgumentException('invalid value for $anticipos when calling SendInvoiceRequest., number of items must be less than or equal to 20.');
+        }
+        $this->container['anticipos'] = $anticipos;
 
         return $this;
     }

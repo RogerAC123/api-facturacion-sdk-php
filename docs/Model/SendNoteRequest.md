@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **serie** | **string** |  |
 **correlativo** | **string** |  |
 **tipo_moneda** | **string** |  | [optional] [default to 'PEN']
+**tipo_cambio** | **float** |  | [optional]
 **fecha_emision** | **string** |  |
 **empresa_ruc** | **string** |  |
 **establecimiento_codigo** | **string** |  | [optional] [default to '0000']

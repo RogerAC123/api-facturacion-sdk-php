@@ -62,6 +62,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'serie' => 'string',
         'correlativo' => 'string',
         'tipo_moneda' => 'string',
+        'tipo_cambio' => 'float',
         'fecha_emision' => 'string',
         'empresa_ruc' => 'string',
         'establecimiento_codigo' => 'string',
@@ -104,6 +105,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'serie' => null,
         'correlativo' => null,
         'tipo_moneda' => null,
+        'tipo_cambio' => null,
         'fecha_emision' => null,
         'empresa_ruc' => null,
         'establecimiento_codigo' => null,
@@ -144,6 +146,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'serie' => false,
         'correlativo' => false,
         'tipo_moneda' => false,
+        'tipo_cambio' => false,
         'fecha_emision' => true,
         'empresa_ruc' => false,
         'establecimiento_codigo' => false,
@@ -264,6 +267,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'serie' => 'serie',
         'correlativo' => 'correlativo',
         'tipo_moneda' => 'tipoMoneda',
+        'tipo_cambio' => 'tipoCambio',
         'fecha_emision' => 'fechaEmision',
         'empresa_ruc' => 'empresaRuc',
         'establecimiento_codigo' => 'establecimientoCodigo',
@@ -304,6 +308,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'serie' => 'setSerie',
         'correlativo' => 'setCorrelativo',
         'tipo_moneda' => 'setTipoMoneda',
+        'tipo_cambio' => 'setTipoCambio',
         'fecha_emision' => 'setFechaEmision',
         'empresa_ruc' => 'setEmpresaRuc',
         'establecimiento_codigo' => 'setEstablecimientoCodigo',
@@ -344,6 +349,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'serie' => 'getSerie',
         'correlativo' => 'getCorrelativo',
         'tipo_moneda' => 'getTipoMoneda',
+        'tipo_cambio' => 'getTipoCambio',
         'fecha_emision' => 'getFechaEmision',
         'empresa_ruc' => 'getEmpresaRuc',
         'establecimiento_codigo' => 'getEstablecimientoCodigo',
@@ -465,6 +471,7 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('serie', $data ?? [], null);
         $this->setIfExists('correlativo', $data ?? [], null);
         $this->setIfExists('tipo_moneda', $data ?? [], 'PEN');
+        $this->setIfExists('tipo_cambio', $data ?? [], null);
         $this->setIfExists('fecha_emision', $data ?? [], null);
         $this->setIfExists('empresa_ruc', $data ?? [], null);
         $this->setIfExists('establecimiento_codigo', $data ?? [], '0000');
@@ -561,6 +568,14 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if (!is_null($this->container['tipo_moneda']) && (mb_strlen($this->container['tipo_moneda']) < 3)) {
             $invalidProperties[] = "invalid value for 'tipo_moneda', the character length must be bigger than or equal to 3.";
+        }
+
+        if (!is_null($this->container['tipo_cambio']) && ($this->container['tipo_cambio'] > 100)) {
+            $invalidProperties[] = "invalid value for 'tipo_cambio', must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['tipo_cambio']) && ($this->container['tipo_cambio'] <= 0)) {
+            $invalidProperties[] = "invalid value for 'tipo_cambio', must be bigger than 0.";
         }
 
         if ($this->container['fecha_emision'] === null && !$this->isNullableSetToNull('fecha_emision')) {
@@ -932,6 +947,40 @@ class SendNoteRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         }
 
         $this->container['tipo_moneda'] = $tipo_moneda;
+
+        return $this;
+    }
+
+    /**
+     * Gets tipo_cambio
+     *
+     * @return float|null
+     */
+    public function getTipoCambio()
+    {
+        return $this->container['tipo_cambio'];
+    }
+
+    /**
+     * Sets tipo_cambio
+     *
+     * @param float|null $tipo_cambio tipo_cambio
+     *
+     * @return self
+     */
+    public function setTipoCambio($tipo_cambio)
+    {
+        if (is_null($tipo_cambio)) {
+            throw new \InvalidArgumentException('non-nullable tipo_cambio cannot be null');
+        }
+        if (($tipo_cambio > 100)) {
+            throw new \InvalidArgumentException('invalid value for $tipo_cambio when calling SendNoteRequest., must be smaller than or equal to 100.');
+        }
+        if (($tipo_cambio <= 0)) {
+            throw new \InvalidArgumentException('invalid value for $tipo_cambio when calling SendNoteRequest., must be bigger than 0.');
+        }
+
+        $this->container['tipo_cambio'] = $tipo_cambio;
 
         return $this;
     }

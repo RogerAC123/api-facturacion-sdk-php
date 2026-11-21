@@ -132,18 +132,25 @@ try {
 | `SummaryApi` | Resumen diario y comunicación de baja; `getSummary($id)` da el estado del envío |
 | `DocumentsApi` | Listar/consultar documentos, reintentar fallidos |
 | `QueuesApi` | Estado de las colas BullMQ |
-| `CompanyApi` / `BranchesApi` | Empresas y establecimientos (solo lectura) |
+| `CompanyApi` / `BranchesApi` | Empresas y establecimientos: lectura; gestión en planes pagos (ver abajo) |
 | `PlansApi` | Planes y consumo (quota) |
 | `PublicApi` | Consulta pública de comprobantes (sin auth) |
 | `AuthApi` | Autenticación |
 | `SystemApi` | `/health`, catálogos SUNAT |
+| `UsageApi` | Consumo del plan: comprobantes emitidos en el periodo y su límite |
 
-> **Desde la 3.0** la administración de la cuenta —crear o editar empresas,
-> credenciales SOL/GRE, certificado, logo, registrar establecimientos y
-> **webhooks**— se hace desde el panel de Intifact, no con la API key (la API
-> responde `403`). Por eso `WebhooksApi` y los métodos de escritura de
-> `CompanyApi`/`BranchesApi` ya no están en el SDK: una key filtrada solo
-> puede emitir y consultar.
+> **Desde la 3.1**, en los **planes pagos**, una API key live de cuenta
+> también **gestiona sus empresas** (autogestión): `CompanyApi` suma
+> `registerCompany` (alta con el certificado `.p12` del mismo RUC),
+> `updateCompany`, `uploadCompanyCertificate`, `uploadCompanyLogo` y
+> `deleteCompanyLogo`; `BranchesApi` suma `createBranch`, `updateBranch` y
+> `deactivateBranch`. Por ejemplo: `$companyApi->registerCompany($request)`.
+>
+> Siguen en el panel de Intifact: las credenciales SOL/GRE/SIRE de una
+> empresa ya creada, los **webhooks** y el reclamo de un RUC. En el plan
+> gratis, con una key de prueba o con una key de empresa, la API responde
+> `403` (`AUTOGESTION_NO_DISPONIBLE`). Detalle en
+> https://docs.intifact.com/docs/facturacion/autogestion
 
 ## Regenerar desde la API
 

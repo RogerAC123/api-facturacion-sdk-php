@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **serie** | **string** |  |
 **correlativo** | **string** |  |
 **tipo_moneda** | **string** |  | [optional] [default to 'PEN']
+**tipo_cambio** | **float** |  | [optional]
 **fecha_emision** | **string** |  |
 **empresa_ruc** | **string** |  |
 **establecimiento_codigo** | **string** |  | [optional] [default to '0000']
@@ -38,5 +39,6 @@ Name | Type | Description | Notes
 **pagos** | [**\Intifact\Sdk\Model\SendInvoiceRequestPagosInner[]**](SendInvoiceRequestPagosInner.md) |  | [optional]
 **detraccion** | [**\Intifact\Sdk\Model\SendInvoiceRequestDetraccion**](SendInvoiceRequestDetraccion.md) |  | [optional]
 **guia_remision** | [**\Intifact\Sdk\Model\SendInvoiceRequestGuiaRemisionInner[]**](SendInvoiceRequestGuiaRemisionInner.md) |  | [optional]
+**anticipos** | [**\Intifact\Sdk\Model\SendInvoiceRequestAnticiposInner[]**](SendInvoiceRequestAnticiposInner.md) |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
